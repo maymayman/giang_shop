@@ -18,10 +18,10 @@ const options = { allowInsecureHTTP: false };
 const dashboard = new ParseDashboard({
   "apps": [
     {
-      "serverURL": "http://localhost:1337/api",
-      "appId": "myAppId",
-      "masterKey": "myMasterKey",
-      "appName": "MyApp"
+      "serverURL": process.env.SERVER_URL || 'http://localhost:1337/api',
+      "appId": process.env.APP_ID || 'myAppId',
+      "masterKey": process.env.MASTER_KEY || 'myMasterKey',
+      "appName": process.env.APP_NAME || 'GiangShop'
     }
   ],
   "users": [

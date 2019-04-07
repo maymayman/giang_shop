@@ -7,10 +7,11 @@ const ProductModel = require('../models/Product');
 router.get('/:objectId', async function(req, res, next) {
   try {
     const menus = await MenuModel.find(true);
-    res.render('products/detail', { menus });
+    const product = await ProductModel.findByObjectId(req.params.objectId);
+    res.render('products/detail', { menus, product });
   } catch (error) {
     next(error);
-  } 
+  }
 });
 
 module.exports = router;

@@ -1,0 +1,11 @@
+.products-slider {
+    margin: auto;
+    width: 50%;
+    flex: none;
+}
+@media (max-width: 576px) {
+    .products-slider {
+        width: 100%;
+    }
+}
+
