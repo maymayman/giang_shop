@@ -597,8 +597,7 @@
         item: 1,
         margin: 30,
         dots: true,
-        // dotsEach: true,
-        // dotsData: true,
+        dotsEach: 1,
         responsive: {
             0: {
                 items: 1
@@ -691,5 +690,13 @@
 
         $('.count-style').text(Object.keys(cartProducts).length);
     });
+
+    $('.pro-details-cart').on('click', function() {
+        const productId = $(this).data('product_id');
+        const price = $(this).data('price');
+        const images = $(this).data('images');
+
+        console.log(productId, price, images);
+    });    
 
 })(jQuery);

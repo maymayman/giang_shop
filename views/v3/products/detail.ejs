@@ -21,6 +21,8 @@
     <link rel="stylesheet" href=<%= domain + "css/plugins.css"; %>>
     <!-- Main Style CSS -->
     <link rel="stylesheet" href=<%= domain + "css/style.css"; %>>
+    <!-- Product Style CSS -->
+    <link rel="stylesheet" href=<%= domain + "css/product.css"; %>>
     <!-- Modernizer JS -->
     <script src=<%= domain + "js/vendor/modernizr-2.8.3.min.js"; %>></script>
 </head>
@@ -133,9 +135,15 @@
 <div class="shop-area pt-100 pb-100">
     <div class="container">
         <div class="row">
-            <div class="col-lg-12 col-md-12">
+            <div class="col-lg-12 col-md-12 products-slider">
                 <div class="product-details-slider-active nav-style-1 owl-carousel">
-                    <div class="dec-img-wrap">
+                    <% product.images.forEach(function(image){ %>
+                        <div class="dec-img-wrap">
+                            <a class="img-popup" href=<%= domain + image; %>><img src=<%= domain + image; %> alt=""/></a>
+                            <!-- <span>-29%</span> -->
+                        </div>
+                    <% }); %>
+                    <!-- <div class="dec-img-wrap">
                         <a class="img-popup" href="img/product-details/product-detalis-bl1.jpg"><img src=<%= domain + "img/product-details/product-detalis-l1.jpg"; %> alt=""/></a>
                         <span>-29%</span>
                     </div>
@@ -150,17 +158,17 @@
                     <div class="dec-img-wrap">
                         <a class="img-popup" href="img/product-details/product-detalis-bl3.jpg"><img src=<%= domain + "img/product-details/product-detalis-l3.jpg"; %> alt=""/></a>
                         <span>-29%</span>
-                    </div>
+                    </div> -->
                 </div>
             </div>
             <div class="col-lg-12 col-md-12">
                 <div class="product-details-content pro-details-slider-content mt-50 text-center">
-                    <h2>Products Name Here</h2>
+                    <h2><%= product.name; %></h2>
                     <div class="product-details-price">
-                        <span>$18.00 </span>
-                        <span class="old">$20.00 </span>
+                        <span>$<%= product.price; %></span>
+                        <!-- <span class="old">$20.00 </span> -->
                     </div>
-                    <div class="pro-details-rating-wrap">
+                    <!-- <div class="pro-details-rating-wrap">
                         <div class="pro-details-rating">
                             <i class="fa fa-star-o yellow"></i>
                             <i class="fa fa-star-o yellow"></i>
@@ -169,15 +177,15 @@
                             <i class="fa fa-star-o"></i>
                         </div>
                         <span><a href="#">3 Reviews</a></span>
-                    </div>
-                    <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nam fringilla augue nec est tristique auctor. Donec non est at libero vulputate rutrum. Morbi ornare lectus quis justo gravida semper. Nulla tellus mi, vulputate adipiscing cursus eu, suscipit id nulla.</p>
-                    <div class="pro-details-list">
+                    </div> -->
+                    <p><%= product.shortDescription; %></p>
+                    <!-- <div class="pro-details-list">
                         <ul>
                             <li>- 0.5 mm Dail</li>
                             <li>- Inspired vector icons</li>
                             <li>- Very modern style  </li>
                         </ul>
-                    </div>
+                    </div> -->
                     <div class="pro-details-size-color">
                         <div class="pro-details-color-wrap">
                             <span>Color</span>
@@ -206,17 +214,21 @@
                     </div>
                     <div class="pro-details-quality">
                         <div class="cart-plus-minus">
-                            <input class="cart-plus-minus-box" type="text" name="qtybutton" value="2">
+                            <input class="cart-plus-minus-box" type="text" name="qtybutton" value="1">
                         </div>
-                        <div class="pro-details-cart btn-hover">
+                        <div class="pro-details-cart btn-hover"
+                            data-product_id=<%= product.objectId; %>
+                            data-price=<%= product.price; %>
+                            data-images=<%= product.images; %>
+                        >
                             <a href="#">Add To Cart</a>
                         </div>
                         <div class="pro-details-wishlist">
                             <a href="#"><i class="fa fa-heart-o"></i></a>
                         </div>
-                        <div class="pro-details-compare">
+                        <!-- <div class="pro-details-compare">
                             <a href="#"><i class="pe-7s-shuffle"></i></a>
-                        </div>
+                        </div> -->
                     </div>
                     <div class="pro-details-meta">
                         <span>Categories :</span>
@@ -254,26 +266,26 @@
             <div class="description-review-topbar nav">
                 <a data-toggle="tab" href="#des-details1">Additional information</a>
                 <a class="active" data-toggle="tab" href="#des-details2">Description</a>
-                <a data-toggle="tab" href="#des-details3">Reviews (2)</a>
+                <!-- <a data-toggle="tab" href="#des-details3">Reviews (2)</a> -->
             </div>
             <div class="tab-content description-review-bottom">
                 <div id="des-details2" class="tab-pane active">
                     <div class="product-description-wrapper">
-                        <p>Lorem ipsum dolor sit amet consectetur adipisicing elit, sed do eiusmod tempor incididunt</p>
-                        <p>ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commo consequat. Duis aute irure dolor in reprehend in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt </p>
+                        <p style="width: 100%;"><%= product.description; %></p>
                     </div>
                 </div>
                 <div id="des-details1" class="tab-pane ">
                     <div class="product-anotherinfo-wrapper">
-                        <ul>
+                        <p style="width: 100%;"><%- product.information; %></p>
+                        <!-- <ul>
                             <li><span>Weight</span> 400 g</li>
                             <li><span>Dimensions</span>10 x 10 x 15 cm </li>
                             <li><span>Materials</span> 60% cotton, 40% polyester</li>
                             <li><span>Other Info</span> American heirloom jean shorts pug seitan letterpress</li>
-                        </ul>
+                        </ul> -->
                     </div>
                 </div>
-                <div id="des-details3" class="tab-pane">
+                <!-- <div id="des-details3" class="tab-pane">
                     <div class="row">
                         <div class="col-lg-7">
                             <div class="review-wrapper">
@@ -371,12 +383,12 @@
                             </div>
                         </div>
                     </div>
-                </div>
+                </div> -->
             </div>
         </div>
     </div>
 </div>
-<div class="related-product-area pb-95">
+<!-- <div class="related-product-area pb-95">
     <div class="container">
         <div class="section-title text-center mb-50">
             <h2>Related products</h2>
@@ -552,7 +564,7 @@
             </div>
         </div>
     </div>
-</div>
+</div> -->
 <footer class="footer-area bg-gray pt-100 pb-70">
     <div class="container">
         <div class="row">
@@ -729,7 +741,11 @@
                                 <div class="cart-plus-minus">
                                     <input class="cart-plus-minus-box" type="text" name="qtybutton" value="2">
                                 </div>
-                                <div class="pro-details-cart btn-hover">
+                                <div class="pro-details-cart btn-hover"
+                                    data-product_id=<%= product.objectId; %>
+                                    data-price=<%= product.price; %>
+                                    data-images=<%= product.images; %>
+                                >
                                     <a href="#">Add To Cart</a>
                                 </div>
                                 <div class="pro-details-wishlist">
