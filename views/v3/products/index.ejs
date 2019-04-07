@@ -1,0 +1,323 @@
+<div class="product-area pb-60 section-padding-1">
+  <div class="container-fluid">
+    <div class="section-title-2 text-center mb-60">
+      <h2>New Arrival</h2>
+      <p>Lorem ipsum dolor sit amet conse ctetu.</p>
+    </div>
+    <div class="custom-row">
+      <% products.forEach(function(product){ %>
+        <div class="custom-col-5">
+          <div class="product-wrap-2 mb-25 scroll-zoom">
+            <div class="product-img">
+              <a href="product-details.html">
+                <img class="default-img" src=<%= product.images[0]; %> alt="">
+                <img class="hover-img" src=<%= product.images[1] ? product.images[1] : product.images[0]; %> alt="">
+              </a>
+
+              <!-- <span class="pink">-10%</span> -->
+              <div class="product-action-2">
+                  <a title="Add To Cart" 
+                  data-product_id=<%= product.objectId; %>
+                  data-price=<%= product.price; %>
+                  data-images=<%= product.images; %>
+                  class="shopping-cart"
+                  >
+                    <i class="fa fa-shopping-cart"></i>
+                  </a>
+                  <a title="View"><i class="fa fa-eye"></i></a>
+                  <!-- <a title="Compare" href="#"><i class="fa fa-retweet"></i></a> -->
+              </div>
+            </div>
+
+            <div class="product-content-2">
+              <div class="title-price-wrap-2">
+                <h3><a href="product-details.html"><%= product.name; %></a></h3>
+                <div class="price-2">
+                  <span>$ <%= product.price; %></span>
+                  <!-- <span class="old">$ 60.00</span> -->
+                </div>
+              </div>
+              <!-- <div class="pro-wishlist-2">
+                <a title="Wishlist" href="wishlist.html"><i class="fa fa-heart-o"></i></a>
+              </div> -->
+            </div>
+          </div>
+        </div>
+      <% }); %>
+      <!-- <div class="custom-col-5">
+        <div class="product-wrap-2 mb-25 scroll-zoom">
+          <div class="product-img">
+              <a href="product-details.html">
+                  <img class="default-img" src="img/product/hm3-pro-1.jpg" alt="">
+                  <img class="hover-img" src="img/product/hm3-pro-1.jpg" alt="">
+              </a>
+              <span class="pink">-10%</span>
+              <div class="product-action-2">
+                  <a title="Add To Cart" href="#"><i class="fa fa-shopping-cart"></i></a>
+                  <a title="Quick View" href="#" data-toggle="modal" data-target="#exampleModal"><i class="fa fa-eye"></i></a>
+                  <a title="Compare" href="#"><i class="fa fa-retweet"></i></a>
+              </div>
+          </div>
+          <div class="product-content-2">
+              <div class="title-price-wrap-2">
+                  <h3><a href="product-details.html">T- Shirt And Jeans</a></h3>
+                  <div class="price-2">
+                      <span>$ 60.00</span>
+                      <span class="old">$ 60.00</span>
+                  </div>
+              </div>
+              <div class="pro-wishlist-2">
+                  <a title="Wishlist" href="wishlist.html"><i class="fa fa-heart-o"></i></a>
+              </div>
+          </div>
+        </div>
+      </div>
+      <div class="custom-col-5">
+          <div class="product-wrap-2 mb-25 scroll-zoom">
+              <div class="product-img">
+                  <a href="product-details.html">
+                      <img class="default-img" src="img/product/hm3-pro-2.jpg" alt="">
+                      <img class="hover-img" src="img/product/hm3-pro-2.jpg" alt="">
+                  </a>
+                  <span class="purple">New</span>
+                  <div class="product-action-2">
+                      <a title="Add To Cart" href="#"><i class="fa fa-shopping-cart"></i></a>
+                      <a title="Quick View" href="#" data-toggle="modal" data-target="#exampleModal"><i class="fa fa-eye"></i></a>
+                      <a title="Compare" href="#"><i class="fa fa-retweet"></i></a>
+                  </div>
+              </div>
+              <div class="product-content-2">
+                  <div class="title-price-wrap-2">
+                      <h3><a href="product-details.html">T- Shirt And Jeans</a></h3>
+                      <div class="price-2">
+                          <span>$ 70.00</span>
+                      </div>
+                  </div>
+                  <div class="pro-wishlist-2">
+                      <a title="Wishlist" href="wishlist.html"><i class="fa fa-heart-o"></i></a>
+                  </div>
+              </div>
+          </div>
+      </div>
+      <div class="custom-col-5">
+          <div class="product-wrap-2 mb-25 scroll-zoom">
+              <div class="product-img">
+                  <a href="product-details.html">
+                      <img class="default-img" src="img/product/hm3-pro-3.jpg" alt="">
+                      <img class="hover-img" src="img/product/hm3-pro-3.jpg" alt="">
+                  </a>
+                  <span class="pink">-10%</span>
+                  <div class="product-action-2">
+                      <a title="Add To Cart" href="#"><i class="fa fa-shopping-cart"></i></a>
+                      <a title="Quick View" href="#" data-toggle="modal" data-target="#exampleModal"><i class="fa fa-eye"></i></a>
+                      <a title="Compare" href="#"><i class="fa fa-retweet"></i></a>
+                  </div>
+              </div>
+              <div class="product-content-2">
+                  <div class="title-price-wrap-2">
+                      <h3><a href="product-details.html">T- Shirt And Jeans</a></h3>
+                      <div class="price-2">
+                          <span>$ 40.00</span>
+                          <span class="old">$ 50.00</span>
+                      </div>
+                  </div>
+                  <div class="pro-wishlist-2">
+                      <a title="Wishlist" href="wishlist.html"><i class="fa fa-heart-o"></i></a>
+                  </div>
+              </div>
+          </div>
+      </div>
+      <div class="custom-col-5">
+          <div class="product-wrap-2 mb-25 scroll-zoom">
+              <div class="product-img">
+                  <a href="product-details.html">
+                      <img class="default-img" src="img/product/hm3-pro-4.jpg" alt="">
+                      <img class="hover-img" src="img/product/hm3-pro-4.jpg" alt="">
+                  </a>
+                  <span class="purple">New</span>
+                  <div class="product-action-2">
+                      <a title="Add To Cart" href="#"><i class="fa fa-shopping-cart"></i></a>
+                      <a title="Quick View" href="#" data-toggle="modal" data-target="#exampleModal"><i class="fa fa-eye"></i></a>
+                      <a title="Compare" href="#"><i class="fa fa-retweet"></i></a>
+                  </div>
+              </div>
+              <div class="product-content-2">
+                  <div class="title-price-wrap-2">
+                      <h3><a href="product-details.html">T- Shirt And Jeans</a></h3>
+                      <div class="price-2">
+                          <span>$ 80.00</span>
+                      </div>
+                  </div>
+                  <div class="pro-wishlist-2">
+                      <a title="Wishlist" href="wishlist.html"><i class="fa fa-heart-o"></i></a>
+                  </div>
+              </div>
+          </div>
+      </div>
+      <div class="custom-col-5">
+          <div class="product-wrap-2 mb-25 scroll-zoom">
+              <div class="product-img">
+                  <a href="product-details.html">
+                      <img class="default-img" src="img/product/hm3-pro-5.jpg" alt="">
+                      <img class="hover-img" src="img/product/hm3-pro-5.jpg" alt="">
+                  </a>
+                  <span class="pink">-10%</span>
+                  <div class="product-action-2">
+                      <a title="Add To Cart" href="#"><i class="fa fa-shopping-cart"></i></a>
+                      <a title="Quick View" href="#" data-toggle="modal" data-target="#exampleModal"><i class="fa fa-eye"></i></a>
+                      <a title="Compare" href="#"><i class="fa fa-retweet"></i></a>
+                  </div>
+              </div>
+              <div class="product-content-2">
+                  <div class="title-price-wrap-2">
+                      <h3><a href="product-details.html">T- Shirt And Jeans</a></h3>
+                      <div class="price-2">
+                          <span>$ 30.00</span>
+                          <span class="old">$ 40.00</span>
+                      </div>
+                  </div>
+                  <div class="pro-wishlist-2">
+                      <a title="Wishlist" href="wishlist.html"><i class="fa fa-heart-o"></i></a>
+                  </div>
+              </div>
+          </div>
+      </div>
+      <div class="custom-col-5">
+          <div class="product-wrap-2 mb-25 scroll-zoom">
+              <div class="product-img">
+                  <a href="product-details.html">
+                      <img class="default-img" src="img/product/hm3-pro-6.jpg" alt="">
+                      <img class="hover-img" src="img/product/hm3-pro-6.jpg" alt="">
+                  </a>
+                  <span class="purple">New</span>
+                  <div class="product-action-2">
+                      <a title="Add To Cart" href="#"><i class="fa fa-shopping-cart"></i></a>
+                      <a title="Quick View" href="#" data-toggle="modal" data-target="#exampleModal"><i class="fa fa-eye"></i></a>
+                      <a title="Compare" href="#"><i class="fa fa-retweet"></i></a>
+                  </div>
+              </div>
+              <div class="product-content-2">
+                  <div class="title-price-wrap-2">
+                      <h3><a href="product-details.html">T- Shirt And Jeans</a></h3>
+                      <div class="price-2">
+                          <span>$ 90.00</span>
+                      </div>
+                  </div>
+                  <div class="pro-wishlist-2">
+                      <a title="Wishlist" href="wishlist.html"><i class="fa fa-heart-o"></i></a>
+                  </div>
+              </div>
+          </div>
+      </div>
+      <div class="custom-col-5">
+          <div class="product-wrap-2 mb-25 scroll-zoom">
+              <div class="product-img">
+                  <a href="product-details.html">
+                      <img class="default-img" src="img/product/hm3-pro-7.jpg" alt="">
+                      <img class="hover-img" src="img/product/hm3-pro-7.jpg" alt="">
+                  </a>
+                  <span class="pink">-10%</span>
+                  <div class="product-action-2">
+                      <a title="Add To Cart" href="#"><i class="fa fa-shopping-cart"></i></a>
+                      <a title="Quick View" href="#" data-toggle="modal" data-target="#exampleModal"><i class="fa fa-eye"></i></a>
+                      <a title="Compare" href="#"><i class="fa fa-retweet"></i></a>
+                  </div>
+              </div>
+              <div class="product-content-2">
+                  <div class="title-price-wrap-2">
+                      <h3><a href="product-details.html">T- Shirt And Jeans</a></h3>
+                      <div class="price-2">
+                          <span>$ 20.00</span>
+                          <span class="old">$ 30.00</span>
+                      </div>
+                  </div>
+                  <div class="pro-wishlist-2">
+                      <a title="Wishlist" href="wishlist.html"><i class="fa fa-heart-o"></i></a>
+                  </div>
+              </div>
+          </div>
+      </div>
+      <div class="custom-col-5">
+          <div class="product-wrap-2 mb-25 scroll-zoom">
+              <div class="product-img">
+                  <a href="product-details.html">
+                      <img class="default-img" src="img/product/hm3-pro-8.jpg" alt="">
+                      <img class="hover-img" src="img/product/hm3-pro-8.jpg" alt="">
+                  </a>
+                  <span class="purple">New</span>
+                  <div class="product-action-2">
+                      <a title="Add To Cart" href="#"><i class="fa fa-shopping-cart"></i></a>
+                      <a title="Quick View" href="#" data-toggle="modal" data-target="#exampleModal"><i class="fa fa-eye"></i></a>
+                      <a title="Compare" href="#"><i class="fa fa-retweet"></i></a>
+                  </div>
+              </div>
+              <div class="product-content-2">
+                  <div class="title-price-wrap-2">
+                      <h3><a href="product-details.html">T- Shirt And Jeans</a></h3>
+                      <div class="price-2">
+                          <span>$ 50.00</span>
+                      </div>
+                  </div>
+                  <div class="pro-wishlist-2">
+                      <a title="Wishlist" href="wishlist.html"><i class="fa fa-heart-o"></i></a>
+                  </div>
+              </div>
+          </div>
+      </div>
+      <div class="custom-col-5">
+          <div class="product-wrap-2 mb-25 scroll-zoom">
+              <div class="product-img">
+                  <a href="product-details.html">
+                      <img class="default-img" src="img/product/hm3-pro-9.jpg" alt="">
+                      <img class="hover-img" src="img/product/hm3-pro-9.jpg" alt="">
+                  </a>
+                  <span class="purple">New</span>
+                  <div class="product-action-2">
+                      <a title="Add To Cart" href="#"><i class="fa fa-shopping-cart"></i></a>
+                      <a title="Quick View" href="#" data-toggle="modal" data-target="#exampleModal"><i class="fa fa-eye"></i></a>
+                      <a title="Compare" href="#"><i class="fa fa-retweet"></i></a>
+                  </div>
+              </div>
+              <div class="product-content-2">
+                  <div class="title-price-wrap-2">
+                      <h3><a href="product-details.html">T- Shirt And Jeans</a></h3>
+                      <div class="price-2">
+                          <span>$ 50.00</span>
+                      </div>
+                  </div>
+                  <div class="pro-wishlist-2">
+                      <a title="Wishlist" href="wishlist.html"><i class="fa fa-heart-o"></i></a>
+                  </div>
+              </div>
+          </div>
+      </div>
+      <div class="custom-col-5">
+          <div class="product-wrap-2 mb-25 scroll-zoom">
+              <div class="product-img">
+                  <a href="product-details.html">
+                      <img class="default-img" src="img/product/hm3-pro-10.jpg" alt="">
+                      <img class="hover-img" src="img/product/hm3-pro-10.jpg" alt="">
+                  </a>
+                  <span class="purple">New</span>
+                  <div class="product-action-2">
+                      <a title="Add To Cart" href="#"><i class="fa fa-shopping-cart"></i></a>
+                      <a title="Quick View" href="#" data-toggle="modal" data-target="#exampleModal"><i class="fa fa-eye"></i></a>
+                      <a title="Compare" href="#"><i class="fa fa-retweet"></i></a>
+                  </div>
+              </div>
+              <div class="product-content-2">
+                  <div class="title-price-wrap-2">
+                      <h3><a href="product-details.html">T- Shirt And Jeans</a></h3>
+                      <div class="price-2">
+                          <span>$ 50.00</span>
+                      </div>
+                  </div>
+                  <div class="pro-wishlist-2">
+                      <a title="Wishlist" href="wishlist.html"><i class="fa fa-heart-o"></i></a>
+                  </div>
+              </div>
+          </div>
+      </div> -->
+    </div>
+  </div>
+</div>

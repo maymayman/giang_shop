@@ -1,0 +1,35 @@
+<div class="mobile-menu-area">
+  <div class="mobile-menu">
+    <nav id="mobile-menu-active">
+      <ul class="menu-overflow">
+        <% menus.forEach(function(menu){ %>
+          <li><a href="shop.html"><%= menu.name %></a>
+            <ul>
+                <% menu.categories.forEach(function(category){ %>
+                  <li><a href="#"><%= category.name %></a>
+                    <ul>
+                      <% category.items.forEach(function(item){ %>
+                        <li><a href="shop.html"><%= item.name %></a></li>
+                      <% }); %>
+                    </ul>
+                <% }); %>
+            </ul>
+          </li>
+        <% }); %>
+
+        <li><a href="blog.html">Blog</a>
+          <ul>
+            <li><a href="blog.html">blog standard</a></li>
+            <li><a href="blog-no-sidebar.html">blog no sidebar</a></li>
+            <li><a href="blog-right-sidebar.html">blog right sidebar</a></li>
+            <li><a href="blog-details.html">blog details 1</a></li>
+            <li><a href="blog-details-2.html">blog details 2</a></li>
+            <li><a href="blog-details-3.html">blog details 3</a></li>
+          </ul>
+        </li>
+        <li><a href="about.html">About us</a></li>
+        <li><a href="contact.html">Contact</a></li>
+      </ul>
+    </nav>
+  </div>
+</div>
