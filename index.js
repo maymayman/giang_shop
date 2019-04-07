@@ -5,6 +5,7 @@ const path = require('path');
 
 const indexRouter = require('./routes/index');
 const productRouter = require('./routes/product');
+const cartRouter = require('./routes/cart');
 
 global.domain = process.env.DOMAIN || 'http://localhost:1337/'
 
@@ -65,6 +66,7 @@ app.set('view engine', 'ejs');
 
 app.use('/', indexRouter);
 app.use('/product', productRouter);
+app.use('/cart', cartRouter);
 
 // error handler
 app.use(function(err, req, res, next) {

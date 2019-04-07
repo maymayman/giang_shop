@@ -695,8 +695,27 @@
         const productId = $(this).data('product_id');
         const price = $(this).data('price');
         const images = $(this).data('images');
+        const count = parseInt($('.cart-plus-minus-box').val());
+        const product = { objectId: productId, price, images, count };
+        let cartProducts = Cookies.get('cartProducts');
 
-        console.log(productId, price, images);
+        if (!cartProducts) {
+            cartProducts = {};
+            cartProducts[productId] =product;
+        } else {
+            cartProducts = JSON.parse(cartProducts);
+            
+            if (cartProducts[productId]) {
+                cartProducts[productId]['count'] += count;
+            } else {
+                cartProducts[productId] = product;
+            }
+        }
+
+        Cookies.set('cartProducts', cartProducts);
+        Cookies.set('countProducts', Object.keys(cartProducts).length);
+
+        $('.count-style').text(Object.keys(cartProducts).length);
     });    
 
 })(jQuery);
