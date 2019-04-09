@@ -6,9 +6,18 @@ const ProductModel = require('../models/Product');
 
 router.get('/', async function(req, res, next) {
   try {
+    const cookies = req.cookies;
+    const cartProducts = cookies.cartProducts ? JSON.parse(cookies.cartProducts) : undefined;
+    const products = cartProducts ? Object.values(cartProducts) : [];
     const menus = await MenuModel.find(true);
-    // const product = await ProductModel.findByObjectId(req.params.objectId);
-    res.render('cart', { menus });
+    
+    let totalAmount = 0;
+
+    products.forEach(product => {
+      totalAmount = totalAmount + product.price * product.count;
+    });
+
+    res.render('cart', { menus, products, totalAmount });
   } catch (error) {
     next(error);
   }
