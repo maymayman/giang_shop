@@ -37,57 +37,42 @@
                                 </tr>
                             </thead>
                             <tbody>
-                                <tr>
-                                    <td class="product-thumbnail">
-                                        <a href="#"><img src="assets/img/cart/cart-1.png" alt=""></a>
-                                    </td>
-                                    <td class="product-name"><a href="#">Product Name</a></td>
-                                    <td class="product-price-cart"><span class="amount">$260.00</span></td>
-                                    <td class="product-quantity">
-                                        <div class="cart-plus-minus">
-                                            <input class="cart-plus-minus-box" type="text" name="qtybutton" value="2">
-                                        </div>
-                                    </td>
-                                    <td class="product-subtotal">$110.00</td>
-                                    <td class="product-remove">
-                                        <a href="#"><i class="fa fa-pencil"></i></a>
-                                        <a href="#"><i class="fa fa-times"></i></a>
-                                   </td>
-                                </tr>
-                                <tr>
-                                    <td class="product-thumbnail">
-                                        <a href="#"><img src="assets/img/cart/cart-2.png" alt=""></a>
-                                    </td>
-                                    <td class="product-name"><a href="#">Product Name</a></td>
-                                    <td class="product-price-cart"><span class="amount">$150.00</span></td>
-                                    <td class="product-quantity">
-                                        <div class="cart-plus-minus">
-                                            <input class="cart-plus-minus-box" type="text" name="qtybutton" value="2">
-                                        </div>
-                                    </td>
-                                    <td class="product-subtotal">$150.00</td>
-                                    <td class="product-remove">
-                                        <a href="#"><i class="fa fa-pencil"></i></a>
-                                        <a href="#"><i class="fa fa-times"></i></a>
-                                   </td>
-                                </tr>
-                                <tr>
-                                    <td class="product-thumbnail">
-                                        <a href="#"><img src="assets/img/cart/cart-1.png" alt=""></a>
-                                    </td>
-                                    <td class="product-name"><a href="#">Product Name </a></td>
-                                    <td class="product-price-cart"><span class="amount">$170.00</span></td>
-                                    <td class="product-quantity">
-                                        <div class="cart-plus-minus">
-                                            <input class="cart-plus-minus-box" type="text" name="qtybutton" value="2">
-                                        </div>
-                                    </td>
-                                    <td class="product-subtotal">$170.00</td>
-                                    <td class="product-remove">
-                                        <a href="#"><i class="fa fa-pencil"></i></a>
-                                        <a href="#"><i class="fa fa-times"></i></a>
-                                   </td>
-                                </tr>
+                                <% products.forEach(function(product){ %>
+                                    <tr>
+                                        <td class="product-thumbnail">
+                                            <a href=<%= domain + 'product/' + product.objectId; %>></a>
+                                                <img style="width: 82px;" src=<%= domain + product.images; %> alt="">
+                                            </a>
+                                        </td>
+                                        <td class="product-name product-quantity">
+                                            <a href=<%= domain + 'product/' + product.objectId; %>>Product Name</a>
+                                            <!-- <br>
+                                            <span class="amount">$<%= product.price; %></span>
+                                            <br>
+                                            <div class="cart-plus-minus">
+                                                <input class="cart-plus-minus-box" type="text" name="qtybutton" value=<%= product.count; %>>
+                                            </div>
+                                            <br>
+                                            <span>$<%= product.price * product.count; %></span> -->
+                                        </td>
+                                        <td class="product-price-cart">$<span class="amount"><%= product.price; %></span></td>
+                                        <td class="product-quantity">
+                                            <div class="cart-plus-minus">
+                                                <input class="cart-plus-minus-box" 
+                                                    data-subtotal=".product-subtotal-<%= product.objectId; %>"
+                                                    data-amount="<%= product.price; %>"
+                                                    type="text" name="qtybutton" value=<%= product.count; %>>
+                                            </div>
+                                        </td>
+                                        <td class="product-subtotal">$
+                                            <span class="product-subtotal-<%= product.objectId; %>"><%= product.price * product.count; %></span>
+                                        </td>
+                                        <td class="product-remove">
+                                            <a href="#"><i class="fa fa-pencil"></i></a>
+                                            <a href="#"><i class="fa fa-times"></i></a>
+                                        </td>
+                                    </tr>
+                                <% }); %>
                             </tbody>
                         </table>
                     </div>
@@ -95,18 +80,18 @@
                         <div class="col-lg-12">
                             <div class="cart-shiping-update-wrapper">
                                 <div class="cart-shiping-update">
-                                    <a href="#">Continue Shopping</a>
+                                    <a href=<%= domain; %>>Continue Shopping</a>
                                 </div>
                                 <div class="cart-clear">
-                                    <button>Update Shopping Cart</button>
-                                    <a href="#">Clear Shopping Cart</a>
+                                    <!-- <button>Update Shopping Cart</button> -->
+                                    <a href=<%= domain + "cart/clear"; %>>Clear Shopping Cart</a>
                                 </div>
                             </div>
                         </div>
                     </div>
                 </form>
                 <div class="row">
-                    <div class="col-lg-4 col-md-6">
+                    <div class="col-lg-6 col-md-6">
                         <div class="cart-tax">
                             <div class="title-wrap">
                                 <h4 class="cart-bottom-title section-bg-gray">Estimate Shipping And Tax</h4>
@@ -116,40 +101,34 @@
                                 <div class="tax-select-wrapper">
                                     <div class="tax-select">
                                         <label>
-                                            * Country
+                                            * City
                                         </label>
-                                        <select class="email s-email s-wid">
-                                            <option>Bangladesh</option>
-                                            <option>Albania</option>
-                                            <option>Åland Islands</option>
-                                            <option>Afghanistan</option>
-                                            <option>Belgium</option>
+                                        <select class="city s-wid">
+                                            <option value="HCM">Hồ Chí Minh</option>
+                                            <option value="HN">Hà Nội</option>
                                         </select>
                                     </div>
                                     <div class="tax-select">
                                         <label>
-                                            * Region / State
+                                            * District
                                         </label>
-                                        <select class="email s-email s-wid">
-                                            <option>Bangladesh</option>
-                                            <option>Albania</option>
-                                            <option>Åland Islands</option>
-                                            <option>Afghanistan</option>
-                                            <option>Belgium</option>
+                                        <select class="district s-wid">
+                                            
                                         </select>
                                     </div>
                                     <div class="tax-select">
                                         <label>
-                                            * Zip/Postal Code
+                                            * Address
                                         </label>
                                         <input type="text">
                                     </div>
-                                    <button class="cart-btn-2" type="submit">Get A Quote</button>
+                                    <!-- <button class="cart-btn-2" type="submit">Get A Quote</button> -->
                                 </div>
                             </div>
+                            
                         </div>
                     </div>
-                    <div class="col-lg-4 col-md-6">
+                    <!-- <div class="col-lg-4 col-md-6">
                         <div class="discount-code-wrapper">
                             <div class="title-wrap">
                                <h4 class="cart-bottom-title section-bg-gray">Use Coupon Code</h4> 
@@ -162,21 +141,21 @@
                                 </form>
                             </div>
                         </div>
-                    </div>
-                    <div class="col-lg-4 col-md-12">
+                    </div> -->
+                    <div class="col-lg-6 col-md-12">
                         <div class="grand-totall">
                             <div class="title-wrap">
                                 <h4 class="cart-bottom-title section-bg-gary-cart">Cart Total</h4>
                             </div>
-                            <h5>Total products <span>$260.00</span></h5>
+                             <h5>Total products</h5>
                             <div class="total-shipping">
                                 <h5>Total shipping</h5>
                                 <ul>
-                                    <li><input type="checkbox"> Standard <span>$20.00</span></li>
-                                    <li><input type="checkbox"> Express <span>$30.00</span></li>
+                                    <li> Standard <span>$0</span></li>
+                                    <!-- <li><input type="checkbox"> Express <span>$30.00</span></li> -->
                                 </ul>
                             </div>
-                            <h4 class="grand-totall-title">Grand Total  <span>$260.00</span></h4>
+                            <h4 class="grand-totall-title">Grand Total  <span>$<span class="total-amount"><%= totalAmount; %></span></span></h4>
                             <a href="#">Proceed to Checkout</a>
                         </div>
                     </div>
@@ -270,31 +249,23 @@
     </div>
 </footer>
 
-
-
-
-
-
-
-
-
-
-
 <!-- JS
 ============================================ -->
 
 <!-- jQuery JS -->
-<script src="assets/js/vendor/jquery-1.12.4.min.js"></script>
+<script src=<%= domain + "js/vendor/jquery-1.12.4.min.js"; %>></script>
 <!-- Popper JS -->
-<script src="assets/js/popper.min.js"></script>
+<script src=<%= domain + "js/popper.min.js"; %>></script>
 <!-- Bootstrap JS -->
-<script src="assets/js/bootstrap.min.js"></script>
+<script src=<%= domain + "js/bootstrap.min.js"; %>></script>
+<!-- jQuery Cookie JS -->
+<script src=<%= domain + "js/vendor/jquery.cookie.js"; %>></script>
 <!-- Plugins JS -->
-<script src="assets/js/plugins.js"></script>
+<script src=<%= domain + "js/plugins.js"; %>></script>
 <!-- Ajax Mail -->
-<script src="assets/js/ajax-mail.js"></script>
+<script src=<%= domain + "js/ajax-mail.js"; %>></script>
 <!-- Main JS -->
-<script src="assets/js/main.js"></script>
+<script src=<%= domain + "js/main.js"; %>></script>
 
 </body>
 

@@ -2,6 +2,7 @@ const express = require('express');
 const ParseServer = require('parse-server').ParseServer;
 const ParseDashboard = require('parse-dashboard');
 const path = require('path');
+const cookie = require('cookie');
 
 const indexRouter = require('./routes/index');
 const productRouter = require('./routes/product');
@@ -63,6 +64,12 @@ app.use('/dashboard', dashboard);
 // view engine setup
 app.set('views', path.join(__dirname, 'views/v3'));
 app.set('view engine', 'ejs');
+
+app.use(function (req, res, next) {
+  const cookies = cookie.parse(req.headers.cookie || '');
+  req.cookies = cookies;
+  next();
+})
 
 app.use('/', indexRouter);
 app.use('/product', productRouter);
