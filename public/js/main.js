@@ -292,6 +292,13 @@
                 newVal = 1;
             }
         }
+        let cartProducts = Cookies.get('cartProducts');
+        const productId = $input.data("product-id");
+        cartProducts = JSON.parse(cartProducts);
+        cartProducts[productId].count = newVal;
+
+        Cookies.set('cartProducts', cartProducts);
+        Cookies.set('countProducts', Object.keys(cartProducts).length);
 
         const subtotal = $input.data("subtotal");
         const amount = $input.data("amount");
@@ -726,5 +733,35 @@
 
         $('.count-style').text(Object.keys(cartProducts).length);
     });    
+
+    $('.cart-order').on('click', function() {
+        let cartProducts = Cookies.get('cartProducts');
+        cartProducts = cartProducts ? JSON.parse(cartProducts) : null;
+
+        if (!cartProducts) {
+            alert('Your cart doest have product');
+        }
+
+        const url = '/cart/order'
+        return fetch(url, {
+            method: "POST", // *GET, POST, PUT, DELETE, etc.
+            mode: "cors", // no-cors, cors, *same-origin
+            cache: "no-cache", // *default, no-cache, reload, force-cache, only-if-cached
+            credentials: "same-origin", // include, *same-origin, omit
+            headers: {
+                "Content-Type": "application/json"
+                // "Content-Type": "application/x-www-form-urlencoded",
+            },
+            body: { cartProducts }, // body data type must match "Content-Type" header
+        }).then(res => res.json()).then(response => {
+            if (!response.success || response.error) {
+                throw response.error;
+            }
+            console.log(response);
+        }).catch(err => {
+            console.error(err);
+            alert(`error: ${err.code || 141}, ${err.message}`);
+        });
+    });
 
 })(jQuery);

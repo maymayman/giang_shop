@@ -7,6 +7,7 @@ const cookie = require('cookie');
 const indexRouter = require('./routes/index');
 const productRouter = require('./routes/product');
 const cartRouter = require('./routes/cart');
+const userRouter = require('./routes/user');
 
 global.domain = process.env.DOMAIN || 'http://localhost:1337/'
 
@@ -59,6 +60,10 @@ app.use(express.static(path.join(__dirname, 'public')));
 const mountPath = process.env.PARSE_MOUNT || '/api';
 app.use(mountPath, api);
 
+Parse.Error.LOGIN_REQUIRE = 700;
+Parse.Error.INVALID_DATA = 701;
+console.log(Parse.Error, Parse.Error.ErrorCode);
+
 app.use('/dashboard', dashboard);
 
 // view engine setup
@@ -69,11 +74,15 @@ app.use(function (req, res, next) {
   const cookies = cookie.parse(req.headers.cookie || '');
   req.cookies = cookies;
   next();
-})
+});
+
+app.use(express.json());
+app.use(express.urlencoded({ extended: false }));
 
 app.use('/', indexRouter);
 app.use('/product', productRouter);
 app.use('/cart', cartRouter);
+app.use('/user', userRouter);
 
 // error handler
 app.use(function(err, req, res, next) {

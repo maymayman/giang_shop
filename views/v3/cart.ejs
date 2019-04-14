@@ -58,7 +58,8 @@
                                         <td class="product-price-cart">$<span class="amount"><%= product.price; %></span></td>
                                         <td class="product-quantity">
                                             <div class="cart-plus-minus">
-                                                <input class="cart-plus-minus-box" 
+                                                <input class="cart-plus-minus-box"
+                                                    data-product-id="<%= product.objectId; %>"
                                                     data-subtotal=".product-subtotal-<%= product.objectId; %>"
                                                     data-amount="<%= product.price; %>"
                                                     type="text" name="qtybutton" value=<%= product.count; %>>
@@ -156,7 +157,7 @@
                                 </ul>
                             </div>
                             <h4 class="grand-totall-title">Grand Total  <span>$<span class="total-amount"><%= totalAmount; %></span></span></h4>
-                            <a href="#">Proceed to Checkout</a>
+                            <a class="cart-order">Proceed to Checkout</a>
                         </div>
                     </div>
                 </div>
