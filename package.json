@@ -10,7 +10,8 @@
     "parse-dashboard": "^1.2.0",
     "parse-server": "^3.2.3",
     "ejs": "^2.6.1",
-    "cookie": "^0.3.1"
+    "cookie": "^0.3.1",
+    "nodemailer": "^6.1.0"
   },
   "devDependencies": {
     "nodemon": "^1.18.10"

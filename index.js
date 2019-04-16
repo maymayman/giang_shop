@@ -70,9 +70,21 @@ app.use('/dashboard', dashboard);
 app.set('views', path.join(__dirname, 'views/v3'));
 app.set('view engine', 'ejs');
 
-app.use(function (req, res, next) {
+app.use(async function (req, res, next) {
   const cookies = cookie.parse(req.headers.cookie || '');
   req.cookies = cookies;
+
+  const responseUser = cookies['X-Session-Token']
+    ? await Parse.Cloud.httpRequest({
+      url: Parse.serverURL + '/users/me',
+      headers: {
+        'X-Parse-Application-Id': process.env.APP_ID || 'myAppId',
+        'X-Parse-Session-Token': cookies['X-Session-Token']
+      }
+    })
+    : {};
+  
+  req.user = responseUser.data;
   next();
 });
 

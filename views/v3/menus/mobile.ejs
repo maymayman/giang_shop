@@ -3,13 +3,13 @@
     <nav id="mobile-menu-active">
       <ul class="menu-overflow">
         <% menus.forEach(function(menu){ %>
-          <li><a href="shop.html"><%= menu.name %></a>
+          <li><a href=<%= domain + 'product?menu=' + menu.objectId; %>><%= menu.name %></a>
             <ul>
                 <% menu.categories.forEach(function(category){ %>
                   <li><a href="#"><%= category.name %></a>
                     <ul>
                       <% category.items.forEach(function(item){ %>
-                        <li><a href="shop.html"><%= item.name %></a></li>
+                        <li><a href=<%= domain + 'product?menu=' + item.objectId; %>><%= item.name %></a></li>
                       <% }); %>
                     </ul>
                 <% }); %>

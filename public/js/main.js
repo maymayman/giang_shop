@@ -686,8 +686,9 @@
         const productId = $(this).data('product_id');
         const price = $(this).data('price');
         const images = $(this).data('images');
+        const name = $(this).data('name');
         let cartProducts = Cookies.get('cartProducts');
-        const product = { objectId: productId, price, images,count: 1 };
+        const product = { objectId: productId, price, images, count: 1, name };
 
         if (!cartProducts) {
             cartProducts = {};
@@ -711,8 +712,9 @@
         const productId = $(this).data('product_id');
         const price = $(this).data('price');
         const images = $(this).data('images');
+        const name = $(this).data('name');
         const count = parseInt($('.cart-plus-minus-box').val());
-        const product = { objectId: productId, price, images, count };
+        const product = { objectId: productId, price, images, count, name };
         let cartProducts = Cookies.get('cartProducts');
 
         if (!cartProducts) {
@@ -737,30 +739,73 @@
     $('.cart-order').on('click', function() {
         let cartProducts = Cookies.get('cartProducts');
         cartProducts = cartProducts ? JSON.parse(cartProducts) : null;
+        let errMessage = ''
 
         if (!cartProducts) {
-            alert('Your cart doest have product');
+            errMessage = 'Your cart doest have product';
         }
 
-        const url = '/cart/order'
+        const url = '/cart/order';
+        if (!$('input[name=Recipient_name]').val()) {
+            $('input[name=Recipient_name]').css('border-color', '#a94442');
+            errMessage = `Recipient's name is required`;
+        } else {
+            $('input[name=Recipient_name]').css('border-color', '');
+        }
+        if (!$('input[name=Recipient_phone]').val()) {
+            $('input[name=Recipient_phone]').css('border-color', '#a94442');
+            errMessage = `Recipient's phone is required`;
+        } else {
+            $('input[name=Recipient_phone]').css('border-color', '');
+        }
+        if (!$('input[name=address]').val()) {
+            $('input[name=address]').css('border-color', '#a94442');
+            errMessage = `Recipient's address is required`;
+        } else {
+            $('input[name=address]').css('border-color', '');
+        }
+
+        if (errMessage) {
+            return alert(errMessage);
+        }
+        const name = $('input[name=Recipient_name]').val();
+        const phone = $('input[name=Recipient_phone]').val();
+        const address = $('input[name=address]').val();
+        const deliveryInfo = {
+            name, phone, address
+        };
+
+        console.log(deliveryInfo);
+
+        $('body').loadingModal({
+            text: 'Loading...'
+        });
+            
         return fetch(url, {
             method: "POST", // *GET, POST, PUT, DELETE, etc.
             mode: "cors", // no-cors, cors, *same-origin
             cache: "no-cache", // *default, no-cache, reload, force-cache, only-if-cached
             credentials: "same-origin", // include, *same-origin, omit
             headers: {
-                "Content-Type": "application/json"
+                // 'Accept': 'application/json',
+                "Content-Type": "application/json",
                 // "Content-Type": "application/x-www-form-urlencoded",
             },
-            body: { cartProducts }, // body data type must match "Content-Type" header
+            body: JSON.stringify({deliveryInfo}), // body data type must match "Content-Type" header
         }).then(res => res.json()).then(response => {
             if (!response.success || response.error) {
                 throw response.error;
             }
-            console.log(response);
+            
+            Cookies.remove('cartProducts');
+            Cookies.remove('countProducts');
+            
+            window.location.replace('/user/account?active=order');
+            
         }).catch(err => {
             console.error(err);
-            alert(`error: ${err.code || 141}, ${err.message}`);
+            $('body').loadingModal('destroy');
+            return alert(`error: ${err.message}`);
         });
     });
 
