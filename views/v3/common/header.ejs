@@ -65,10 +65,16 @@
                             <a class="account-satting-active" href="#"><i class="pe-7s-user-female"></i></a>
                             <div class="account-dropdown">
                                 <ul>
-                                    <li><a href=<%= domain + "user/login"; %>>Login</a></li>
+                                    <% if (user) { %>
+                                        <li><a href=<%= domain + "user/account"; %>>my account</a></li>
+                                    <% } else { %>
+                                        <li><a href=<%= domain + "user/login"; %>>Login</a></li>
+                                        <li><a href=<%= domain + "user/login"; %>>Register</a></li>
+                                    <% } %>
+                                    <!-- <li><a href=<%= domain + "user/login"; %>>Login</a></li>
                                     <li><a href="login-register.html">Register</a></li>
                                     <li><a href="wishlist.html">Wishlist  </a></li>
-                                    <li><a href="my-account.html">my account</a></li>
+                                    <li><a href="my-account.html">my account</a></li> -->
                                 </ul>
                             </div>
                         </div>

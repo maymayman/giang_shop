@@ -6,6 +6,7 @@ const OrderModel = require('../models/Order');
 
 router.get('/', async function(req, res, next) {
   try {
+    const user = req.user;
     const cookies = req.cookies;
     const cartProducts = cookies.cartProducts ? JSON.parse(cookies.cartProducts) : undefined;
     const products = cartProducts ? Object.values(cartProducts) : [];
@@ -17,7 +18,7 @@ router.get('/', async function(req, res, next) {
       totalAmount = totalAmount + product.price * product.count;
     });
 
-    res.render('cart', { menus, products, totalAmount });
+    res.render('cart', { menus, products, totalAmount, user });
   } catch (error) {
     next(error);
   }
@@ -28,7 +29,10 @@ router.post('/order', async function(req, res, next) {
     const cookies = req.cookies;
     const cartProducts = cookies.cartProducts ? JSON.parse(cookies.cartProducts) : undefined;
     const products = cartProducts ? Object.values(cartProducts) : [];
-    const sessionToken = cookies.sessionToken || '';
+    const sessionToken = cookies['X-Session-Token'] || '';
+    const deliveryInfo = req.body.deliveryInfo;
+
+    console.log(req.body);
     
     let totalAmount = 0;
 
@@ -36,7 +40,7 @@ router.post('/order', async function(req, res, next) {
       totalAmount = totalAmount + product.price * product.count;
     });
 
-    const order = await OrderModel.create(cartProducts, totalAmount, sessionToken)
+    const order = await OrderModel.create(cartProducts, totalAmount, sessionToken, deliveryInfo)
 
     res.json({success: true, error: null, data: { order: order } });
   } catch (error) {

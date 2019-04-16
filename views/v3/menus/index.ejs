@@ -1,14 +1,14 @@
 <nav>
   <ul>
       <% menus.forEach(function(menu){ %>
-        <li><a href="shop.html"> <%= menu.name %> <i class="fa fa-angle-down"></i> </a>
+        <li><a href=<%= domain + 'product?menu=' + menu.objectId; %>> <%= menu.name %> <i class="fa fa-angle-down"></i> </a>
           <ul class="mega-menu">
               <% menu.categories.forEach(function(category){ %>
                 <li>
                   <ul>
                       <li class="mega-menu-title"><a href="#"><%= category.name %></a></li>
                       <% category.items.forEach(function(item){ %>
-                        <li><a href="shop.html"><%= item.name %></a></li>
+                        <li><a href=<%= domain + 'product?category=' + item.objectId; %>><%= item.name %></a></li>
                       <% }); %>
                   </ul>
                 </li>

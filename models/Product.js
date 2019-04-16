@@ -11,6 +11,15 @@ module.exports = {
       const Product = Parse.Object.extend('Product');
       const query = new Parse.Query(Product);
       query.equalTo('status', "ACTIVE");
+
+      if (options.menuId) {
+        query.equalTo('menuId', options.menuId);
+      }
+
+      if (options.categoryId) {
+        query.equalTo('categoryIds', options.categoryId);
+      }
+
       query.skip(skip);
       query.limit(limit);
 
@@ -36,4 +45,4 @@ module.exports = {
       throw err;
     }
   }
-}
+};
