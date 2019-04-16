@@ -12,6 +12,10 @@ Parse.Cloud.beforeSave('Order', async (request) => {
     request.object.set('status', 'NEW');
   }
 
+  if (!request.object.get('role')) {
+    request.object.set('role', 'customer');
+  }
+
   const deliveryInfo = request.object.get('deliveryInfo');
   if (!deliveryInfo || !deliveryInfo.name || !deliveryInfo.phone || !deliveryInfo.address) {
     throw new Parse.Error(Parse.Error.INVALID_DATA, 'Invalid data Order deliveryInfo');
