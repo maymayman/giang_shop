@@ -22,6 +22,7 @@ Parse.Cloud.beforeSave(Parse.User, (request) => {
   if (request.object.isNew()) {
     request.object.set('status', 'INACTIVE');
   }
+
   if (!request.object.get('role')) {
     request.object.set('role', 'customer');
   }
