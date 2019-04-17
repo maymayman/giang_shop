@@ -35,8 +35,15 @@
         <nav class="navbar navbar-expand-sm navbar-default">
             <div id="main-menu" class="main-menu collapse navbar-collapse">
                 <ul class="nav navbar-nav">
+                    <li class="menu-title">Categories</li><!-- /.menu-title -->
                     <li>
                         <a href="#"> <i class="menu-icon fa fa-list-alt active"></i>Products </a>
+                    </li>
+                    <li>
+                        <a href="./shop/view"> <i class="menu-icon fa fa-table"></i>Items Post</a>
+                    </li>
+                    <li>
+                        <a href="./shop/create"> <i class="menu-icon fa fa-th"></i>Create Post</a>
                     </li>
                 </ul>
             </div><!-- /.navbar-collapse -->
@@ -157,6 +164,7 @@
                 <div class="card">
                     <div class="card-header">
                         <strong class="card-title">Stripped Table</strong>
+                        <button type="button" class="btn btn-outline-success btn-sm float-right" onclick="location.href = './shop/create'">New</button>
                     </div>
                     <div class="card-body">
                         <table class="table order-table table-striped">
@@ -186,6 +194,12 @@
                                                 &nbsp; Approve
                                             </button>
                                         </a>
+                                        <a>
+                                            <button type="button" class="btn btn-outline-success list-group-item-dark btn-sm" onclick="location.href = './shop/view'">
+                                                <i class="fa fa-eye"></i>
+                                                &nbsp; View
+                                            </button>
+                                        </a>
                                     </td>
                                 </tr>
                                 <tr>
@@ -203,6 +217,12 @@
                                                 &nbsp; Approve
                                             </button>
                                         </a>
+                                        <a>
+                                            <button type="button" class="btn btn-outline-success list-group-item-dark btn-sm" onclick="location.href = './shop/view'">
+                                                <i class="fa fa-eye"></i>
+                                                &nbsp; View
+                                            </button>
+                                        </a>
                                     </td>
                                 </tr>
                                 <tr>
@@ -218,6 +238,12 @@
                                             <button type="button" class="btn btn-outline-success btn-sm">
                                                 <i class="fa fa-magic"></i>
                                                 &nbsp; Approve
+                                            </button>
+                                        </a>
+                                        <a>
+                                            <button type="button" class="btn btn-outline-success list-group-item-dark btn-sm" onclick="location.href = './shop/view'">
+                                                <i class="fa fa-eye"></i>
+                                                &nbsp; View
                                             </button>
                                         </a>
                                     </td>
