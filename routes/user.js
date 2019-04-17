@@ -103,11 +103,6 @@ router.post('/login', async function(req, res, next) {
       return res.redirect(`/user/login?errorMessage=${errorMessage}`);
     }
 
-    if (user.role !== 'customer') {
-      errorMessage = `Permission denied`;
-      return res.redirect(`/user/login?errorMessage=${errorMessage}`);
-    }
-
     res.setHeader('Set-Cookie', cookie.serialize('X-Session-Token', user.sessionToken, {
       httpOnly: true,
       path: '/',
@@ -116,7 +111,7 @@ router.post('/login', async function(req, res, next) {
 
     return res.redirect(`/`);
   } catch (error) {
-    next(error);
+    return res.redirect(`/user/login?errorMessage=${error.message}`);
   }
 });
 
