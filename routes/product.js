@@ -24,7 +24,7 @@ router.get('/', async function(req, res, next) {
     const categoryId = req.query.category || '';
 
     const menus = await MenuModel.find(true);
-    const products = await ProductModel.find({skip, limit, menuId, categoryId});
+    const products = await ProductModel.find({skip, limit, menuId, categoryId, user});
     
 
     res.render('search_products', { menus, products, user });

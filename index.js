@@ -8,6 +8,7 @@ const indexRouter = require('./routes/index');
 const productRouter = require('./routes/product');
 const cartRouter = require('./routes/cart');
 const userRouter = require('./routes/user');
+const adminRouter = require('./routes/admin');
 
 global.domain = process.env.DOMAIN || 'http://localhost:1337/'
 
@@ -33,7 +34,8 @@ const dashboard = new ParseDashboard({
       "pass":"root@admin"
     }
   ],
-  "useEncryptedPasswords": false
+  "useEncryptedPasswords": false,
+  "allowInsecureHTTP": true,
 }, options);
 
 const api = new ParseServer({
@@ -95,6 +97,7 @@ app.use('/', indexRouter);
 app.use('/product', productRouter);
 app.use('/cart', cartRouter);
 app.use('/user', userRouter);
+app.use('/admin', adminRouter);
 
 // error handler
 app.use(function(err, req, res, next) {
