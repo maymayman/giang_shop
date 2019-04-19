@@ -59,5 +59,30 @@ module.exports = {
     } catch (err) {
       throw err;
     }
+  },
+  
+  create: async function(item) {
+    try {
+      const Product = Parse.Object.extend('Product');
+      const product = new Product();
+  
+      product.set('information', (item.information ? item.information : ''));
+      product.set('name', item.name);
+      product.set('price', item.price);
+      product.set('images', item.images);
+      product.set('categoryIds', ["YYbS7WVYGY","VQCeGFtkGX"]);
+      if (item.fontSize) {
+        product.set('size', item.fontSize);
+      }else {
+        product.set('size', item.sizeNumber);
+      }
+      console.log(111111111111)
+      const newProduct = await product.save();
+      console.log(222222222222222)
+  
+      return helper.toJSON(newProduct);
+    } catch (err) {
+      throw err;
+    }
   }
 };
