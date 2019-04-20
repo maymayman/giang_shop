@@ -18,7 +18,7 @@ if (!databaseUri) {
   console.log('DATABASE_URI not specified, falling back to localhost.');
 }
 
-const options = { allowInsecureHTTP: false };
+const options = { allowInsecureHTTP: true };
 const dashboard = new ParseDashboard({
   "apps": [
     {
