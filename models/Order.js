@@ -33,5 +33,19 @@ module.exports = {
     } catch (err) {
       throw err;
     }
+  },
+  getOrderByAdminOrShop: async function(options) {
+    try {      
+      const Order = Parse.Object.extend('Order');
+      const query = new Parse.Query(Order);
+      query.limit(options.limit);
+      query.skip(options.skip);
+
+      const orders = await query.find();
+
+      return helper.toJSON(orders);
+    } catch (err) {
+      throw err;
+    }
   }
 };
