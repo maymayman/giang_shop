@@ -26,11 +26,6 @@
                 <div class="card">
                     <div class="card-header">
                         <strong class="card-title">Products</strong>
-                        <% if (typeof user !== 'undefined' && user.role == 'store') { %>
-                            <button type="button" class="btn btn-outline-success btn-sm float-right" 
-                                onclick="location.href = './product/create'">New
-                            </button>
-                          <% } %>
                     </div>
                     <div class="card-body">
                         <table class="table order-table table-striped table-bordered">
@@ -84,7 +79,8 @@
                                             <% } %>
             
                                             <a>
-                                                <button type="button" class="btn btn-outline-success btn-sm" onclick="location.href = './shop/view'">
+                                                <button type="button" class="btn btn-outline-success btn-sm"
+                                                    onclick="location.href = './order/<%= order.objectId; %>'">
                                                     <i class="fa fa-eye"></i>
                                                     &nbsp; Detail
                                                 </button>

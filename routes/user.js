@@ -109,7 +109,11 @@ router.post('/login', async function(req, res, next) {
       maxAge: 60 * 60 * 24 * 7 // 1 week
     }));
 
-    return res.redirect(`/`);
+    if (user.role == 'customer') {
+      return res.redirect(`/`);
+    } else {
+      return res.redirect(`/admin`);
+    }
   } catch (error) {
     return res.redirect(`/user/login?errorMessage=${error.message}`);
   }

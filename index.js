@@ -64,7 +64,6 @@ app.use(mountPath, api);
 
 Parse.Error.LOGIN_REQUIRE = 700;
 Parse.Error.INVALID_DATA = 701;
-console.log(Parse.Error, Parse.Error.ErrorCode);
 
 app.use('/dashboard', dashboard);
 

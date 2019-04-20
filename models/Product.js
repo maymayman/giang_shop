@@ -37,6 +37,7 @@ module.exports = {
 
       query.skip(skip);
       query.limit(limit);
+      query.descending('createdAt');
 
       const results = await query.find();
 
@@ -88,6 +89,22 @@ module.exports = {
       const newProduct = await product.save();
   
       return helper.toJSON(newProduct);
+    }  catch (err) {
+      throw err;
+    }
+  },
+  
+  findByIds: async function(objectIds) {
+    try {
+      const Product = Parse.Object.extend('Product');
+      const query = new Parse.Query(Product);
+      query.equalTo('status', "ACTIVE");
+      query.containedIn('objectId', objectIds);
+      query.include('store');
+
+      const result = await query.find();
+
+      return helper.toJSON(result);
     } catch (err) {
       throw err;
     }
