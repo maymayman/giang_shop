@@ -24,8 +24,14 @@
                     <i class="menu-icon fa fa-table"></i>Orders
                 </a>
                 <ul class="sub-menu children dropdown-menu">
-                    <li><i class="fa fa-table"></i><a href="tables-basic.html">Basic Table</a></li>
-                    <li><i class="fa fa-table"></i><a href="tables-data.html">Data Table</a></li>
+                    <li>
+                        <i class="fa fa-table"></i>
+                        <a href=<%= domain + 'admin/order?status=NEW';%>>Pending</a>
+                    </li>
+                    <li>
+                        <i class="fa fa-table"></i>
+                        <a href=<%= domain + 'admin/order?status=COMPLETED';%>>Complete</a>
+                    </li>
                 </ul>
             </li>
             

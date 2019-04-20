@@ -31,9 +31,10 @@ router.get('/order', async function(req, res, next) {
     const user = req.user;
     const skip = parseInt(req.query.skip) || 0;
     const limit = parseInt(req.query.limit) || 20;
+    const status = req.query.status || '';
     
     const orders = await OrderModel.getOrderByAdminOrShop({
-      user, skip, limit
+      user, skip, limit, status
     });
     res.render('../admin/order/index', {orders, user});
   } catch (error) {
