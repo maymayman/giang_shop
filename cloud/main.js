@@ -34,7 +34,12 @@ Parse.Cloud.beforeSave('Product', async (request) => {
   }
   if (!request.object.get('menuId') || request.object.get('categoryIds')) {
     const category = await request.object.get('category').fetchWithInclude('parent');
+    request.object.set('menu', category.get('parent').get('menu'));
     request.object.set('menuId', category.get('parent').get('menu').id);
     request.object.set('categoryIds', [category.get('parent').id, category.id]);
+  }
+  
+  if(request.object.isNew()) {
+    request.object.set('status', 'PENDING');
   }
 });

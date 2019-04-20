@@ -6,29 +6,29 @@
 <%- include('../common/header', { menus }); %>
 
 <div class="breadcrumb-area pt-35 pb-35 bg-gray-3">
-    <div class="container">
-        <div class="breadcrumb-content text-center">
-            <ul>
-                <li>
-                    <a href=<%= domain; %>>Home</a>
-                </li>
-                <li class="active">Product Detail </li>
-            </ul>
-        </div>
+  <div class="container">
+    <div class="breadcrumb-content text-center">
+      <ul>
+        <li>
+          <a href=<%= domain; %>>Home</a>
+        </li>
+        <li class="active">Product Detail</li>
+      </ul>
     </div>
+  </div>
 </div>
 <div class="shop-area pt-100 pb-100">
-    <div class="container">
-        <div class="row">
-            <div class="col-lg-12 col-md-12 products-slider">
-                <div class="product-details-slider-active nav-style-1 owl-carousel">
-                    <% product.images.forEach(function(image){ %>
-                        <div class="dec-img-wrap">
-                            <a class="img-popup" href=<%= domain + image; %>><img src=<%= domain + image; %> alt=""/></a>
-                            <!-- <span>-29%</span> -->
-                        </div>
-                    <% }); %>
-                    <!-- <div class="dec-img-wrap">
+  <div class="container">
+    <div class="row">
+      <div class="col-lg-12 col-md-12 products-slider">
+        <div class="product-details-slider-active nav-style-1 owl-carousel">
+          <% product.images.forEach(function(image){ %>
+          <div class="dec-img-wrap">
+            <a class="img-popup" href=<%= domain + image; %>><img src=<%= domain + image; %> alt=""/></a>
+            <!-- <span>-29%</span> -->
+          </div>
+          <% }); %>
+          <!-- <div class="dec-img-wrap">
                         <a class="img-popup" href="img/product-details/product-detalis-bl1.jpg"><img src=<%= domain + "img/product-details/product-detalis-l1.jpg"; %> alt=""/></a>
                         <span>-29%</span>
                     </div>
@@ -44,134 +44,146 @@
                         <a class="img-popup" href="img/product-details/product-detalis-bl3.jpg"><img src=<%= domain + "img/product-details/product-detalis-l3.jpg"; %> alt=""/></a>
                         <span>-29%</span>
                     </div> -->
-                </div>
-            </div>
-            <div class="col-lg-12 col-md-12">
-                <div class="product-details-content pro-details-slider-content mt-50 text-center">
-                    <h2><%= product.name; %></h2>
-                    <div class="product-details-price">
-                        <span>$<%= product.price; %></span>
-                        <!-- <span class="old">$20.00 </span> -->
-                    </div>
-                    <!-- <div class="pro-details-rating-wrap">
-                        <div class="pro-details-rating">
-                            <i class="fa fa-star-o yellow"></i>
-                            <i class="fa fa-star-o yellow"></i>
-                            <i class="fa fa-star-o yellow"></i>
-                            <i class="fa fa-star-o"></i>
-                            <i class="fa fa-star-o"></i>
-                        </div>
-                        <span><a href="#">3 Reviews</a></span>
-                    </div> -->
-                    <p><%= product.shortDescription; %></p>
-                    <!-- <div class="pro-details-list">
-                        <ul>
-                            <li>- 0.5 mm Dail</li>
-                            <li>- Inspired vector icons</li>
-                            <li>- Very modern style  </li>
-                        </ul>
-                    </div> -->
-                    <div class="pro-details-size-color">
-                        <div class="pro-details-color-wrap">
-                            <span>Color</span>
-                            <div class="pro-details-color-content">
-                                <ul>
-                                    <li class="blue"></li>
-                                    <li class="maroon active"></li>
-                                    <li class="gray"></li>
-                                    <li class="green"></li>
-                                    <li class="yellow"></li>
-                                </ul>
-                            </div>
-                        </div>
-                        <div class="pro-details-size">
-                            <span>Size</span>
-                            <div class="pro-details-size-content">
-                                <ul>
-                                    <li><a href="#">s</a></li>
-                                    <li><a href="#">m</a></li>
-                                    <li><a href="#">l</a></li>
-                                    <li><a href="#">xl</a></li>
-                                    <li><a href="#">xxl</a></li>
-                                </ul>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="pro-details-quality">
-                        <div class="cart-plus-minus">
-                            <input class="cart-plus-minus-box" type="text" name="qtybutton" value="1">
-                        </div>
-                        <div class="pro-details-cart btn-hover"
-                            data-product_id=<%= product.objectId; %>
-                            data-price=<%= product.price; %>
-                            data-images=<%= product.images; %>
-                            data-name="<%= product.name; %>"
-                        >
-                            <a href="#">Add To Cart</a>
-                        </div>
-                        <div class="pro-details-wishlist">
-                            <a href="#"><i class="fa fa-heart-o"></i></a>
-                        </div>
-                        <!-- <div class="pro-details-compare">
-                            <a href="#"><i class="pe-7s-shuffle"></i></a>
-                        </div> -->
-                    </div>
-                    <div class="pro-details-meta">
-                        <span>Categories :</span>
-                        <ul>
-                            <li><a href="#">Minimal,</a></li>
-                            <li><a href="#">Furniture,</a></li>
-                            <li><a href="#">Fashion</a></li>
-                        </ul>
-                    </div>
-                    <div class="pro-details-meta">
-                        <span>Tag :</span>
-                        <ul>
-                            <li><a href="#">Fashion, </a></li>
-                            <li><a href="#">Furniture,</a></li>
-                            <li><a href="#">Electronic</a></li>
-                        </ul>
-                    </div>
-                    <div class="pro-details-social">
-                        <ul>
-                            <li><a href="#"><i class="fa fa-facebook"></i></a></li>
-                            <li><a href="#"><i class="fa fa-dribbble"></i></a></li>
-                            <li><a href="#"><i class="fa fa-pinterest-p"></i></a></li>
-                            <li><a href="#"><i class="fa fa-twitter"></i></a></li>
-                            <li><a href="#"><i class="fa fa-linkedin"></i></a></li>
-                        </ul>
-                    </div>
-                </div>
-            </div>
         </div>
+      </div>
+      <div class="col-lg-12 col-md-12">
+        <div class="product-details-content pro-details-slider-content mt-50 text-center">
+          <h2><%= product.name; %></h2>
+          <div class="product-details-price">
+            <span>$<%= product.price; %></span>
+            <!-- <span class="old">$20.00 </span> -->
+          </div>
+          <!-- <div class="pro-details-rating-wrap">
+              <div class="pro-details-rating">
+                  <i class="fa fa-star-o yellow"></i>
+                  <i class="fa fa-star-o yellow"></i>
+                  <i class="fa fa-star-o yellow"></i>
+                  <i class="fa fa-star-o"></i>
+                  <i class="fa fa-star-o"></i>
+              </div>
+              <span><a href="#">3 Reviews</a></span>
+          </div> -->
+          <p><%= product.shortDescription; %></p>
+          <!-- <div class="pro-details-list">
+              <ul>
+                  <li>- 0.5 mm Dail</li>
+                  <li>- Inspired vector icons</li>
+                  <li>- Very modern style  </li>
+              </ul>
+          </div> -->
+          <div class="pro-details-size-color">
+            <div class="pro-details-color-wrap">
+              <span>Color</span>
+              <div class="pro-details-color-content">
+                <ul>
+                  <% if(product && product.colors){ %>
+                  <% product.colors.forEach(function(color){ %>
+                  <li class="<%= color %>"></li>
+                  <% }); %>
+                  <% }else{ %>
+                  <li class="blue"></li>
+                  <li class="maroon active"></li>
+                  <li class="gray"></li>
+                  <li class="green"></li>
+                  <li class="yellow"></li>
+                  <% } %>
+                </ul>
+              </div>
+            </div>
+            <div class="pro-details-size">
+              <span>Size</span>
+              <div class="pro-details-size-content">
+                <ul>
+                  <% if(product && product.size){ %>
+                  <% product.size.forEach(function(size){ %>
+                  <li><a href="#"><%= size %></a></li>
+                  <% }); %>
+                  <% }else{ %>
+                  <li><a href="#">s</a></li>
+                  <li><a href="#">m</a></li>
+                  <li><a href="#">l</a></li>
+                  <li><a href="#">xl</a></li>
+                  <li><a href="#">xxl</a></li>
+                  <% } %>
+                </ul>
+              </div>
+            </div>
+          </div>
+          <div class="pro-details-quality">
+            <div class="cart-plus-minus">
+              <input class="cart-plus-minus-box" type="text" name="qtybutton" value="1">
+            </div>
+            <div class="pro-details-cart btn-hover"
+                 data-product_id=<%= product.objectId; %>
+                 data-price=<%= product.price; %>
+                 data-images=<%= product.images; %>
+                 data-name="<%= product.name; %>"
+            >
+              <a href="#">Add To Cart</a>
+            </div>
+            <div class="pro-details-wishlist">
+              <a href="#"><i class="fa fa-heart-o"></i></a>
+            </div>
+            <!-- <div class="pro-details-compare">
+                <a href="#"><i class="pe-7s-shuffle"></i></a>
+            </div> -->
+          </div>
+          <div class="pro-details-meta">
+            <span>Categories :</span>
+            <ul>
+              <li><a href="#">Minimal,</a></li>
+              <li><a href="#">Furniture,</a></li>
+              <li><a href="#">Fashion</a></li>
+            </ul>
+          </div>
+          <div class="pro-details-meta">
+            <span>Tag :</span>
+            <ul>
+              <li><a href="#">Fashion, </a></li>
+              <li><a href="#">Furniture,</a></li>
+              <li><a href="#">Electronic</a></li>
+            </ul>
+          </div>
+          <div class="pro-details-social">
+            <ul>
+              <li><a href="#"><i class="fa fa-facebook"></i></a></li>
+              <li><a href="#"><i class="fa fa-dribbble"></i></a></li>
+              <li><a href="#"><i class="fa fa-pinterest-p"></i></a></li>
+              <li><a href="#"><i class="fa fa-twitter"></i></a></li>
+              <li><a href="#"><i class="fa fa-linkedin"></i></a></li>
+            </ul>
+          </div>
+        </div>
+      </div>
     </div>
+  </div>
 </div>
 <div class="description-review-area pb-90">
-    <div class="container">
-        <div class="description-review-wrapper">
-            <div class="description-review-topbar nav">
-                <a data-toggle="tab" href="#des-details1">Additional information</a>
-                <a class="active" data-toggle="tab" href="#des-details2">Description</a>
-                <!-- <a data-toggle="tab" href="#des-details3">Reviews (2)</a> -->
-            </div>
-            <div class="tab-content description-review-bottom">
-                <div id="des-details2" class="tab-pane active">
-                    <div class="product-description-wrapper">
-                        <p style="width: 100%;"><%= product.description; %></p>
-                    </div>
-                </div>
-                <div id="des-details1" class="tab-pane ">
-                    <div class="product-anotherinfo-wrapper">
-                        <p style="width: 100%;"><%- product.information; %></p>
-                        <!-- <ul>
-                            <li><span>Weight</span> 400 g</li>
-                            <li><span>Dimensions</span>10 x 10 x 15 cm </li>
-                            <li><span>Materials</span> 60% cotton, 40% polyester</li>
-                            <li><span>Other Info</span> American heirloom jean shorts pug seitan letterpress</li>
-                        </ul> -->
-                    </div>
-                </div>
-                <!-- <div id="des-details3" class="tab-pane">
+  <div class="container">
+    <div class="description-review-wrapper">
+      <div class="description-review-topbar nav">
+        <a data-toggle="tab" href="#des-details1">Additional information</a>
+        <a class="active" data-toggle="tab" href="#des-details2">Description</a>
+        <!-- <a data-toggle="tab" href="#des-details3">Reviews (2)</a> -->
+      </div>
+      <div class="tab-content description-review-bottom">
+        <div id="des-details2" class="tab-pane active">
+          <div class="product-description-wrapper">
+            <p style="width: 100%;"><%= product.description; %></p>
+          </div>
+        </div>
+        <div id="des-details1" class="tab-pane ">
+          <div class="product-anotherinfo-wrapper">
+            <p style="width: 100%;"><%- product.information; %></p>
+            <!-- <ul>
+                <li><span>Weight</span> 400 g</li>
+                <li><span>Dimensions</span>10 x 10 x 15 cm </li>
+                <li><span>Materials</span> 60% cotton, 40% polyester</li>
+                <li><span>Other Info</span> American heirloom jean shorts pug seitan letterpress</li>
+            </ul> -->
+          </div>
+        </div>
+        <!-- <div id="des-details3" class="tab-pane">
                     <div class="row">
                         <div class="col-lg-7">
                             <div class="review-wrapper">
@@ -270,9 +282,9 @@
                         </div>
                     </div>
                 </div> -->
-            </div>
-        </div>
+      </div>
     </div>
+  </div>
 </div>
 <!-- <div class="related-product-area pb-95">
     <div class="container">
@@ -452,88 +464,91 @@
     </div>
 </div> -->
 <footer class="footer-area bg-gray pt-100 pb-70">
-    <div class="container">
-        <div class="row">
-            <div class="col-lg-2 col-md-4 col-sm-4">
-                <div class="copyright mb-30">
-                    <div class="footer-logo">
-                        <a href="index.html">
-                            <img alt="" src=<%= domain + "img/logo/logo.png"; %>>
-                        </a>
-                    </div>
-                    <p>© 2019 <a href="#">Flone</a>.<br> All Rights Reserved</p>
-                </div>
-            </div>
-            <div class="col-lg-2 col-md-4 col-sm-4">
-                <div class="footer-widget mb-30 ml-30">
-                    <div class="footer-title">
-                        <h3>ABOUT US</h3>
-                    </div>
-                    <div class="footer-list">
-                        <ul>
-                            <li><a href="about.html">About us</a></li>
-                            <li><a href="#">Store location</a></li>
-                            <li><a href="contact.html">Contact</a></li>
-                            <li><a href="#">Orders tracking</a></li>
-                        </ul>
-                    </div>
-                </div>
-            </div>
-            <div class="col-lg-2 col-md-4 col-sm-4">
-                <div class="footer-widget mb-30 ml-50">
-                    <div class="footer-title">
-                        <h3>USEFUL LINKS</h3>
-                    </div>
-                    <div class="footer-list">
-                        <ul>
-                            <li><a href="#">Returns</a></li>
-                            <li><a href="#">Support Policy</a></li>
-                            <li><a href="#">Size guide</a></li>
-                            <li><a href="#">FAQs</a></li>
-                        </ul>
-                    </div>
-                </div>
-            </div>
-            <div class="col-lg-2 col-md-6 col-sm-6">
-                <div class="footer-widget mb-30 ml-75">
-                    <div class="footer-title">
-                        <h3>FOLLOW US</h3>
-                    </div>
-                    <div class="footer-list">
-                        <ul>
-                            <li><a href="#">Facebook</a></li>
-                            <li><a href="#">Twitter</a></li>
-                            <li><a href="#">Instagram</a></li>
-                            <li><a href="#">Youtube</a></li>
-                        </ul>
-                    </div>
-                </div>
-            </div>
-            <div class="col-lg-4 col-md-6 col-sm-6">
-                <div class="footer-widget mb-30 ml-70">
-                    <div class="footer-title">
-                        <h3>SUBSCRIBE</h3>
-                    </div>
-                    <div class="subscribe-style">
-                        <p>Get E-mail updates about our latest shop and special offers.</p>
-                        <div id="mc_embed_signup" class="subscribe-form">
-                            <form id="mc-embedded-subscribe-form" class="validate" novalidate="" target="_blank" name="mc-embedded-subscribe-form" method="post" action="http://devitems.us11.list-manage.com/subscribe/post?u=6bbb9b6f5827bd842d9640c82&amp;id=05d85f18ef">
-                                <div id="mc_embed_signup_scroll" class="mc-form">
-                                    <input class="email" type="email" required="" placeholder="Enter your email here.." name="EMAIL" value="">
-                                    <div class="mc-news" aria-hidden="true">
-                                        <input type="text" value="" tabindex="-1" name="b_6bbb9b6f5827bd842d9640c82_05d85f18ef">
-                                    </div>
-                                    <div class="clear">
-                                        <input id="mc-embedded-subscribe" class="button" type="submit" name="subscribe" value="Subscribe">
-                                    </div>
-                                </div>
-                            </form>
-                        </div>
-                    </div>
-                </div>
-            </div>
+  <div class="container">
+    <div class="row">
+      <div class="col-lg-2 col-md-4 col-sm-4">
+        <div class="copyright mb-30">
+          <div class="footer-logo">
+            <a href="index.html">
+              <img alt="" src=<%= domain + "img/logo/logo.png"; %>>
+            </a>
+          </div>
+          <p>© 2019 <a href="#">Flone</a>.<br> All Rights Reserved</p>
         </div>
+      </div>
+      <div class="col-lg-2 col-md-4 col-sm-4">
+        <div class="footer-widget mb-30 ml-30">
+          <div class="footer-title">
+            <h3>ABOUT US</h3>
+          </div>
+          <div class="footer-list">
+            <ul>
+              <li><a href="about.html">About us</a></li>
+              <li><a href="#">Store location</a></li>
+              <li><a href="contact.html">Contact</a></li>
+              <li><a href="#">Orders tracking</a></li>
+            </ul>
+          </div>
+        </div>
+      </div>
+      <div class="col-lg-2 col-md-4 col-sm-4">
+        <div class="footer-widget mb-30 ml-50">
+          <div class="footer-title">
+            <h3>USEFUL LINKS</h3>
+          </div>
+          <div class="footer-list">
+            <ul>
+              <li><a href="#">Returns</a></li>
+              <li><a href="#">Support Policy</a></li>
+              <li><a href="#">Size guide</a></li>
+              <li><a href="#">FAQs</a></li>
+            </ul>
+          </div>
+        </div>
+      </div>
+      <div class="col-lg-2 col-md-6 col-sm-6">
+        <div class="footer-widget mb-30 ml-75">
+          <div class="footer-title">
+            <h3>FOLLOW US</h3>
+          </div>
+          <div class="footer-list">
+            <ul>
+              <li><a href="#">Facebook</a></li>
+              <li><a href="#">Twitter</a></li>
+              <li><a href="#">Instagram</a></li>
+              <li><a href="#">Youtube</a></li>
+            </ul>
+          </div>
+        </div>
+      </div>
+      <div class="col-lg-4 col-md-6 col-sm-6">
+        <div class="footer-widget mb-30 ml-70">
+          <div class="footer-title">
+            <h3>SUBSCRIBE</h3>
+          </div>
+          <div class="subscribe-style">
+            <p>Get E-mail updates about our latest shop and special offers.</p>
+            <div id="mc_embed_signup" class="subscribe-form">
+              <form id="mc-embedded-subscribe-form" class="validate" novalidate="" target="_blank"
+                    name="mc-embedded-subscribe-form" method="post"
+                    action="http://devitems.us11.list-manage.com/subscribe/post?u=6bbb9b6f5827bd842d9640c82&amp;id=05d85f18ef">
+                <div id="mc_embed_signup_scroll" class="mc-form">
+                  <input class="email" type="email" required="" placeholder="Enter your email here.." name="EMAIL"
+                         value="">
+                  <div class="mc-news" aria-hidden="true">
+                    <input type="text" value="" tabindex="-1" name="b_6bbb9b6f5827bd842d9640c82_05d85f18ef">
+                  </div>
+                  <div class="clear">
+                    <input id="mc-embedded-subscribe" class="button" type="submit" name="subscribe" value="Subscribe">
+                  </div>
+                </div>
+              </form>
+            </div>
+          </div>
+        </div>
+      </div>
     </div>
+  </div>
 </footer>
 
 <!-- JS
