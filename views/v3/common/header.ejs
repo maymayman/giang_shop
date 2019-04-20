@@ -66,7 +66,11 @@
                             <div class="account-dropdown">
                                 <ul>
                                     <% if (user) { %>
-                                        <li><a href=<%= domain + "user/account"; %>>my account</a></li>
+                                        <li><a href=<%= domain + ((user.role == 'customer') 
+                                            ? "user/account"
+                                            : "admin"); %>><%=(user.role == 'customer') 
+                                            ? "Profile"
+                                            : "dashboard"; %></a></li>
                                     <% } else { %>
                                         <li><a href=<%= domain + "user/login"; %>>Login</a></li>
                                         <li><a href=<%= domain + "user/login"; %>>Register</a></li>

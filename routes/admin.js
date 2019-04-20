@@ -156,13 +156,30 @@ router.post('/product/create', uploadFile, async function (req, res, next) {
     next(error);
   }
 });
+router.get('/order/:objectId', async function(req, res, next) {
+  try {
+    const user = req.user;
+    const objectId = req.params.objectId;
+    
+    const order = await OrderModel.findById(objectId);
+    
+    if (!order) {
+      return next('Order Not Found');
+    }
 
-// router.get('/view', async function(req, res, next) {
-//     try {
-//       res.render('../shop/list-item', {});
-//     } catch (error) {
-//       next(error);
-//     }
-//   });
+    const productIds = Object.keys(order.items);
+    const products = await ProductModel.findByIds(productIds);
+
+    if (products.length) {
+      products.forEach(product => {
+        product.count = order.items[product.objectId].count
+      });
+    }
+
+    res.render('../admin/order/detail', {order, user, products});
+  } catch (error) {
+    next(error);
+  }
+});
 
 module.exports = router;

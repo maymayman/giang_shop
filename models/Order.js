@@ -48,5 +48,19 @@ module.exports = {
     } catch (err) {
       throw err;
     }
+  },
+
+  findById: async function(objectId) {
+    try {      
+      const Order = Parse.Object.extend('Order');
+      const query = new Parse.Query(Order);
+      query.equalTo('objectId', objectId);    
+
+      const order = await query.first();
+
+      return helper.toJSON(order);
+    } catch (err) {
+      throw err;
+    }
   }
 };

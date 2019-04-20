@@ -11,7 +11,7 @@ module.exports = {
       return results;
     }
     
-    return ParseObject.toJSON();
+    return ParseObject ? ParseObject.toJSON() : undefined;
   },
 
   pagination: function(options) {
