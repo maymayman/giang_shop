@@ -40,6 +40,7 @@ module.exports = {
       const query = new Parse.Query(Order);
       query.limit(options.limit);
       query.skip(options.skip);
+      query.equalTo('status', options.status);
 
       const orders = await query.find();
 
