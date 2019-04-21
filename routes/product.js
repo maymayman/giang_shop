@@ -9,6 +9,7 @@ router.get('/:objectId', async function(req, res, next) {
     const user = req.user;
     const menus = await MenuModel.find(true);
     const product = await ProductModel.findByObjectId(req.params.objectId);
+  
     res.render('products/detail', { menus, product, user });
   } catch (error) {
     next(error);

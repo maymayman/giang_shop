@@ -4196,7 +4196,7 @@ a.default-btn {
     .product-details-content .pro-details-size-color .pro-details-color-wrap span {
       display: block;
       font-weight: 500;
-      margin: 0 0 15px;
+      margin: 0 0 10px;
       font-size: 15px; }
     .product-details-content .pro-details-size-color .pro-details-color-wrap .pro-details-color-content ul li {
       border-radius: 50px;
@@ -4290,6 +4290,50 @@ a.default-btn {
       right: 0;
       top: 0; }
     .product-details-content .pro-details-quality .cart-plus-minus input.cart-plus-minus-box {
+      background: transparent none repeat scroll 0 0;
+      border: medium none;
+      color: #8f8f8f;
+      float: left;
+      font-size: 14px;
+      height: 60px;
+      margin: 0;
+      padding: 0;
+      text-align: center;
+      width: 80px; }
+
+  .product-details-content .pro-details-quality .cart-plus-minus-detail {
+    border: 1px solid #e8e8e8;
+    display: inline-block;
+    height: 60px;
+    overflow: hidden;
+    padding: 0;
+    position: relative;
+    width: 80px; }
+    .product-details-content .pro-details-quality .cart-plus-minus-detail .qtybutton-detail {
+      color: #8f8f8f;
+      cursor: pointer;
+      float: inherit;
+      font-size: 14px;
+      font-weight: 500;
+      line-height: 20px;
+      margin: 0;
+      position: absolute;
+      text-align: center;
+      -webkit-transition: all 0.3s ease 0s;
+      -o-transition: all 0.3s ease 0s;
+      transition: all 0.3s ease 0s;
+      width: 24px; }
+    .product-details-content .pro-details-quality .cart-plus-minus-detail .dec.qtybutton-detail {
+      height: 60px;
+      left: 0;
+      padding-top: 20px;
+      top: 0; }
+    .product-details-content .pro-details-quality .cart-plus-minus-detail .inc.qtybutton-detail {
+      height: 60px;
+      padding-top: 20px;
+      right: 0;
+      top: 0; }
+    .product-details-content .pro-details-quality .cart-plus-minus-detail input.cart-plus-minus-box {
       background: transparent none repeat scroll 0 0;
       border: medium none;
       color: #8f8f8f;

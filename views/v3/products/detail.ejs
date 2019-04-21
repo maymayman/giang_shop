@@ -74,50 +74,45 @@
           <div class="pro-details-size-color">
             <div class="pro-details-color-wrap">
               <span>Color</span>
-              <div class="pro-details-color-content">
-                <ul>
-                  <% if(product && product.colors){ %>
-                  <% product.colors.forEach(function(color){ %>
-                  <li class="<%= color %>"></li>
-                  <% }); %>
-                  <% }else{ %>
-                  <li class="blue"></li>
-                  <li class="maroon active"></li>
-                  <li class="gray"></li>
-                  <li class="green"></li>
-                  <li class="yellow"></li>
-                  <% } %>
-                </ul>
+              <div class="billing-info-wrap">
+                  <div class="billing-select">
+                    <% if(product && product.colors){ %>
+                    <select id="color">
+                      <% product.colors.forEach(function(color){ %>
+                      <option value="<%=color%>" class="<%=color%>"><%=color%></option>
+                      <% }); %>
+                    </select>
+                    <% }%>
+                  </div>
               </div>
             </div>
             <div class="pro-details-size">
               <span>Size</span>
-              <div class="pro-details-size-content">
-                <ul>
+              <div class="billing-info-wrap">
+                <div class="billing-select">
                   <% if(product && product.size){ %>
-                  <% product.size.forEach(function(size){ %>
-                  <li><a href="#"><%= size %></a></li>
-                  <% }); %>
-                  <% }else{ %>
-                  <li><a href="#">s</a></li>
-                  <li><a href="#">m</a></li>
-                  <li><a href="#">l</a></li>
-                  <li><a href="#">xl</a></li>
-                  <li><a href="#">xxl</a></li>
-                  <% } %>
-                </ul>
+                  <select id="size">
+                    <% product.size.forEach(function(size){ %>
+                    <option value="<%=size%>" class="<%=size%>"><%=size%></option>
+
+                    <% }); %>
+                  </select>
+
+                  <% }%>
+                </div>
               </div>
             </div>
           </div>
           <div class="pro-details-quality">
-            <div class="cart-plus-minus">
-              <input class="cart-plus-minus-box" type="text" name="qtybutton" value="1">
+            <div class="cart-plus-minus-detail">
+              <input class="cart-plus-minus-box" type="text" name="qtybutton-detail" value="1">
             </div>
             <div class="pro-details-cart btn-hover"
                  data-product_id=<%= product.objectId; %>
                  data-price=<%= product.price; %>
                  data-images=<%= product.images; %>
                  data-name="<%= product.name; %>"
+                 data-store-id="<%= product.store.objectId; %>"
             >
               <a href="#">Add To Cart</a>
             </div>
@@ -569,6 +564,16 @@
 <!-- Main JS -->
 <script src=<%= domain + "js/main.js"; %>></script>
 
+<script src=<%= domain + "assets/js/lib/chosen/chosen.jquery.min.js" %>></script>
+<script>
+  jQuery(document).ready(function () {
+    jQuery(".standardSelect").chosen({
+      disable_search_threshold: 10,
+      no_results_text: "Oops, nothing found!",
+      width: "100%"
+    });
+  });
+</script>
 </body>
 
 </html>

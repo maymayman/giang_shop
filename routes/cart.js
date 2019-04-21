@@ -6,6 +6,7 @@ const OrderModel = require('../models/Order');
 
 router.get('/', async function(req, res, next) {
   try {
+    
     const user = req.user;
     const cookies = req.cookies;
     const cartProducts = cookies.cartProducts ? JSON.parse(cookies.cartProducts) : undefined;
@@ -31,6 +32,9 @@ router.post('/order', async function(req, res, next) {
     const products = cartProducts ? Object.values(cartProducts) : [];
     const sessionToken = cookies['X-Session-Token'] || '';
     const deliveryInfo = req.body.deliveryInfo;
+    const storeIds = [];
+    
+    
 
     console.log(req.body);
     
@@ -38,9 +42,15 @@ router.post('/order', async function(req, res, next) {
 
     products.forEach(product => {
       totalAmount = totalAmount + product.price * product.count;
+      if (product.storeId && !storeIds.includes(product.storeId)){
+        storeIds.push(product.storeId);
+      }
     });
 
-    const order = await OrderModel.create(cartProducts, totalAmount, sessionToken, deliveryInfo)
+    if (!storeIds || !deliveryInfo){
+      return res.json({success: false, error: 'Invalid data ', data: null});
+    }
+    const order = await OrderModel.create(cartProducts, totalAmount, sessionToken, deliveryInfo, storeIds);
 
     res.json({success: true, error: null, data: { order: order } });
   } catch (error) {
