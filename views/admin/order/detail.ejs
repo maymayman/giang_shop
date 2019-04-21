@@ -1,81 +1,92 @@
 <!doctype html>
-<!--[if lt IE 7]>      <html class="no-js lt-ie9 lt-ie8 lt-ie7" lang=""> <![endif]-->
-<!--[if IE 7]>         <html class="no-js lt-ie9 lt-ie8" lang=""> <![endif]-->
-<!--[if IE 8]>         <html class="no-js lt-ie9" lang=""> <![endif]-->
-<!--[if gt IE 8]><!--> <html class="no-js" lang=""> <!--<![endif]-->
+<!--[if lt IE 7]>
+<html class="no-js lt-ie9 lt-ie8 lt-ie7" lang=""> <![endif]-->
+<!--[if IE 7]>
+<html class="no-js lt-ie9 lt-ie8" lang=""> <![endif]-->
+<!--[if IE 8]>
+<html class="no-js lt-ie9" lang=""> <![endif]-->
+<!--[if gt IE 8]><!-->
+<html class="no-js" lang=""> <!--<![endif]-->
 
 <%- include('../common/head', {}); %>
 
 <body>
-    <!-- Left Panel -->
-    
-    <aside id="left-panel" class="left-panel">
-        <%- include('../common/navbar', {}); %>
-    </aside>
+<!-- Left Panel -->
 
-    <!-- /#left-panel -->
-    <!-- Right Panel -->
-    <div id="right-panel" class="right-panel">
-        <!-- Header-->
-        <%- include('../common/header', {}); %>
-        <!-- /#header -->
-        <!-- Content -->
-        <div class="content">
-            <!-- Animated -->
-            <div class="col-lg-12">
-                <div class="card">
-                    <div class="card-header">
-                        <strong class="card-title">Oder</strong>
-                        <strong class="btn btn-outline-success btn-sm float-right"><%= '$' + order.amount; %></strong>
-                    </div>
-                    <div class="card-body">
-                        <table class="table order-table table-striped table-bordered">
-                            <thead>
-                                <tr>
-                                    <th scope="col" style="width: 10%">ID</th>
-                                    <th scope="col" style="width: 12%">Image</th>
-                                    <th scope="col">Name</th>
-                                    <th scope="col">Price</th>
-                                    <th scope="col">Count</th>
-                                    <th scope="col">shop</th>
-                                    <th scope="col">Total</th>
-                                </tr>
-                            </thead>
-                            <tbody>
-                                <% products.forEach(function(product){ %>
-                                    <tr>
-                                        <td scope="serial"><%= product.objectId %></td>
-                                        <td><img src=<%= domain + product.images[0]; %> alt="" width="100"></td>
-                                        <td><%= product.name %></td>
-                                        <td><%= '$' + product.price %></td>
-                                        <td><%= product.count %></td>
-                                        <td>
-                                            store ID: <%= product.store.objectId  %>
-                                            <br>
-                                            store name: <%= product.store.username  %>
-                                            <br>
-                                            store phone number: <%= product.store.phone  %>
-                                            <br>
-                                            store address: <%= product.store.address; %>
-                                            
-                                        </td>
-                                        <td><%= '$' + product.price * product.count %></td>
-                                    </tr>
-                                <% }); %>
+<aside id="left-panel" class="left-panel">
+  <%- include('../common/navbar', {}); %>
+</aside>
 
-                            </tbody>
-                        </table>
-                    </div>
-                </div>
-            </div>
-            <!-- .animated -->
+<!-- /#left-panel -->
+<!-- Right Panel -->
+<div id="right-panel" class="right-panel">
+  <!-- Header-->
+  <%- include('../common/header', {}); %>
+  <!-- /#header -->
+  <!-- Content -->
+  <div class="content">
+    <!-- Animated -->
+    <div class="col-lg-12">
+      <div class="card">
+        <div class="card-header">
+          <strong class="card-title">Oder</strong>
+          <% if (user && user.role == 'administrator'){ %>
+          <strong class="btn btn-outline-success btn-sm float-right"><%= '$' + order.amount; %></strong>
+          <% } %>
         </div>
-        <!-- /.content -->
-        <div class="clearfix"></div>
-        <!-- Footer -->
-        <%- include('../common/footer', {}); %>
-        <!-- /.site-footer -->
+        <div class="card-body">
+          <table class="table order-table table-striped table-bordered">
+            <thead>
+            <tr>
+              <th scope="col" style="width: 10%">ID</th>
+              <th scope="col" style="width: 12%">Image</th>
+              <th scope="col">Name</th>
+              <th scope="col">Price</th>
+              <th scope="col">Count</th>
+              <th scope="col">Shop</th>
+              <th scope="col">Size</th>
+              <th scope="col">Color</th>
+              <th scope="col">Total</th>
+            </tr>
+            </thead>
+            <tbody>
+            <% products.forEach(function(product){ %>
+            <tr>
+              <td scope="serial"><%= product.objectId %></td>
+              <td><img src=<%= domain + product.images[0]; %> alt="" width="100"></td>
+              <td><%= product.name %></td>
+              <td><%= '$' + product.price %></td>
+              <td><%= product.count %></td>
+              <td>
+                store ID: <%= product.store.objectId %>
+                <br>
+                store name: <%= product.store.username %>
+                <br>
+                store phone number: <%= product.store.phone %>
+                <br>
+                store address: <%= product.store.address; %>
+
+              </td>
+              <td><%= order.items[product.objectId].size %></td>
+              <td><%= order.items[product.objectId].color %></td>
+              <td><%= '$' + product.price * product.count %></td>
+            </tr>
+            <% }); %>
+
+
+            </tbody>
+          </table>
+        </div>
+      </div>
     </div>
-    <!-- /#right-panel -->
+    <!-- .animated -->
+  </div>
+  <!-- /.content -->
+  <div class="clearfix"></div>
+  <!-- Footer -->
+  <%- include('../common/footer', {}); %>
+  <!-- /.site-footer -->
+</div>
+<!-- /#right-panel -->
 </body>
 </html>

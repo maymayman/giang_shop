@@ -65,7 +65,6 @@ module.exports = {
         if (options.user.role === 'store') {
           const pointerToStore = new Parse.User();
           pointerToStore.id = options.user.objectId;
-
           query.equalTo('store', pointerToStore);
         }
       }
@@ -90,7 +89,7 @@ module.exports = {
     }
   },
 
-  findByObjectId: async function(objectId) {
+  findByObjectId: async function(objectId, user) {
     try {
       const Product = Parse.Object.extend('Product');
       const query = new Parse.Query(Product);
@@ -160,14 +159,19 @@ module.exports = {
     }
   },
   
-  findByIds: async function(objectIds) {
+  findByIds: async function(objectIds, user) {
     try {
       const Product = Parse.Object.extend('Product');
       const query = new Parse.Query(Product);
       query.equalTo('status', "ACTIVE");
       query.containedIn('objectId', objectIds);
       query.include('store');
-
+      
+      if (user && user.role == 'store'){
+        const pointerToUser = new Parse.User();
+        pointerToUser.id = user.objectId;
+        query.equalTo('store', pointerToUser);
+      }
       const result = await query.find();
 
       return helper.toJSON(result);

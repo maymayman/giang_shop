@@ -15,8 +15,8 @@ module.exports = {
   },
 
   pagination: function(options) {
-    const page = options.skip ? parseInt(options.skip) : 1;
-    const limit = options.limit ? parseInt(options.limit) : 20
+    const page = options.page ? parseInt(options.page) : 1;
+    const limit = options.limit ? parseInt(options.limit) : 20;
     return {
       skip: (page - 1) * limit,
       limit: limit

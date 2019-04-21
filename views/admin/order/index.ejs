@@ -44,7 +44,12 @@
                                     <tr>
                                         <th scope="serial"><%= order.objectId %></th>
                                         <td>
-                                            <img src=<%= domain + Object.values(order.items)[0].images; %> alt="" width="100">
+                                            <% Object.values(order.items).forEach(function(item){ %>
+                                                <% if(item.storeId == user.objectId){ %>
+
+                                                    <img src=<%= domain + item.images; %> alt="" width="100">
+                                                <%}%>
+                                            <%})%>
                                         </td>
                                         <td><%= order.amount %></td>
                                         <td>
@@ -90,8 +95,60 @@
                             
                                 <% }); %>
 
+
                             </tbody>
                         </table>
+                    </div>
+                    <div class="col-md-6 offset-md-3 mr-auto ml-auto">
+                        <ul class="col-md-12 offset-md-12 mr-auto ml-auto" style="text-align: center">
+                            <% if (prePage > 0) { %>
+                            <li class="btn btn-outline-primary"><a class="prev" href=
+                                        <%= domain + 'admin/'
+                                        + 'order?page=' + prePage
+                                        + '&limit=' + limit
+                                        + '&status=' + status
+                                        + '&keyword=' + keyword
+                                        %>>
+                                    <i class="fa fa-angle-double-left"></i></a>
+                            </li>
+                            <% if (prePage > 1) { %>
+                            <li class="btn btn-outline-primary"><a class="" href="#">...</a></li>
+                            <% } %>
+                            <li class="btn btn-outline-primary"><a href= <%= domain + 'admin/'
+                                + 'order?page=' + prePage
+                                + '&limit=' + limit
+                                + '&status=' + status
+                                + '&keyword=' + keyword
+                                %>><%= prePage; %></a>
+                            </li>
+                            <% } %>
+
+                            <% if (totalPage) { %>
+                            <li class="btn btn-outline-primary" style="color: #fff;background-color: #007bff;border-color: #007bff;">
+                                <a class="active" href="#" style="color: black"><%= page; %></a></li>
+                            <% } %>
+
+                            <% if (nextPage <= totalPage) { %>
+                            <li class="btn btn-outline-primary"><a href=<%= domain + 'admin/'
+                                + 'order?page=' + nextPage
+                                + '&limit=' + limit
+                                + '&status=' + status
+                                + '&keyword=' + keyword
+                                %>><%= nextPage; %></a>
+                            </li>
+                            <% if (nextPage <= (totalPage - 1)) { %>
+                            <li class="btn btn-outline-primary"><a class="" href="#">...</a></li>
+                            <% } %>
+                            <li class="btn btn-outline-primary"><a class="next" href=<%= domain + 'admin/'
+                                + 'order?page=' + nextPage
+                                + '&limit=' + limit
+                                + '&status=' + status
+                                + '&keyword=' + keyword
+                                %>>
+                                    <i class="fa fa-angle-double-right"></i></a>
+                            </li>
+                            <% } %>
+                        </ul>
                     </div>
                 </div>
             </div>
