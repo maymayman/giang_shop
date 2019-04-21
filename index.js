@@ -65,6 +65,9 @@ app.use(mountPath, api);
 Parse.Error.LOGIN_REQUIRE = 700;
 Parse.Error.INVALID_DATA = 701;
 
+// define Parse Cache
+Parse.Cache = {};
+
 app.use('/dashboard', dashboard);
 
 // view engine setup
