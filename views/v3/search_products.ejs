@@ -22,7 +22,7 @@
     <div class="container">
         <div class="row flex-row-reverse">
             <div class="col-lg-12">
-                <div class="shop-top-bar mb-35">
+                <!-- <div class="shop-top-bar mb-35">
                     <div class="select-shoing-wrap">
                         <div class="shop-select">
                             <select>
@@ -37,11 +37,11 @@
                     <div class="filter-active">
                         <a href="#"><i class="fa fa-plus"></i> filter</a>
                     </div>
-                </div>
+                </div> -->
                 <div class="product-filter-wrapper">
                     <div class="row">
                         <!-- Product Filter -->
-                        <div class="col-md-3 col-sm-6 col-xs-12 mb-30">
+                        <!-- <div class="col-md-3 col-sm-6 col-xs-12 mb-30">
                             <div class="product-filter">
                                 <h5>Sort by</h5>
                                 <ul class="sort-by">
@@ -53,9 +53,9 @@
                                     <li><a href="#">Price: High to Low</a></li>
                                 </ul>
                             </div>
-                        </div>
+                        </div> -->
                         <!-- Product Filter -->
-                        <div class="col-md-3 col-sm-6 col-xs-12 mb-30">
+                        <!-- <div class="col-md-3 col-sm-6 col-xs-12 mb-30">
                             <div class="product-filter">
                                 <h5>color filters</h5>
                                 <ul class="color-filter">
@@ -67,9 +67,9 @@
                                     <li><input type="checkbox" value=""> <a href="#">purple</a></li>
                                 </ul>
                             </div>
-                        </div>
+                        </div> -->
                         <!-- Product Filter -->
-                        <div class="col-md-3 col-sm-6 col-xs-12 mb-30">
+                        <!-- <div class="col-md-3 col-sm-6 col-xs-12 mb-30">
                             <div class="product-filter">
                                 <h5>product tags</h5>
                                 <div class="product-tags">
@@ -83,9 +83,9 @@
                                     </ul>
                                 </div>
                             </div>
-                        </div>
+                        </div> -->
                         <!-- Product Filter -->
-                        <div class="col-md-3 col-sm-6 col-xs-12 mb-30">
+                        <!-- <div class="col-md-3 col-sm-6 col-xs-12 mb-30">
                             <div class="product-filter">
                                 <h5>Filter by price</h5>
                                 <div class="price-filter mt-25">
@@ -95,16 +95,56 @@
                                     <div id="slider-range"></div>
                                 </div>
                             </div>
-                        </div>
+                        </div> -->
                     </div>
                 </div>
                 <%- include('products/index', { products }); %>
+
                 <div class="pro-pagination-style text-center mt-30">
                     <ul>
-                        <li><a class="prev" href="#"><i class="fa fa-angle-double-left"></i></a></li>
-                        <li><a class="active" href="#">1</a></li>
-                        <li><a href="#">2</a></li>
-                        <li><a class="next" href="#"><i class="fa fa-angle-double-right"></i></a></li>
+                        <% if (prePage > 0) { %>
+                            <li><a class="prev" href=
+                                <%= domain 
+                                    + 'product?page=' + prePage 
+                                    + '&limit=' + limit 
+                                    + '&keyword=' + keyword 
+                                    + '&menu=' + menuId
+                                    + '&category=' + categoryId;%>>
+                                <i class="fa fa-angle-double-left"></i></a>
+                            </li>
+                            <li><a href= <%= domain 
+                                + 'product?page=' + prePage 
+                                + '&limit=' + limit 
+                                + '&keyword=' + keyword 
+                                + '&menu=' + menuId
+                                + '&category=' + categoryId;%>><%= prePage; %></a>
+                            </li>
+                        <% } %>
+                        
+                        <% if (totalPage) { %>
+                            <li><a class="active" href="#"><%= page; %></a></li>
+                        <% } %>                        
+
+                        <% if (nextPage <= totalPage) { %>
+                            <li><a href=<%= domain
+                                + 'product?page=' + nextPage 
+                                + '&limit=' + limit 
+                                + '&keyword=' + keyword 
+                                + '&menu=' + menuId
+                                + '&category=' + categoryId;%>><%= nextPage; %></a>
+                            </li>
+                            <% if (nextPage <= (totalPage - 1)) { %>
+                                <li><a class="" href="#">...</a></li>
+                            <% } %>
+                            <li><a class="next" href=<%= domain
+                                + 'product?page=' + nextPage 
+                                + '&limit=' + limit 
+                                + '&keyword=' + keyword 
+                                + '&menu=' + menuId
+                                + '&category=' + categoryId;%>><%= nextPage; %>>
+                                <i class="fa fa-angle-double-right"></i></a>
+                            </li>
+                        <% } %>
                     </ul>
                 </div>
             </div>
