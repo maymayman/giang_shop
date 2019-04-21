@@ -56,8 +56,8 @@ const checkUser = function(req, res, next){
   try {
     const user = req.user ? req.user : null;
     if (!user && (user.role != 'admin' || user.role != 'store')){
-      res.json('permission denied');
-      return res.redirect('/user/login');
+      const errorMessage = 'permission denied';
+      return res.redirect(`/user/login?errorMessage=${errorMessage}`);
     }else {
       next();
     }
