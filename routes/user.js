@@ -52,6 +52,15 @@ router.get('/login', async function(req, res, next) {
   }
 });
 
+router.get('/logout', async function(req, res, next) {
+  res.setHeader('Set-Cookie', cookie.serialize('X-Session-Token', '', {
+    httpOnly: true,
+    path: '/'
+  }));
+
+  res.redirect('/');
+});
+
 router.post('/register', async function(req, res, next) {
   try {
     const { username, password, email, store, address, phone } = req.body;
