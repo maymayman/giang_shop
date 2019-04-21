@@ -55,8 +55,8 @@
                         <div class="same-style header-search">
                             <a class="search-active" href="#"><i class="pe-7s-search"></i></a>
                             <div class="search-content">
-                                <form action="#">
-                                    <input type="text" placeholder="Search" />
+                                <form id="search-product" action=<%= domain + 'product/search'%> method="post">
+                                    <input type="text" name="keyword" placeholder="Search" />
                                     <button class="button-search"><i class="pe-7s-search"></i></button>
                                 </form>
                             </div> 
@@ -100,5 +100,11 @@
             </div>
             <%- include('../menus/mobile', { menus }); %>
         </div>
+        <script>
+            function submit() {
+                document.getElementById("search-product").submit();
+            }
+        </script>
+        
     </div>
 </header>

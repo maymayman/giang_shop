@@ -34,6 +34,10 @@ module.exports = {
         query.equalTo('categoryIds', options.categoryId);
       }
 
+      if (options.keyword) {
+        query.matches('name', new RegExp(options.keyword, 'i'));
+      }
+
       query.skip(skip);
       query.limit(limit);
       query.descending('createdAt');
@@ -72,6 +76,10 @@ module.exports = {
 
       if (options.categoryId) {
         query.equalTo('categoryIds', options.categoryId);
+      }
+
+      if (options.keyword) {
+        query.matches('name', new RegExp(options.keyword, 'i'));
       }
 
       const count = await query.count();

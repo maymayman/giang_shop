@@ -49,4 +49,10 @@ router.get('/', async function(req, res, next) {
   }
 });
 
+router.post('/search', async function(req, res, next) {
+  const keyword = req.body.keyword;
+
+  res.redirect(`/product?keyword=${keyword}`);
+});
+
 module.exports = router;
