@@ -10,7 +10,6 @@ const ProductModel = require('../models/Product');
 const OrderModel = require('../models/Order');
 const MenuModel = require('../models/Menu');
 
-
 const uploadFile = function (req, res, next) {
   const form = new formidable.IncomingForm();
   const removeFile = [];

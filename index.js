@@ -67,6 +67,7 @@ Parse.Error.INVALID_DATA = 701;
 
 // define Parse Cache
 Parse.Cache = {};
+Parse.Cache.Session = {};
 
 app.use('/dashboard', dashboard);
 
@@ -74,32 +75,38 @@ app.use('/dashboard', dashboard);
 app.set('views', path.join(__dirname, 'views/v3'));
 app.set('view engine', 'ejs');
 
-app.use(async function (req, res, next) {
+const sessionMiddleware = async function(req, res, next) {
   const cookies = cookie.parse(req.headers.cookie || '');
   req.cookies = cookies;
+  const token = cookies['X-Session-Token'] || '';
 
-  const responseUser = cookies['X-Session-Token']
-    ? await Parse.Cloud.httpRequest({
-      url: Parse.serverURL + '/users/me',
-      headers: {
-        'X-Parse-Application-Id': process.env.APP_ID || 'myAppId',
-        'X-Parse-Session-Token': cookies['X-Session-Token']
-      }
-    })
-    : {};
+  if (token) {
+    if (!Parse.Cache.Session[token]) {
+      const responseUser =  await Parse.Cloud.httpRequest({
+        url: Parse.serverURL + '/users/me',
+        headers: {
+          'X-Parse-Application-Id': process.env.APP_ID || 'myAppId',
+          'X-Parse-Session-Token': token
+        }
+      });
+
+      Parse.Cache.Session[token] = responseUser.data;
+    }
+  }
   
-  req.user = responseUser.data;
+  req.user = Parse.Cache.Session[token];
   next();
-});
+}
 
 app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
 
-app.use('/', indexRouter);
-app.use('/product', productRouter);
-app.use('/cart', cartRouter);
-app.use('/user', userRouter);
-app.use('/admin', adminRouter);
+app.use('/', sessionMiddleware, indexRouter);
+app.use('/product',sessionMiddleware, productRouter);
+app.use('/cart', sessionMiddleware, cartRouter);
+app.use('/cart', sessionMiddleware, cartRouter);
+app.use('/user', sessionMiddleware, userRouter);
+app.use('/admin', sessionMiddleware, adminRouter);
 
 // error handler
 app.use(function(err, req, res, next) {
