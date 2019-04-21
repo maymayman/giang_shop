@@ -1,9 +1,9 @@
 const menuModel = require('../models/Menu');
 
 Parse.Cloud.beforeSave('Order', async (request) => {
-  if (!request.user) {
-      throw new Parse.Error(Parse.Error.LOGIN_REQUIRE, 'Login Require, Please login before complete');
-  }
+  // if (!request.user) {
+  //     throw new Parse.Error(Parse.Error.LOGIN_REQUIRE, 'Login Require, Please login before complete');
+  // }
 
   if (!request.object.get('items') || !request.object.get('amount')) {
     throw new Parse.Error(Parse.Error.INVALID_DATA, 'Invalid data Order');

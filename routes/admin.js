@@ -55,7 +55,7 @@ const uploadFile = function (req, res, next) {
 const checkUser = function(req, res, next){
   try {
     const user = req.user ? req.user : null;
-    if (!user && (user.role != 'admin' || user.role != 'store')){
+    if (!user || (user.role != 'administrator' && user.role != 'store')){
       const errorMessage = 'permission denied';
       return res.redirect(`/user/login?errorMessage=${errorMessage}`);
     }else {
@@ -79,12 +79,24 @@ router.get('/', async function (req, res, next) {
 router.get('/product', async function (req, res, next) {
   try {
     const user = req.user;
-    const skip = parseInt(req.query.skip) || 0;
+    const page = parseInt(req.query.page) || 1;
     const limit = parseInt(req.query.limit) || 20;
     const status = req.query.status || 'ACTIVE';
-    const products = await ProductModel.find({skip, limit, user, status});
+    const keyword = req.query.keyword || '';
     
-    res.render('../admin/product/index', {products, user});
+    const products = await ProductModel.find({page, limit, user, status});
+  
+    const count = await ProductModel.count({user, status});
+    
+    res.render('../admin/product/index', {products,
+      user,
+      page,
+      nextPage: page + 1,
+      prePage: page - 1,
+      keyword,
+      status,
+      limit,
+      totalPage: count ? Math.ceil(count/limit) : 0});
   } catch (error) {
     next(error);
   }
@@ -93,14 +105,26 @@ router.get('/product', async function (req, res, next) {
 router.get('/order', async function(req, res, next) {
   try {
     const user = req.user;
-    const skip = parseInt(req.query.skip) || 0;
+    const page = parseInt(req.query.page) || 1;
     const limit = parseInt(req.query.limit) || 20;
-    const status = req.query.status || '';
+    const status = req.query.status || 'NEW';
+    const keyword = req.query.keyword || '';
     
     const orders = await OrderModel.getOrderByAdminOrShop({
-      user, skip, limit, status
+      user, page, limit, status
     });
-    res.render('../admin/order/index', {orders, user});
+  
+    const count = await OrderModel.count({user, status});
+    res.render('../admin/order/index', {
+      orders,
+      user,
+      page,
+      nextPage: page + 1,
+      prePage: page - 1,
+      keyword,
+      status,
+      limit,
+      totalPage: count ? Math.ceil(count/limit) : 0});
   } catch (error) {
     next(error);
   }
@@ -198,14 +222,14 @@ router.get('/order/:objectId', async function(req, res, next) {
     const user = req.user;
     const objectId = req.params.objectId;
     
-    const order = await OrderModel.findById(objectId);
+    const order = await OrderModel.findById(objectId, user);
     
     if (!order) {
       return next('Order Not Found');
     }
 
     const productIds = Object.keys(order.items);
-    const products = await ProductModel.findByIds(productIds);
+    const products = await ProductModel.findByIds(productIds, user);
 
     if (products.length) {
       products.forEach(product => {

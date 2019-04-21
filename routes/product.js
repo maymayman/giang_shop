@@ -23,13 +23,14 @@ router.get('/', async function(req, res, next) {
     const menuId = req.query.menu || '';
     const categoryId = req.query.category || '';
     const keyword = req.query.keyword || '';
+    const status = req.query.status || 'ACTIVE';
 
     const menus = await MenuModel.find(true);
     const products = await ProductModel.find({
-      page, limit, menuId, categoryId, user, keyword
+      page, limit, menuId, categoryId, user, keyword, status
     });
     const count = await ProductModel.count({
-      menuId, categoryId, user, keyword
+      menuId, categoryId, user, keyword, status
     });
 
     res.render('search_products', {
@@ -42,6 +43,7 @@ router.get('/', async function(req, res, next) {
       keyword,
       categoryId,
       menuId,
+      limit,
       totalPage: count ? Math.ceil(count/limit) : 0
     });
   } catch (error) {

@@ -36,12 +36,17 @@ module.exports = {
     }
   },
   getOrderByAdminOrShop: async function(options) {
-    try {      
+    try {
+      const { skip, limit } = helper.pagination(options);
       const Order = Parse.Object.extend('Order');
       const query = new Parse.Query(Order);
-      query.limit(options.limit);
-      query.skip(options.skip);
+      query.limit(limit);
+      query.skip(skip);
       query.equalTo('status', options.status);
+      
+      if (options.user && options.user.role == 'store'){
+        query.equalTo('storeIds', options.user.objectId);
+      }
 
       const orders = await query.find();
 
@@ -50,12 +55,34 @@ module.exports = {
       throw err;
     }
   },
+  
+  count: async function(options) {
+    try {
+      const Order = Parse.Object.extend('Order');
+      const query = new Parse.Query(Order);
+      query.equalTo('status', options.status);
+      
+      if (options.user && options.user.role == 'store'){
+        query.equalTo('storeIds', options.user.objectId);
+      }
 
-  findById: async function(objectId) {
+      const count = await query.count();
+
+      return count;
+    } catch (err) {
+      throw err;
+    }
+  },
+
+  findById: async function(objectId, user) {
     try {      
       const Order = Parse.Object.extend('Order');
       const query = new Parse.Query(Order);
-      query.equalTo('objectId', objectId);    
+      query.equalTo('objectId', objectId);
+  
+      if (user.role === 'store') {
+        query.equalTo('storeIds', user.objectId);
+      }
 
       const order = await query.first();
 
