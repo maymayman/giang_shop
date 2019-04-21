@@ -12,6 +12,7 @@ Parse.Cloud.beforeSave('Order', async (request) => {
   if (request.object.isNew()) {
     request.object.set('user', request.user);
     request.object.set('status', 'NEW');
+    
   }
 
   const deliveryInfo = request.object.get('deliveryInfo');

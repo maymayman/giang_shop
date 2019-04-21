@@ -294,6 +294,7 @@
         }
         let cartProducts = Cookies.get('cartProducts');
         const productId = $input.data("product-id");
+        console.log('cartProducts-------', cartProducts)
         cartProducts = JSON.parse(cartProducts);
         cartProducts[productId].count = newVal;
 
@@ -307,6 +308,30 @@
 
         const total_amount = parseFloat($(".total-amount").text());
         $(".total-amount").text(total_amount + amount);
+        $input.val(newVal);
+    });
+    
+    
+    /*----------------------------
+    	Cart Plus Minus Button
+    ------------------------------ */
+    var CartPlusMinus = $('.cart-plus-minus-detail');
+    CartPlusMinus.prepend('<div class="dec qtybutton-detail">-</div>');
+    CartPlusMinus.append('<div class="inc qtybutton-detail">+</div>');
+    $(".qtybutton-detail").on("click", function() {
+        const $button = $(this);
+        const $input = $button.parent().find("input");
+        const oldValue = $input .val();
+        if ($button.text() === "+") {
+            var newVal = parseFloat(oldValue) + 1;
+        } else {
+            // Don't allow decrementing below zero
+            if (oldValue > 0) {
+                var newVal = parseFloat(oldValue) - 1;
+            } else {
+                newVal = 1;
+            }
+        }
         $input.val(newVal);
     });
     
@@ -687,12 +712,13 @@
         const price = $(this).data('price');
         const images = $(this).data('images');
         const name = $(this).data('name');
+        const storeId = $(this).data('store-id');
         let cartProducts = Cookies.get('cartProducts');
-        const product = { objectId: productId, price, images, count: 1, name };
+        const product = { objectId: productId, price, images, count: 1, name, storeId };
 
         if (!cartProducts) {
             cartProducts = {};
-            cartProducts[productId] =product;
+            cartProducts[productId] = product;
         } else {
             cartProducts = JSON.parse(cartProducts);
             
@@ -713,8 +739,11 @@
         const price = $(this).data('price');
         const images = $(this).data('images');
         const name = $(this).data('name');
+        const storeId = $(this).data('store-id');
+        const size = $('#size').val();
+        const color = $('#color').val();
         const count = parseInt($('.cart-plus-minus-box').val());
-        const product = { objectId: productId, price, images, count, name };
+        const product = { objectId: productId, price, images, count, name, storeId, size, color };
         let cartProducts = Cookies.get('cartProducts');
 
         if (!cartProducts) {
@@ -725,11 +754,13 @@
             
             if (cartProducts[productId]) {
                 cartProducts[productId]['count'] += count;
+                cartProducts[productId]['size'] = size;
+                cartProducts[productId]['color'] = color;
             } else {
                 cartProducts[productId] = product;
             }
         }
-
+        console.log("cartProducts: ", cartProducts)
         Cookies.set('cartProducts', cartProducts);
         Cookies.set('countProducts', Object.keys(cartProducts).length);
 
