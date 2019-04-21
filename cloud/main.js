@@ -1,3 +1,5 @@
+const menuModel = require('../models/Menu');
+
 Parse.Cloud.beforeSave('Order', async (request) => {
   if (!request.user) {
       throw new Parse.Error(Parse.Error.LOGIN_REQUIRE, 'Login Require, Please login before complete');
@@ -42,4 +44,12 @@ Parse.Cloud.beforeSave('Product', async (request) => {
   if(request.object.isNew()) {
     request.object.set('status', 'PENDING');
   }
+});
+
+Parse.Cloud.afterSave('Menu', async (request) => {
+  menuModel.find(true, true);
+});
+
+Parse.Cloud.afterSave('Category', async (request) => {
+  menuModel.find(true, true);
 });

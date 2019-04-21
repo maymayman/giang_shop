@@ -45,8 +45,12 @@ const Help = {
 };
 
 module.exports = {
-  find: async function(hasCategories) {
+  find: async function(hasCategories, trigger) {
     try {
+      if (Parse.Cache.Menus && !trigger) {
+        return Parse.Cache.Menus;
+      }
+
       const Menu = Parse.Object.extend('Menu');
       const query = new Parse.Query(Menu);
       query.equalTo('status', "ACTIVE");
@@ -60,12 +64,15 @@ module.exports = {
       const promises = [];
 
       menus.forEach(menu => {
-        promises.push(Help.findCategoriesByMenu(menu));
+        promises.push(Help.findCategoriesByMenu(menu)); 
       });
 
-      const results = await Promise.all(promises);
+      const parseMenus = await Promise.all(promises);
+      const results = helper.toJSON(parseMenus);
 
-      return helper.toJSON(results);
+      Parse.Cache.Menus = results;
+
+      return results;
     } catch (err) {
       throw err;
     }
