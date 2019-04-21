@@ -8,8 +8,7 @@ router.get('/:objectId', async function(req, res, next) {
   try {
     const user = req.user;
     const menus = await MenuModel.find(true);
-    const product = await ProductModel.findByObjectId(req.params.objectId);
-  
+    const product = await ProductModel.findByObjectId(req.params.objectId, user);
     res.render('products/detail', { menus, product, user });
   } catch (error) {
     next(error);

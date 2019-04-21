@@ -254,16 +254,8 @@
               <div class="col-lg-12">
                 <div class="card">
                   <div class="card-body card-block">
-                    <div class="row form-group">
-                      <div class="col col-md-12">
-                        <label class=" form-control-label">Infomation</label></div>
-                      <div class="col col-md-12">
 
-                        <textarea id="summernote" name="information" width="100px"></textarea>
 
-                      </div>
-
-                    </div>
                     <div class="row form-group">
                       <div class="col col-md-12">
                         <label for="name" class=" form-control-label">Name</label>
@@ -275,6 +267,20 @@
                       <div class="col col-md-12">
                         <label for="price" class=" form-control-label">Price</label>
                         <input type="number" id="price" name="price" class="form-control">
+                      </div>
+                    </div>
+
+                    <div class="row form-group">
+                      <div class="col col-md-12">
+                        <label for="shortDescription" class=" form-control-label">Short Description</label>
+                        <textarea type="text" id="shortDescription" name="shortDescription" class="form-control"></textarea>
+                      </div>
+                    </div>
+
+                    <div class="row form-group">
+                      <div class="col col-md-12">
+                        <label for="Description" class=" form-control-label">Description</label>
+                        <textarea type="text" id="Description" name="description" class="form-control"></textarea>
                       </div>
                     </div>
 
@@ -328,6 +334,23 @@
                             </label>
                           </div>
                         </div>
+                      </div>
+                    </div>
+
+                    <div class="row form-group">
+                      <div class="col col-md-12">
+                        <label class=" form-control-label">Information</label></div>
+                      <div class="col col-md-12">
+                        <textarea id="summernote" name="information" width="100px"></textarea>
+                      </div>
+                    </div>
+
+
+                    <div class="row form-group">
+                      <div class="col col-md-12">
+                        <label class=" form-control-label">User manual</label></div>
+                      <div class="col col-md-12">
+                        <textarea id="summernote2" name="userManual" width="100px"></textarea>
                       </div>
                     </div>
                   </div>
@@ -393,6 +416,7 @@
                           <% if(listCategory && listCategory.length){ %>
                           <% listCategory.forEach(function(categories){ %>
                           <optgroup label="<%= categories.name %>">
+                            <option style="display: none">&nbsp;</option>
                             <% categories.categories.forEach(function(category){ %>
                             <optgroup label="&nbsp;&nbsp;&nbsp;&nbsp;<%= category.name %>">
                               <% category.items.forEach(function(item){ %>
@@ -518,6 +542,14 @@
 
   $(document).ready(function () {
     $('#summernote').summernote();
+  });
+
+  $(document).ready(function () {
+    $('#summernote1').summernote();
+  });
+
+  $(document).ready(function () {
+    $('#summernote2').summernote();
   });
 
   function submit() {
