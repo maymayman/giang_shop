@@ -157,17 +157,23 @@
   <div class="container">
     <div class="description-review-wrapper">
       <div class="description-review-topbar nav">
-        <a data-toggle="tab" href="#des-details1">Additional information</a>
-        <a class="active" data-toggle="tab" href="#des-details2">Description</a>
+        <a class="active" data-toggle="tab" href="#des-details1">Additional information</a>
+        <a data-toggle="tab" href="#des-details2">Description</a>
+        <a data-toggle="tab" href="#des-details3">Short Description</a>
         <!-- <a data-toggle="tab" href="#des-details3">Reviews (2)</a> -->
       </div>
       <div class="tab-content description-review-bottom">
-        <div id="des-details2" class="tab-pane active">
+        <div id="des-details3" class="tab-pane">
+          <div class="product-description-wrapper">
+            <p style="width: 100%;"><%= product.shortDescription; %></p>
+          </div>
+        </div>
+        <div id="des-details2" class="tab-pane">
           <div class="product-description-wrapper">
             <p style="width: 100%;"><%= product.description; %></p>
           </div>
         </div>
-        <div id="des-details1" class="tab-pane ">
+        <div id="des-details1" class="tab-pane active">
           <div class="product-anotherinfo-wrapper">
             <p style="width: 100%;"><%- product.information; %></p>
             <!-- <ul>

@@ -47,16 +47,36 @@ module.exports = {
     }
   },
 
-  findByObjectId: async function(objectId) {
+  findByObjectId: async function(objectId, user) {
     try {
       const Product = Parse.Object.extend('Product');
       const query = new Parse.Query(Product);
-      query.equalTo('status', "ACTIVE");
+      if (!user || user.role == 'customer') {
+        query.equalTo('status', "ACTIVE");
+  
+      }
       query.equalTo('objectId', objectId);
 
       const result = await query.first();
 
       return helper.toJSON(result);
+    } catch (err) {
+      throw err;
+    }
+  },
+  
+  findByObjectIdToUpdate: async function(objectId, status, sessionToken) {
+    try {
+      const Product = Parse.Object.extend('Product');
+      const query = new Parse.Query(Product);
+      query.equalTo('objectId', objectId);
+
+      const result = await query.first();
+      result.set('status', status);
+      
+      const product = await result.save(null, {sessionToken});
+
+      return helper.toJSON(product);
     } catch (err) {
       throw err;
     }
@@ -81,7 +101,10 @@ module.exports = {
       product.set('images', item.images);
       product.set('category', pointerToCategory);
       product.set('colors', item.colors);
-      if (item.fontSize) {
+      product.set('description', item.description);
+      product.set('userManual', item.userManual);
+      product.set('shortDescription', item.shortDescription);
+      if (item.fontSize && item.fontSize.length > 0) {
         product.set('size', item.fontSize);
       }else {
         product.set('size', item.sizeNumber);

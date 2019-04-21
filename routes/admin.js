@@ -52,6 +52,22 @@ const uploadFile = function (req, res, next) {
     });
 };
 
+const checkUser = function(req, res, next){
+  try {
+    const user = req.user ? req.user : null;
+    if (!user && (user.role != 'admin' || user.role != 'store')){
+      res.json('permission denied');
+      return res.redirect('/user/login');
+    }else {
+      next();
+    }
+  }catch (error) {
+    next(error);
+  }
+};
+
+router.use(checkUser);
+
 router.get('/', async function (req, res, next) {
   try {
     res.render('../admin/index', {});
@@ -93,8 +109,23 @@ router.get('/order', async function(req, res, next) {
 router.get('/product/create', async function (req, res, next) {
   try {
     const listCategory = await MenuModel.find(true);
-    console.log('listCategory: ', listCategory);
     res.render('../admin/create-item', {listCategory});
+  } catch (error) {
+    next(error);
+  }
+});
+
+router.get('/product/:id/approve', async function (req, res, next) {
+  try {
+    const user = req.user;
+    const productId = req.params.id ? req.params.id : null;
+    
+    if (productId && user){
+      const product = await ProductModel.findByObjectIdToUpdate(productId, 'ACTIVE', user.sessionToken);
+      res.redirect('/admin/product?status=ACTIVE');
+    }else {
+      res.json('Some thing was wrong');
+    }
   } catch (error) {
     next(error);
   }
@@ -107,12 +138,17 @@ router.post('/product/create', uploadFile, async function (req, res, next) {
     const name = req.body.name ? req.body.name : null;
     const price = req.body.price ? req.body.price : null;
     const images = req.files ? req.files : null;
-    var colors = req.body.color ? req.body.color : null;
     const category = req.body.category ? req.body.category : null;
+    const description = req.body.description ? req.body.description : null;
+    const shortDescription = req.body.shortDescription ? req.body.shortDescription : null;
+    const userManual = req.body.userManual ? req.body.userManual : null;
+    var colors = req.body.color ? req.body.color : null;
     var fontSize = req.body.fontSize ? req.body.fontSize : null;
     var sizeNumber = req.body.sizeNumber ? req.body.sizeNumber : null;
     const error = [];
-    
+    if(user && user.role != 'store'){
+      return res.json('permission denied');
+    }
     if (!name) {
       error.push('name is require.')
     }
@@ -125,10 +161,10 @@ router.post('/product/create', uploadFile, async function (req, res, next) {
     if (!category) {
       error.push('category is require.')
     }
-    if (!Array.isArray(fontSize)) {
+    if (fontSize && !Array.isArray(fontSize)) {
       fontSize = [fontSize]
     }
-    if (!Array.isArray(sizeNumber)) {
+    if (sizeNumber && !Array.isArray(sizeNumber)) {
       sizeNumber = [sizeNumber]
     }
     if (!Array.isArray(colors)) {
@@ -147,9 +183,11 @@ router.post('/product/create', uploadFile, async function (req, res, next) {
       sizeNumber: sizeNumber,
       colors: colors,
       category: category,
+      description: description,
+      userManual: userManual,
+      shortDescription: shortDescription,
     };
     const productSave = await ProductModel.create(product);
-    // return res.json({success: true, error: null, data: productSave});
     res.redirect('/admin/product?status=PENDING');
   } catch (error) {
     next(error);
