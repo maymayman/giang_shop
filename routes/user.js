@@ -133,7 +133,7 @@ router.post('/login', async function(req, res, next) {
     if (user.role == 'customer') {
       return res.redirect(`/`);
     } else {
-      return res.redirect(`/`);
+      return res.redirect(`/admin`);
     }
   } catch (error) {
     return res.redirect(`/user/login?errorMessage=${error.message}`);
