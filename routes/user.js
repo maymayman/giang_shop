@@ -54,7 +54,7 @@ router.get('/login', async function(req, res, next) {
 
 router.post('/register', async function(req, res, next) {
   try {
-    const { username, password, email } = req.body;
+    const { username, password, email, store, address, phone } = req.body;
     let errorMessage = ``;
 
     if (!username || !password || !email) {
@@ -62,7 +62,19 @@ router.post('/register', async function(req, res, next) {
       return res.redirect(`/user/login?errorMessage=${errorMessage}`);
     }
 
-    const result = await UserModel.signUp({ username, password, email });
+    if (parseInt(store) && (!address || !phone)) {
+      errorMessage = `Missing Addreess`
+      return res.redirect(`/user/login?errorMessage=${errorMessage}`);
+    }
+
+    const data = {
+      username, 
+      password, 
+      email, 
+      address,
+      phone
+    }
+    const result = await UserModel.signUp(data);
     errorMessage = `Welcome ${result.username}, 
     Please verify account by your email before login`;
 
