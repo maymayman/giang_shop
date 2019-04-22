@@ -44,12 +44,16 @@
                                     <tr>
                                         <th scope="serial"><%= order.objectId %></th>
                                         <td>
-                                            <% Object.values(order.items).forEach(function(item){ %>
-                                                <% if(item.storeId == user.objectId){ %>
-
-                                                    <img src=<%= domain + item.images; %> alt="" width="100">
-                                                <%}%>
-                                            <%})%>
+                                            <% const items = Object.values(order.items); %>
+                                            <% if(user.role == 'administrator') { %>
+                                                <img src=<%= domain + items[0].images; %> alt="" width="100">
+                                            <%} else { %>
+                                                <% items.forEach(function(item) { %>
+                                                    <% if(item.storeId == user.objectId){ %>
+                                                        <img src=<%= domain + item.images; %> alt="" width="100">
+                                                    <%}%>
+                                                <%})%>
+                                            <%}%>
                                         </td>
                                         <td><%= order.amount %></td>
                                         <td>
