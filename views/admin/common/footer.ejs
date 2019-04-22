@@ -35,3 +35,94 @@
 <script src="https://cdn.jsdelivr.net/npm/moment@2.22.2/moment.min.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/fullcalendar@3.9.0/dist/fullcalendar.min.js"></script>
 <script src=<%= domain + 'assets/js/init/fullcalendar-init.js'; %>></script>
+
+<script src="http://cdnjs.cloudflare.com/ajax/libs/summernote/0.8.11/summernote.js"></script>
+<script src="http://cdnjs.cloudflare.com/ajax/libs/summernote/0.8.9/summernote.js" defer></script>
+<script src=<%= domain + "assets/js/lib/chosen/chosen.jquery.min.js" %>></script>
+
+<script>
+    jQuery(document).ready(function ($) {
+        $(".standardSelect").chosen({
+            disable_search_threshold: 10,
+            no_results_text: "Oops, nothing found!",
+            width: "100%"
+        });
+
+        var reader = new FileReader();
+        var reader1 = new FileReader();
+        var reader2 = new FileReader();
+        var reader3 = new FileReader();
+        reader.onload = function (e) {
+            $('#blah').attr('src', e.target.result);
+        }
+    
+        reader1.onload = function (e) {
+            $('#blah1').attr('src', e.target.result);
+        }
+        reader2.onload = function (e) {
+            $('#blah2').attr('src', e.target.result);
+        }
+        reader3.onload = function (e) {
+            $('#blah3').attr('src', e.target.result);
+        }
+    
+    
+        function readURL(input) {
+            if (input.files && input.files[0]) {
+                reader.readAsDataURL(input.files[0]);
+            }
+        }
+    
+        function readURL1(input) {
+            if (input.files && input.files[0]) {
+                reader1.readAsDataURL(input.files[0]);
+            }
+        }
+    
+        function readURL2(input) {
+            if (input.files && input.files[0]) {
+                reader2.readAsDataURL(input.files[0]);
+            }
+        }
+    
+        function readURL3(input) {
+            if (input.files && input.files[0]) {
+                reader3.readAsDataURL(input.files[0]);
+            }
+        };
+    
+        $("#image").change(function () {
+            readURL(this);
+        });
+        $("#image1").change(function () {
+            readURL1(this);
+        });
+        $("#image2").change(function () {
+            readURL2(this);
+        });
+        $("#image3").change(function () {
+            readURL3(this);
+        });
+    
+        $(document).ready(function () {
+            $('#summernote').summernote();
+        });
+    
+        $(document).ready(function () {
+            $('#summernote1').summernote();
+        });
+    
+        $(document).ready(function () {
+            $('#summernote2').summernote();
+        });
+        
+    });
+
+    function submit() {
+        document.getElementById("myForm").submit();
+    }
+</script>
+
+<script>
+    
+</script>
