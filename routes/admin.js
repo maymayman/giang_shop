@@ -133,7 +133,7 @@ router.get('/order', async function(req, res, next) {
 router.get('/product/create', async function (req, res, next) {
   try {
     const listCategory = await MenuModel.find(true);
-    res.render('../admin/create-item', {listCategory});
+    res.render('../admin/product/create', {listCategory});
   } catch (error) {
     next(error);
   }
