@@ -71,7 +71,11 @@
                                             : "admin"); %>><%=(user.role == 'customer') 
                                             ? "Profile"
                                             : "dashboard"; %></a></li>
-                                        <li><a href=<%= domain + "user/logout"; %>>Logout</a></li>
+                                  <% if (user.role == 'customer') { %>
+                                  <li><a href=<%= domain + "user/order/history"; %>>History Order</a></li>
+
+                                  <% } %>
+                                  <li><a href=<%= domain + "user/logout"; %>>Logout</a></li>
                                     <% } else { %>
                                         <li><a href=<%= domain + "user/login"; %>>Login</a></li>
                                         <li><a href=<%= domain + "user/login"; %>>Register</a></li>
