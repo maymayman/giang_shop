@@ -19,14 +19,18 @@ module.exports = {
     }
   },
 
-  myOrders: async function(userId) {
+  myOrders: async function(options) {
     try {
+      const { skip, limit } = helper.pagination(options);
       const pointerToUser = new Parse.User();
-      pointerToUser.id = userId;
+      pointerToUser.id = options.user.objectId;
       
       const Order = Parse.Object.extend('Order');
       const query = new Parse.Query(Order);
       query.equalTo('user', pointerToUser);
+      query.limit(limit);
+      query.skip(skip);
+      query.equalTo('status', options.status);
 
       const orders = await query.find();
 

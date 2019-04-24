@@ -9,6 +9,7 @@ const productRouter = require('./routes/product');
 const cartRouter = require('./routes/cart');
 const userRouter = require('./routes/user');
 const adminRouter = require('./routes/admin');
+const orderRouter = require('./routes/order');
 
 global.domain = process.env.DOMAIN || 'http://localhost:1337/'
 
@@ -107,6 +108,7 @@ app.use('/cart', sessionMiddleware, cartRouter);
 app.use('/cart', sessionMiddleware, cartRouter);
 app.use('/user', sessionMiddleware, userRouter);
 app.use('/admin', sessionMiddleware, adminRouter);
+app.use('/order', sessionMiddleware, orderRouter);
 
 // error handler
 app.use(function(err, req, res, next) {
