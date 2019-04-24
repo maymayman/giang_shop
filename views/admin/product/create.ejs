@@ -1,393 +1,403 @@
 <!doctype html>
-<!--[if lt IE 7]>      <html class="no-js lt-ie9 lt-ie8 lt-ie7" lang=""> <![endif]-->
-<!--[if IE 7]>         <html class="no-js lt-ie9 lt-ie8" lang=""> <![endif]-->
-<!--[if IE 8]>         <html class="no-js lt-ie9" lang=""> <![endif]-->
-<!--[if gt IE 8]><!--> <html class="no-js" lang=""> <!--<![endif]-->
+<!--[if lt IE 7]>
+<html class="no-js lt-ie9 lt-ie8 lt-ie7" lang=""> <![endif]-->
+<!--[if IE 7]>
+<html class="no-js lt-ie9 lt-ie8" lang=""> <![endif]-->
+<!--[if IE 8]>
+<html class="no-js lt-ie9" lang=""> <![endif]-->
+<!--[if gt IE 8]><!-->
+<html class="no-js" lang=""> <!--<![endif]-->
 
 <%- include('../common/head', {
-  csslinks: [
-    `http://netdna.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap.css`,
-    `http://cdnjs.cloudflare.com/ajax/libs/summernote/0.8.11/summernote.css`,
-    `${domain}assets/css/lib/chosen/chosen.min.css`
-  ]
+csslinks: [
+`http://netdna.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap.css`,
+`http://cdnjs.cloudflare.com/ajax/libs/summernote/0.8.11/summernote.css`,
+`${domain}assets/css/lib/chosen/chosen.min.css`
+]
 }); %>
 
 <style>
-    .btn-file {
-      position: relative;
-      overflow: hidden;
-    }
+  .btn-file {
+    position: relative;
+    overflow: hidden;
+  }
 
-    .btn-file input[type=file] {
-      position: absolute;
-      top: 0;
-      right: 0;
-      min-width: 100%;
-      min-height: 100%;
-      font-size: 100px;
-      text-align: right;
-      filter: alpha(opacity=0);
-      opacity: 0;
-      outline: none;
-      background: white;
-      cursor: inherit;
-      display: block;
-    }
+  .btn-file input[type=file] {
+    position: absolute;
+    top: 0;
+    right: 0;
+    min-width: 100%;
+    min-height: 100%;
+    font-size: 100px;
+    text-align: right;
+    filter: alpha(opacity=0);
+    opacity: 0;
+    outline: none;
+    background: white;
+    cursor: inherit;
+    display: block;
+  }
 
-    .content-submit {
-      padding: 10px 10px 10px 0;
-      border-top: 1px solid #e1e1e1;
-      text-align: right;
-      background-color: #f0f3f5;
-    }
+  .content-submit {
+    padding: 10px 10px 10px 0;
+    border-top: 1px solid #e1e1e1;
+    text-align: right;
+    background-color: #f0f3f5;
+  }
 
-    .multi-select {
-      border-radius: 1px;
-    }
+  .multi-select {
+    border-radius: 1px;
+  }
 
-    .yellow {
-      color: yellow;
-    }
+  .yellow {
+    color: yellow;
+  }
 
-    .gray {
-      color: gray;
-    }
+  .gray {
+    color: gray;
+  }
 
-    .green {
-      color: green;
-    }
+  .green {
+    color: green;
+  }
 
-    .blue {
-      color: blue;
-    }
+  .blue {
+    color: blue;
+  }
 
-    .maroon {
-      color: maroon;
-    }
+  .maroon {
+    color: maroon;
+  }
 
-    .columns .chosen-container, .column .chosen-container {
-        width: 100% !important;
-        margin-bottom: 1rem;
-    }
-    
-  </style>
+  .columns .chosen-container, .column .chosen-container {
+    width: 100% !important;
+    margin-bottom: 1rem;
+  }
+
+</style>
 
 <body>
-    <!-- Left Panel -->
-    
-    <aside id="left-panel" class="left-panel">
-        <%- include('../common/navbar', {}); %>
-    </aside>
+<!-- Left Panel -->
 
-    <!-- /#left-panel -->
-    <!-- Right Panel -->
-    <div id="right-panel" class="right-panel">
-        <!-- Header-->
-        <%- include('../common/header', {}); %>
-        <!-- /#header -->
-        <!-- Content -->
-        <div class="content">
-            
-            <!-- Animated -->
-            <form id="myForm" action="./create" method="post" enctype="multipart/form-data">
-                <div class="row">
-                    <div class="col-lg-8 col-md-8 col-sm-12" style="padding: 3px">
-                        <div class="animated fadeIn">
-                            <div class="row">
-                              <div class="col-lg-12">
-                                <div class="card">
-                                  <div class="card-body card-block">
-                
-                
-                                    <div class="row form-group">
-                                      <div class="col col-md-12">
-                                        <label for="name" class=" form-control-label">Name</label>
-                                        <input type="text" id="name" name="name" class="form-control">
-                                      </div>
-                                    </div>
-                
-                                    <div class="row form-group">
-                                      <div class="col col-md-12">
-                                        <label for="price" class=" form-control-label">Price</label>
-                                        <input type="number" id="price" name="price" class="form-control">
-                                      </div>
-                                    </div>
-                
-                                    <div class="row form-group">
-                                      <div class="col col-md-12">
-                                        <label for="shortDescription" class=" form-control-label">Short Description</label>
-                                        <textarea type="text" id="shortDescription" name="shortDescription" class="form-control"></textarea>
-                                      </div>
-                                    </div>
-                
-                                    <div class="row form-group">
-                                      <div class="col col-md-12">
-                                        <label for="Description" class=" form-control-label">Description</label>
-                                        <textarea type="text" id="Description" name="description" class="form-control"></textarea>
-                                      </div>
-                                    </div>
-                
-                                    <div class="row form-group">
-                                      <div class="col col-md-12">
-                                        <label for="image1">Image</label>
-                                      </div>
-                                      <div class="col-12 col-md-12">
-                                        <div class="row">
-                                          <div class=" col-3 col-md-3">
-                                            <img id="blah"
-                                                 src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAGQAAABkCAMAAABHPGVmAAAAXVBMVEXa2trc3NxWVlZQUFDi4uJMTExwcHBVVVXJyclsbGyAgIBJSUmYmJh0dHTq6uq2trbQ0NBgYGDU1NRcXFy6urrAwMCjo6OwsLDr6+uVlZVmZmaPj4+fn598fHyKiopxX3gCAAABPUlEQVRoge3W3Y6CMBCGYToztZYqVCu4/uD9X+ZWjG52tSabTPdg8z0HxHDAy0BBmgYAAAAAAAD+KfOWTkMOfr0o8a1ORabARcErRVqmUoN4oRWxyRckvUjYxNeHMutQMyJiqkdkGLemckQGClP1yMUmHqRKxHzt4sR9jYhcdnLfNQab8j71iInOP95U5uTzIPoRObM9zaPk1WvEXH/qT+LzS2Q+/f1jGWhHpGci3myN2VJ7vzfqkdaSI9uKjGwPUiUiy+QysqPky5a3NSLdKg+SI7w5syM33xz9y5XPfx7F8bylQX91NbtbIx//1uJjVH93Nde19Q0vGu0nvul//s+7MKnfk9g/2UftSbpnHyKdYsSmw+ql89HqRcgWOMVPIipivY+7VGokpzSJict3VBp/81UPAAAAAAAAv/IJ3PkWrDb8/5QAAAAASUVORK5CYII="
-                                                 width="100%;" alt="your image"/>
-                
-                                            <label class="btn btn-default btn-file no-padding" style="background-color: cadetblue; width: 100%; margin-top: 10px;">
-                                              <span class="new-button-color">chose imange</span>
-                
-                                              <input class="btn btn-default btn-file" type="file" id="image" name="image">
-                                            </label>
-                                          </div>
-                                          <div class="col-3 col-md-3">
-                                            <img id="blah1"
-                                                 src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAGQAAABkCAMAAABHPGVmAAAAXVBMVEXa2trc3NxWVlZQUFDi4uJMTExwcHBVVVXJyclsbGyAgIBJSUmYmJh0dHTq6uq2trbQ0NBgYGDU1NRcXFy6urrAwMCjo6OwsLDr6+uVlZVmZmaPj4+fn598fHyKiopxX3gCAAABPUlEQVRoge3W3Y6CMBCGYToztZYqVCu4/uD9X+ZWjG52tSabTPdg8z0HxHDAy0BBmgYAAAAAAAD+KfOWTkMOfr0o8a1ORabARcErRVqmUoN4oRWxyRckvUjYxNeHMutQMyJiqkdkGLemckQGClP1yMUmHqRKxHzt4sR9jYhcdnLfNQab8j71iInOP95U5uTzIPoRObM9zaPk1WvEXH/qT+LzS2Q+/f1jGWhHpGci3myN2VJ7vzfqkdaSI9uKjGwPUiUiy+QysqPky5a3NSLdKg+SI7w5syM33xz9y5XPfx7F8bylQX91NbtbIx//1uJjVH93Nde19Q0vGu0nvul//s+7MKnfk9g/2UftSbpnHyKdYsSmw+ql89HqRcgWOMVPIipivY+7VGokpzSJict3VBp/81UPAAAAAAAAv/IJ3PkWrDb8/5QAAAAASUVORK5CYII="
-                                                 width="100%;" alt="your image"/>
-                
-                                            <label class="btn btn-default btn-file no-padding" style="background-color: cadetblue; width: 100%; margin-top: 10px;">
-                                              <span class="new-button-color">chose imange</span>
-                
-                                              <input class="btn btn-default btn-file" type="file" id="image1" name="image1">
-                                            </label>
-                                          </div>
-                                          <div class="col-3 col-md-3">
-                                            <img id="blah2"
-                                                 src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAGQAAABkCAMAAABHPGVmAAAAXVBMVEXa2trc3NxWVlZQUFDi4uJMTExwcHBVVVXJyclsbGyAgIBJSUmYmJh0dHTq6uq2trbQ0NBgYGDU1NRcXFy6urrAwMCjo6OwsLDr6+uVlZVmZmaPj4+fn598fHyKiopxX3gCAAABPUlEQVRoge3W3Y6CMBCGYToztZYqVCu4/uD9X+ZWjG52tSabTPdg8z0HxHDAy0BBmgYAAAAAAAD+KfOWTkMOfr0o8a1ORabARcErRVqmUoN4oRWxyRckvUjYxNeHMutQMyJiqkdkGLemckQGClP1yMUmHqRKxHzt4sR9jYhcdnLfNQab8j71iInOP95U5uTzIPoRObM9zaPk1WvEXH/qT+LzS2Q+/f1jGWhHpGci3myN2VJ7vzfqkdaSI9uKjGwPUiUiy+QysqPky5a3NSLdKg+SI7w5syM33xz9y5XPfx7F8bylQX91NbtbIx//1uJjVH93Nde19Q0vGu0nvul//s+7MKnfk9g/2UftSbpnHyKdYsSmw+ql89HqRcgWOMVPIipivY+7VGokpzSJict3VBp/81UPAAAAAAAAv/IJ3PkWrDb8/5QAAAAASUVORK5CYII="
-                                                 width="100%;" alt="your image"/>
-                
-                                            <label class="btn btn-default btn-file no-padding" style="background-color: cadetblue; width: 100%; margin-top: 10px;">
-                                              <span class="new-button-color">chose imange</span>
-                
-                                              <input class="btn btn-default btn-file" type="file" id="image2" name="image2">
-                                            </label>
-                                          </div>
-                                          <div class="col-3 col-md-3">
-                                            <img id="blah3"
-                                                 src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAGQAAABkCAMAAABHPGVmAAAAXVBMVEXa2trc3NxWVlZQUFDi4uJMTExwcHBVVVXJyclsbGyAgIBJSUmYmJh0dHTq6uq2trbQ0NBgYGDU1NRcXFy6urrAwMCjo6OwsLDr6+uVlZVmZmaPj4+fn598fHyKiopxX3gCAAABPUlEQVRoge3W3Y6CMBCGYToztZYqVCu4/uD9X+ZWjG52tSabTPdg8z0HxHDAy0BBmgYAAAAAAAD+KfOWTkMOfr0o8a1ORabARcErRVqmUoN4oRWxyRckvUjYxNeHMutQMyJiqkdkGLemckQGClP1yMUmHqRKxHzt4sR9jYhcdnLfNQab8j71iInOP95U5uTzIPoRObM9zaPk1WvEXH/qT+LzS2Q+/f1jGWhHpGci3myN2VJ7vzfqkdaSI9uKjGwPUiUiy+QysqPky5a3NSLdKg+SI7w5syM33xz9y5XPfx7F8bylQX91NbtbIx//1uJjVH93Nde19Q0vGu0nvul//s+7MKnfk9g/2UftSbpnHyKdYsSmw+ql89HqRcgWOMVPIipivY+7VGokpzSJict3VBp/81UPAAAAAAAAv/IJ3PkWrDb8/5QAAAAASUVORK5CYII="
-                                                 width="100%;" alt="your image"/>
-                
-                                            <label class="btn btn-default btn-file no-padding" style="background-color: cadetblue; width: 100%; margin-top: 10px;">
-                                              <span class="new-button-color">chose imange</span>
-                                              <input class="btn btn-default btn-file" type="file" id="image3" name="image3">
-                                            </label>
-                                          </div>
-                                        </div>
-                                      </div>
-                                    </div>
-                
-                                    <div class="row form-group">
-                                      <div class="col-md-12 col-sm-12">
-                                        <label class=" form-control-label">Information</label></div>
-                                      <div class="col-md-12 col-sm-12">
-                                        <textarea id="summernote" name="information" width="100px"></textarea>
-                                      </div>
-                                    </div>
-                
-                
-                                    <div class="row form-group">
-                                      <div class="col-md-12 col-sm-12">
-                                        <label class=" form-control-label">User manual</label></div>
-                                      <div class="col-md-12 col-sm-12">
-                                        <textarea id="summernote2" name="userManual" width="100px"></textarea>
-                                      </div>
-                                    </div>
-                                  </div>
-                                </div>
-                              </div>
-                            </div>
+<aside id="left-panel" class="left-panel">
+  <%- include('../common/navbar', {}); %>
+</aside>
+
+<!-- /#left-panel -->
+<!-- Right Panel -->
+<div id="right-panel" class="right-panel">
+  <!-- Header-->
+  <%- include('../common/header', {}); %>
+  <!-- /#header -->
+  <!-- Content -->
+  <div class="content">
+
+    <!-- Animated -->
+    <form id="myForm" action="./create" method="post" enctype="multipart/form-data">
+      <div class="row">
+        <div class="col-lg-8 col-md-8 col-sm-12" style="padding: 3px">
+          <div class="animated fadeIn">
+            <div class="row">
+              <div class="col-lg-12">
+                <div class="card">
+                  <div class="card-body card-block">
+
+
+                    <div class="row form-group">
+                      <div class="col col-md-12">
+                        <label for="name" class=" form-control-label">Name</label>
+                        <input type="text" id="name" name="name" class="form-control">
+                      </div>
+                    </div>
+
+                    <div class="row form-group">
+                      <div class="col col-md-12">
+                        <label for="price" class=" form-control-label">Price</label>
+                        <input type="number" id="price" name="price" class="form-control">
+                      </div>
+                    </div>
+
+                    <div class="row form-group">
+                      <div class="col col-md-12">
+                        <label for="shortDescription" class=" form-control-label">Short Description</label>
+                        <textarea type="text" id="shortDescription" name="shortDescription"
+                                  class="form-control"></textarea>
+                      </div>
+                    </div>
+
+                    <div class="row form-group">
+                      <div class="col col-md-12">
+                        <label for="Description" class=" form-control-label">Description</label>
+                        <textarea type="text" id="Description" name="description" class="form-control"></textarea>
+                      </div>
+                    </div>
+
+                    <div class="row form-group">
+                      <div class="col col-md-12">
+                        <label for="image1">Image</label>
+                      </div>
+                      <div class="col-12 col-md-12">
+                        <div class="row">
+                          <div class=" col-3 col-md-3">
+                            <img id="blah"
+                                 src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAGQAAABkCAMAAABHPGVmAAAAXVBMVEXa2trc3NxWVlZQUFDi4uJMTExwcHBVVVXJyclsbGyAgIBJSUmYmJh0dHTq6uq2trbQ0NBgYGDU1NRcXFy6urrAwMCjo6OwsLDr6+uVlZVmZmaPj4+fn598fHyKiopxX3gCAAABPUlEQVRoge3W3Y6CMBCGYToztZYqVCu4/uD9X+ZWjG52tSabTPdg8z0HxHDAy0BBmgYAAAAAAAD+KfOWTkMOfr0o8a1ORabARcErRVqmUoN4oRWxyRckvUjYxNeHMutQMyJiqkdkGLemckQGClP1yMUmHqRKxHzt4sR9jYhcdnLfNQab8j71iInOP95U5uTzIPoRObM9zaPk1WvEXH/qT+LzS2Q+/f1jGWhHpGci3myN2VJ7vzfqkdaSI9uKjGwPUiUiy+QysqPky5a3NSLdKg+SI7w5syM33xz9y5XPfx7F8bylQX91NbtbIx//1uJjVH93Nde19Q0vGu0nvul//s+7MKnfk9g/2UftSbpnHyKdYsSmw+ql89HqRcgWOMVPIipivY+7VGokpzSJict3VBp/81UPAAAAAAAAv/IJ3PkWrDb8/5QAAAAASUVORK5CYII="
+                                 width="100%;" alt="your image"/>
+
+                            <label class="btn btn-default btn-file no-padding"
+                                   style="background-color: cadetblue; width: 100%; margin-top: 10px;">
+                              <span class="new-button-color">chose imange</span>
+
+                              <input class="btn btn-default btn-file" type="file" id="image" name="image">
+                            </label>
+                          </div>
+                          <div class="col-3 col-md-3">
+                            <img id="blah1"
+                                 src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAGQAAABkCAMAAABHPGVmAAAAXVBMVEXa2trc3NxWVlZQUFDi4uJMTExwcHBVVVXJyclsbGyAgIBJSUmYmJh0dHTq6uq2trbQ0NBgYGDU1NRcXFy6urrAwMCjo6OwsLDr6+uVlZVmZmaPj4+fn598fHyKiopxX3gCAAABPUlEQVRoge3W3Y6CMBCGYToztZYqVCu4/uD9X+ZWjG52tSabTPdg8z0HxHDAy0BBmgYAAAAAAAD+KfOWTkMOfr0o8a1ORabARcErRVqmUoN4oRWxyRckvUjYxNeHMutQMyJiqkdkGLemckQGClP1yMUmHqRKxHzt4sR9jYhcdnLfNQab8j71iInOP95U5uTzIPoRObM9zaPk1WvEXH/qT+LzS2Q+/f1jGWhHpGci3myN2VJ7vzfqkdaSI9uKjGwPUiUiy+QysqPky5a3NSLdKg+SI7w5syM33xz9y5XPfx7F8bylQX91NbtbIx//1uJjVH93Nde19Q0vGu0nvul//s+7MKnfk9g/2UftSbpnHyKdYsSmw+ql89HqRcgWOMVPIipivY+7VGokpzSJict3VBp/81UPAAAAAAAAv/IJ3PkWrDb8/5QAAAAASUVORK5CYII="
+                                 width="100%;" alt="your image"/>
+
+                            <label class="btn btn-default btn-file no-padding"
+                                   style="background-color: cadetblue; width: 100%; margin-top: 10px;">
+                              <span class="new-button-color">chose imange</span>
+
+                              <input class="btn btn-default btn-file" type="file" id="image1" name="image1">
+                            </label>
+                          </div>
+                          <div class="col-3 col-md-3">
+                            <img id="blah2"
+                                 src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAGQAAABkCAMAAABHPGVmAAAAXVBMVEXa2trc3NxWVlZQUFDi4uJMTExwcHBVVVXJyclsbGyAgIBJSUmYmJh0dHTq6uq2trbQ0NBgYGDU1NRcXFy6urrAwMCjo6OwsLDr6+uVlZVmZmaPj4+fn598fHyKiopxX3gCAAABPUlEQVRoge3W3Y6CMBCGYToztZYqVCu4/uD9X+ZWjG52tSabTPdg8z0HxHDAy0BBmgYAAAAAAAD+KfOWTkMOfr0o8a1ORabARcErRVqmUoN4oRWxyRckvUjYxNeHMutQMyJiqkdkGLemckQGClP1yMUmHqRKxHzt4sR9jYhcdnLfNQab8j71iInOP95U5uTzIPoRObM9zaPk1WvEXH/qT+LzS2Q+/f1jGWhHpGci3myN2VJ7vzfqkdaSI9uKjGwPUiUiy+QysqPky5a3NSLdKg+SI7w5syM33xz9y5XPfx7F8bylQX91NbtbIx//1uJjVH93Nde19Q0vGu0nvul//s+7MKnfk9g/2UftSbpnHyKdYsSmw+ql89HqRcgWOMVPIipivY+7VGokpzSJict3VBp/81UPAAAAAAAAv/IJ3PkWrDb8/5QAAAAASUVORK5CYII="
+                                 width="100%;" alt="your image"/>
+
+                            <label class="btn btn-default btn-file no-padding"
+                                   style="background-color: cadetblue; width: 100%; margin-top: 10px;">
+                              <span class="new-button-color">chose imange</span>
+
+                              <input class="btn btn-default btn-file" type="file" id="image2" name="image2">
+                            </label>
+                          </div>
+                          <div class="col-3 col-md-3">
+                            <img id="blah3"
+                                 src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAGQAAABkCAMAAABHPGVmAAAAXVBMVEXa2trc3NxWVlZQUFDi4uJMTExwcHBVVVXJyclsbGyAgIBJSUmYmJh0dHTq6uq2trbQ0NBgYGDU1NRcXFy6urrAwMCjo6OwsLDr6+uVlZVmZmaPj4+fn598fHyKiopxX3gCAAABPUlEQVRoge3W3Y6CMBCGYToztZYqVCu4/uD9X+ZWjG52tSabTPdg8z0HxHDAy0BBmgYAAAAAAAD+KfOWTkMOfr0o8a1ORabARcErRVqmUoN4oRWxyRckvUjYxNeHMutQMyJiqkdkGLemckQGClP1yMUmHqRKxHzt4sR9jYhcdnLfNQab8j71iInOP95U5uTzIPoRObM9zaPk1WvEXH/qT+LzS2Q+/f1jGWhHpGci3myN2VJ7vzfqkdaSI9uKjGwPUiUiy+QysqPky5a3NSLdKg+SI7w5syM33xz9y5XPfx7F8bylQX91NbtbIx//1uJjVH93Nde19Q0vGu0nvul//s+7MKnfk9g/2UftSbpnHyKdYsSmw+ql89HqRcgWOMVPIipivY+7VGokpzSJict3VBp/81UPAAAAAAAAv/IJ3PkWrDb8/5QAAAAASUVORK5CYII="
+                                 width="100%;" alt="your image"/>
+
+                            <label class="btn btn-default btn-file no-padding"
+                                   style="background-color: cadetblue; width: 100%; margin-top: 10px;">
+                              <span class="new-button-color">chose imange</span>
+                              <input class="btn btn-default btn-file" type="file" id="image3" name="image3">
+                            </label>
+                          </div>
                         </div>
+                      </div>
                     </div>
 
-                    <div class="col-lg-4 col-md-4 col-sm-12" style="padding: 3px 0 5px 5px ">
-                        <div class="animated fadeIn">
-                            <div class="row">
-                            <div class="col-lg-12">
-                                <div class="card">
-                                <div class="card-body card-block">
-                                  <div class="row form-group">
-                                    <div class="col col-md-12">
-                                      <label for="quantity" class=" form-control-label">Quantity</label>
-                                      <input type="number" id="quantity" name="quantity" class="form-control">
-                                    </div>
-                                  </div>
-                                  <div class="row form-group">
-                                    <div class="col-12 col-md-12">
-                                        <label for="fontSize" class=" form-control-label">Font Size</label>
-                
-                                        <select id="fontSize" name="fontSize" data-placeholder="Choose size..." multiple
-                                                class="standardSelect">
-                                        <option value="" label="default"></option>
-                                        <option value="S">Size S</option>
-                                        <option value="M">Size M</option>
-                                        <option value="L">Size L</option>
-                                        <option value="XL">Size XL</option>
-                                        <option value="XXL">Size XXL</option>
-                                        <option value="XXXL">Size XXXL</option>
-                                        </select>
-                                    </div>
-                
-                                    <div class="col-12 col-md-12 mt-3">
-                                        <label for="sizeNumber" class=" form-control-label">Size Number</label>
-                                        <select id="sizeNumber" name="sizeNumber" data-placeholder="Choose size..." multiple
-                                                class="standardSelect">
-                                        <option value="" label="default"></option>
-                                        <option value="35">Size 35</option>
-                                        <option value="36">Size 36</option>
-                                        <option value="37">Size 37</option>
-                                        <option value="38">Size 38</option>
-                                        <option value="39">Size 39</option>
-                                        <option value="40">Size 40</option>
-                                        <option value="41">Size 41</option>
-                                        <option value="42">Size 42</option>
-                                        </select>
-                                    </div>
-                
-                                    <div class="col-12 col-md-12 mt-3">
-                                        <label for="color" class=" form-control-label">Color</label>
-                                        <select id="color" name="color" data-placeholder="Choose size..." multiple
-                                                class="standardSelect">
-                                        <option value="" label="default"></option>
-                                        <option value="blue" class="blue">Blue</option>
-                                        <option value="maroon" class="maroon">Maroon</option>
-                                        <option value="gray" class="gray">Gray</option>
-                                        <option value="green" class="green">Green</option>
-                                        <option value="yellow" class="yellow">Yellow</option>
-                                        </select>
-                                    </div>
-                
-                                    <div class="col-12 col-md-12 mt-3">
-                                        <label for="category" class=" form-control-label">Categories</label>
-                                        <select id="category" name="category" class="standardSelect">
-                                        <% if(listCategory && listCategory.length){ %>
-                                        <% listCategory.forEach(function(categories){ %>
-                                        <optgroup label="<%= categories.name %>">
-                                            <option style="display: none">&nbsp;</option>
-                                            <% categories.categories.forEach(function(category){ %>
-                                            <optgroup label="&nbsp;&nbsp;&nbsp;&nbsp;<%= category.name %>">
-                                            <% category.items.forEach(function(item){ %>
-                                            <option value="<%= item.objectId %>">&nbsp;&nbsp;&nbsp;&nbsp; <%= item.name %></option>
-                                            <% }); %>
-                                            </optgroup>
-                                            <% }); %>
-                                            <% }); %>
-                                        </optgroup>
-                                        <% } %>
-                                        </select>
-                                    </div>
-                                    </div>
-                                </div>
-                
-                                </div>
-                            </div>
-                            </div>
-                        </div><!-- .animated -->
+                    <div class="row form-group">
+                      <div class="col-md-12 col-sm-12">
+                        <label class=" form-control-label">Information</label></div>
+                      <div class="col-md-12 col-sm-12">
+                        <textarea id="summernote" name="information" width="100px"></textarea>
+                      </div>
                     </div>
+
+
+                    <div class="row form-group">
+                      <div class="col-md-12 col-sm-12">
+                        <label class=" form-control-label">User manual</label></div>
+                      <div class="col-md-12 col-sm-12">
+                        <textarea id="summernote2" name="userManual" width="100px"></textarea>
+                      </div>
+                    </div>
+                  </div>
                 </div>
-            </form>
-            <!-- .animated -->
+              </div>
+            </div>
+          </div>
         </div>
-      <div class="content pt-0">
-        <button type="submit" onclick="submit()" class="btn btn-sm btn-primary float-right">
-          <i class="fa fa-dot-circle-o"></i> Submit
-        </button>
+
+        <div class="col-lg-4 col-md-4 col-sm-12" style="padding: 3px 0 5px 5px ">
+          <div class="animated fadeIn">
+            <div class="row">
+              <div class="col-lg-12">
+                <div class="card">
+                  <div class="card-body card-block">
+                    <div class="row form-group">
+                      <div class="col col-md-12">
+                        <label for="quantity" class=" form-control-label">Quantity</label>
+                        <input type="number" id="quantity" name="quantity" class="form-control">
+                      </div>
+                    </div>
+                    <div class="row">
+                      <div class="col-12 col-md-12">
+                        <label for="fontSize" class=" form-control-label">Font Size</label>
+
+                        <select id="fontSize" name="fontSize" data-placeholder="Choose size..." multiple
+                                class="standardSelect">
+                          <option value="" label="default"></option>
+                          <option value="S">Size S</option>
+                          <option value="M">Size M</option>
+                          <option value="L">Size L</option>
+                          <option value="XL">Size XL</option>
+                          <option value="XXL">Size XXL</option>
+                          <option value="XXXL">Size XXXL</option>
+                        </select>
+                      </div>
+
+                      <div class="col-12 col-md-12 mt-3">
+                        <label for="sizeNumber" class=" form-control-label">Size Number</label>
+                        <select id="sizeNumber" name="sizeNumber" data-placeholder="Choose size..." multiple
+                                class="standardSelect">
+                          <option value="" label="default"></option>
+                          <option value="35">Size 35</option>
+                          <option value="36">Size 36</option>
+                          <option value="37">Size 37</option>
+                          <option value="38">Size 38</option>
+                          <option value="39">Size 39</option>
+                          <option value="40">Size 40</option>
+                          <option value="41">Size 41</option>
+                          <option value="42">Size 42</option>
+                        </select>
+                      </div>
+
+                      <div class="col-12 col-md-12 mt-3">
+                        <label for="color" class=" form-control-label">Color</label>
+                        <select id="color" name="color" data-placeholder="Choose size..." multiple
+                                class="standardSelect">
+                          <option value="" label="default"></option>
+                          <option value="blue" class="blue">Blue</option>
+                          <option value="maroon" class="maroon">Maroon</option>
+                          <option value="gray" class="gray">Gray</option>
+                          <option value="green" class="green">Green</option>
+                          <option value="yellow" class="yellow">Yellow</option>
+                        </select>
+                      </div>
+
+                      <div class="col-12 col-md-12 mt-3">
+                        <label for="category" class=" form-control-label">Categories</label>
+                        <select id="category" name="category" class="standardSelect">
+                          <% if(listCategory && listCategory.length){ %>
+                          <% listCategory.forEach(function(categories){ %>
+                          <optgroup label="<%= categories.name %>">
+                            <option style="display: none">&nbsp;</option>
+                            <% categories.categories.forEach(function(category){ %>
+                            <optgroup label="&nbsp;&nbsp;&nbsp;&nbsp;<%= category.name %>">
+                              <% category.items.forEach(function(item){ %>
+                              <option value="<%= item.objectId %>">&nbsp;&nbsp;&nbsp;&nbsp; <%= item.name %></option>
+                              <% }); %>
+                            </optgroup>
+                            <% }); %>
+                            <% }); %>
+                          </optgroup>
+                          <% } %>
+                        </select>
+                      </div>
+
+                      <div class="col-12 col-md-12 mt-5">
+                        <button type="submit" onclick="submit()" class="btn btn-sm btn-primary float-right">
+                          <i class="fa fa-dot-circle-o"></i> Submit
+                        </button>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div><!-- .animated -->
+        </div>
       </div>
-        <!-- /.content -->
-        <div class="clearfix"></div>
-        <!-- Footer -->
-        <%- include('../common/footer', {}); %>
-        <!-- /.site-footer -->
-    </div>
-    <!-- /#right-panel -->
+    </form>
+    <!-- .animated -->
+  </div>
+
+  <!-- /.content -->
+  <div class="clearfix"></div>
+  <!-- Footer -->
+  <%- include('../common/footer', {}); %>
+  <!-- /.site-footer -->
+</div>
+<!-- /#right-panel -->
 <!--<script>-->
-  <!--function submit() {-->
-    <!--document.getElementById("myForm").submit();-->
-  <!--}-->
+<!--function submit() {-->
+<!--document.getElementById("myForm").submit();-->
+<!--}-->
 <!--</script>-->
 <script>
   jQuery(document).ready(function ($) {
-      $(".standardSelect").chosen({
-          disable_search_threshold: 10,
-          no_results_text: "Oops, nothing found!",
-          width: "100%"
-      });
+    $(".standardSelect").chosen({
+      disable_search_threshold: 10,
+      no_results_text: "Oops, nothing found!",
+      width: "100%"
+    });
 
-      var reader = new FileReader();
-      var reader1 = new FileReader();
-      var reader2 = new FileReader();
-      var reader3 = new FileReader();
-      reader.onload = function (e) {
-          $('#blah').attr('src', e.target.result);
+    var reader = new FileReader();
+    var reader1 = new FileReader();
+    var reader2 = new FileReader();
+    var reader3 = new FileReader();
+    reader.onload = function (e) {
+      $('#blah').attr('src', e.target.result);
+    }
+
+    reader1.onload = function (e) {
+      $('#blah1').attr('src', e.target.result);
+    }
+    reader2.onload = function (e) {
+      $('#blah2').attr('src', e.target.result);
+    }
+    reader3.onload = function (e) {
+      $('#blah3').attr('src', e.target.result);
+    }
+
+
+    function readURL(input) {
+      if (input.files && input.files[0]) {
+        reader.readAsDataURL(input.files[0]);
       }
-  
-      reader1.onload = function (e) {
-          $('#blah1').attr('src', e.target.result);
+    }
+
+    function readURL1(input) {
+      if (input.files && input.files[0]) {
+        reader1.readAsDataURL(input.files[0]);
       }
-      reader2.onload = function (e) {
-          $('#blah2').attr('src', e.target.result);
+    }
+
+    function readURL2(input) {
+      if (input.files && input.files[0]) {
+        reader2.readAsDataURL(input.files[0]);
       }
-      reader3.onload = function (e) {
-          $('#blah3').attr('src', e.target.result);
+    }
+
+    function readURL3(input) {
+      if (input.files && input.files[0]) {
+        reader3.readAsDataURL(input.files[0]);
       }
-  
-  
-      function readURL(input) {
-          if (input.files && input.files[0]) {
-              reader.readAsDataURL(input.files[0]);
-          }
-      }
-  
-      function readURL1(input) {
-          if (input.files && input.files[0]) {
-              reader1.readAsDataURL(input.files[0]);
-          }
-      }
-  
-      function readURL2(input) {
-          if (input.files && input.files[0]) {
-              reader2.readAsDataURL(input.files[0]);
-          }
-      }
-  
-      function readURL3(input) {
-          if (input.files && input.files[0]) {
-              reader3.readAsDataURL(input.files[0]);
-          }
-      };
-  
-      $("#image").change(function () {
-          readURL(this);
-      });
-      $("#image1").change(function () {
-          readURL1(this);
-      });
-      $("#image2").change(function () {
-          readURL2(this);
-      });
-      $("#image3").change(function () {
-          readURL3(this);
-      });
-  
-      $(document).ready(function () {
-          $('#summernote').summernote();
-      });
-  
-      $(document).ready(function () {
-          $('#summernote1').summernote();
-      });
-  
-      $(document).ready(function () {
-          $('#summernote2').summernote();
-      });
-      
+    };
+
+    $("#image").change(function () {
+      readURL(this);
+    });
+    $("#image1").change(function () {
+      readURL1(this);
+    });
+    $("#image2").change(function () {
+      readURL2(this);
+    });
+    $("#image3").change(function () {
+      readURL3(this);
+    });
+
+    $(document).ready(function () {
+      $('#summernote').summernote();
+    });
+
+    $(document).ready(function () {
+      $('#summernote1').summernote();
+    });
+
+    $(document).ready(function () {
+      $('#summernote2').summernote();
+    });
+
   });
 
   function submit() {
-      document.getElementById("myForm").submit();
+    document.getElementById("myForm").submit();
   }
 </script>
 
