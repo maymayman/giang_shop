@@ -68,10 +68,10 @@
                                         <td class="product-subtotal">$
                                             <span class="product-subtotal-<%= product.objectId; %>"><%= product.price * product.count; %></span>
                                         </td>
-                                        <td class="product-remove">
-                                            <a href="#"><i class="fa fa-pencil"></i></a>
-                                            <a href="#"><i class="fa fa-times"></i></a>
-                                        </td>
+                                        <!--<td class="product-remove">-->
+                                            <!--&lt;!&ndash;<a href="#"><i class="fa fa-pencil"></i></a>&ndash;&gt;-->
+                                            <!--&lt;!&ndash;<a href="<%= domain + product.objectId + '/delete' %>"><i class="fa fa-times"></i></a>&ndash;&gt;-->
+                                        <!--</td>-->
                                     </tr>
                                 <% }); %>
                             </tbody>
@@ -85,7 +85,7 @@
                                 </div>
                                 <div class="cart-clear">
                                     <!-- <button>Update Shopping Cart</button> -->
-                                    <a href=<%= domain + "cart/clear"; %>>Clear Shopping Cart</a>
+                                    <a href=<%= domain + "cart"; %>>Clear Shopping Cart</a>
                                 </div>
                             </div>
                         </div>

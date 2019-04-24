@@ -161,6 +161,7 @@ router.post('/product/create', uploadFile, async function (req, res, next) {
     const information = req.body.information ? req.body.information : null;
     const name = req.body.name ? req.body.name : null;
     const price = req.body.price ? req.body.price : null;
+    const quantity = req.body.quantity ? req.body.quantity : 0;
     const images = req.files ? req.files : null;
     const category = req.body.category ? req.body.category : null;
     const description = req.body.description ? req.body.description : null;
@@ -202,6 +203,7 @@ router.post('/product/create', uploadFile, async function (req, res, next) {
       information: information,
       name: name,
       price: parseInt(price),
+      quantity: parseInt(quantity),
       images: images,
       fontSize: fontSize,
       sizeNumber: sizeNumber,

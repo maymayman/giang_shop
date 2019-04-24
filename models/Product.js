@@ -140,6 +140,7 @@ module.exports = {
       product.set('information', (item.information ? item.information : ''));
       product.set('name', item.name);
       product.set('price', item.price);
+      product.set('quantity', item.quantity);
       product.set('images', item.images);
       product.set('category', pointerToCategory);
       product.set('colors', item.colors);
