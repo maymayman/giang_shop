@@ -28,11 +28,10 @@
                         <table>
                             <thead>
                                 <tr>
-                                    <th>ProductId</th>
                                     <th>Image</th>
                                     <th>Product Name</th>
                                     <th>Until Price</th>
-                                    <th>Qty</th>
+                                    <th>Number</th>
                                     <th>Subtotal</th>
                                     <!--<th></th>-->
                                 </tr>
@@ -40,7 +39,6 @@
                             <tbody>
                             <% products.forEach(function(product){ %>
                             <tr>
-                                <td><%= product.objectId%></td>
                                 <td class="product-thumbnail">
                                     <a href=<%= domain + 'product/' + product.objectId; %>>
                                         <img style="width: 82px;" src=<%= domain + product.images; %> alt="">

@@ -294,7 +294,7 @@
         }
         let cartProducts = Cookies.get('cartProducts');
         const productId = $input.data("product-id");
-        console.log('cartProducts-------', cartProducts)
+        
         cartProducts = JSON.parse(cartProducts);
         cartProducts[productId].count = newVal;
 
@@ -767,7 +767,7 @@
                 cartProducts[productId] = product;
             }
         }
-        console.log("cartProducts: ", cartProducts)
+
         Cookies.set('cartProducts', cartProducts);
         Cookies.set('countProducts', Object.keys(cartProducts).length);
 
@@ -813,8 +813,6 @@
             name, phone, address
         };
 
-        console.log(deliveryInfo);
-
         $('body').loadingModal({
             text: 'Loading...'
         });
@@ -838,7 +836,7 @@
             Cookies.remove('cartProducts');
             Cookies.remove('countProducts');
             
-            window.location.replace('/user/account?active=order');
+            window.location.replace('/order/history');
             
         }).catch(err => {
             console.error(err);

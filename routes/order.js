@@ -20,7 +20,7 @@ router.get('/history', async function(req, res, next) {
     });
     
     const count = await OrderModel.count({user, status});
-    res.render('./order/history_order', {
+    res.render('order/history_order', {
       menus,
       orders,
       user,
@@ -37,7 +37,7 @@ router.get('/history', async function(req, res, next) {
   }
 });
 
-router.get('/order/:id', async function(req, res, next) {
+router.get('/:id', async function(req, res, next) {
   try {
     const user = req.user;
     const objectId = req.params.id;
@@ -59,7 +59,7 @@ router.get('/order/:id', async function(req, res, next) {
       });
     }
     
-    res.render('./order/history_order_detail', {
+    res.render('order/history_order_detail', {
       menus,
       order,
       user,
