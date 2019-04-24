@@ -107,15 +107,21 @@
             <div class="cart-plus-minus-detail">
               <input class="cart-plus-minus-box" type="text" name="qtybutton-detail" value="1">
             </div>
+            <% if(product && !product.quantity){ %>
+            <div class="pro-details-cart">
+              <a>Out Of Stock</a>
+            </div>
+            <% }else {%>
             <div class="pro-details-cart btn-hover"
                  data-product_id=<%= product.objectId; %>
                  data-price=<%= product.price; %>
                  data-images=<%= product.images[0]; %>
                  data-name="<%= product.name; %>"
-                 data-store-id="<%= product.store.objectId; %>"
-            >
+                 data-store-id="<%= product.store.objectId; %>">
               <a href="#">Add To Cart</a>
             </div>
+            <% }%>
+
             <div class="pro-details-wishlist">
               <a href="#"><i class="fa fa-heart-o"></i></a>
             </div>

@@ -335,6 +335,13 @@
         $input.val(newVal);
     });
     
+    /*----clear cart----- */
+    $('.cart-clear').on('click', function () {
+      Cookies.remove('cartProducts');
+      Cookies.remove('countProducts');
+    });
+    
+    
     
     /*--
     Menu Stick
