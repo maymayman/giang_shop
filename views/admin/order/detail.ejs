@@ -43,10 +43,15 @@
               <th scope="col">Name</th>
               <th scope="col">Price</th>
               <th scope="col">Count</th>
-              <th scope="col">Shop</th>
+              <th scope="col">status</th>
               <th scope="col">Size</th>
               <th scope="col">Color</th>
               <th scope="col">Total</th>
+
+              <% if (order.status === 'NEW') { %>
+                <th scope="col">Action</th>
+              <% } %>
+              
             </tr>
             </thead>
             <tbody>
@@ -58,21 +63,37 @@
               <td><%= '$' + product.price %></td>
               <td><%= product.count %></td>
               <td>
-                store ID: <%= product.store.objectId %>
-                <br>
-                store name: <%= product.store.username %>
-                <br>
-                store phone number: <%= product.store.phone %>
-                <br>
-                store address: <%= product.store.address; %>
-
+                <%= 
+                  typeof order.items[product.objectId].status === 'undefined'
+                    ? 'PENDING' : order.items[product.objectId].status
+                %>
               </td>
               <td><%= order.items[product.objectId].size %></td>
               <td><%= order.items[product.objectId].color %></td>
               <td><%= '$' + product.price * product.count %></td>
+    
+                <% if (order.status === 'NEW') { %>
+                  <td>
+                    <button type="button" 
+                      onclick="location.href='<%= `${domain}admin/order/${order.objectId}/${product.objectId}?status=AVAILABLE`;%>'" 
+                      class="btn btn-outline-success btn-sm"
+                    >
+                        <i class="fa fa-magic"></i>
+                        &nbsp; AVAILABLE
+                    </button>
+
+                    <button type="button" 
+                      onclick="location.href='<%= `${domain}admin/order/${order.objectId}/${product.objectId}?status=OUT_OF_STOCK`;%>'"  
+                      class="btn btn-outline-warning btn-sm"
+                    >
+                        <i class="fa fa-map-marker"></i>
+                        &nbsp; OUT OF STOCK
+                    </button>
+                  </td>
+                <% } %>
+            
             </tr>
             <% }); %>
-
 
             </tbody>
           </table>
