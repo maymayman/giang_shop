@@ -113,50 +113,7 @@
                         </div>
                         <div class="panel panel-default single-my-account">
                             <div class="panel-heading my-account-title">
-                                <h3 class="panel-title"><span>3 .</span> <a data-toggle="collapse" data-parent="#faq" href="#my-account-3">Your Orders </a></h3>
-                            </div>
-                            <div id="my-account-3" class="panel-collapse collapse <%= active == 'order' ? 'show' : '';%>">
-                                <div class="panel-body">
-                                    <div class="myaccount-info-wrapper">
-                                        <div class="account-info-wrapper">
-                                            <h4>Your Orders</h4>
-                                        </div>
-
-                                        <% orders.forEach(function(order){ %>
-                                            <div class="entries-wrapper">
-                                                <div class="row">
-                                                    <div class="col-lg-6 col-md-6 d-flex align-items-center justify-content-center">
-                                                        <div class="entries-info text-center">
-                                                            <% for (let product in order.items) { %>
-                                                                <p><%= order.items[product].count + ' ' + order.items[product].name; %></p>
-                                                            <% }; %>
-                                                        </div>
-                                                    </div>
-                                                    <div class="col-lg-6 col-md-6 d-flex align-items-center justify-content-center">
-                                                        <div class="entries-edit-delete text-center">
-                                                            <a class="view" href="#">View</a>
-                                                            <!-- <a href="#">Delete</a> -->
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                        <% }); %>
-                                        
-                                        <div class="billing-back-btn">
-                                            <div class="billing-back">
-                                                <a href="#"><i class="fa fa-arrow-up"></i> back</a>
-                                            </div>
-                                            <!-- <div class="billing-btn">
-                                                <button type="submit">Continue</button>
-                                            </div> -->
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="panel panel-default single-my-account">
-                            <div class="panel-heading my-account-title">
-                                <h3 class="panel-title"><span>4 .</span> <a href="wishlist.html">Modify your wish list   </a></h3>
+                                <h3 class="panel-title"><span>3 .</span> <a href="wishlist.html">Modify your wish list   </a></h3>
                             </div>
                         </div>
                     </div>
