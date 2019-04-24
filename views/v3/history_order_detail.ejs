@@ -1,0 +1,184 @@
+<!doctype html>
+<html class="no-js" lang="zxx">
+
+<%- include('common/head', {}); %>
+
+<body>
+<%- include('common/header', { menus }); %>
+
+<div class="breadcrumb-area pt-35 pb-35 bg-gray-3">
+    <div class="container">
+        <div class="breadcrumb-content text-center">
+            <ul>
+                <li>
+                    <a href=<%= domain; %>>Home</a>
+                </li>
+                <li class="active">Page Order History</li>
+            </ul>
+        </div>
+    </div>
+</div>
+<div class="cart-main-area pt-90 pb-100">
+    <div class="container">
+        <h3 class="cart-page-title">Your Orders Detail</h3>
+        <div class="row">
+            <div class="col-lg-12 col-md-12 col-sm-12 col-12">
+                <form action="#">
+                    <div class="table-content table-responsive cart-table-content">
+                        <table>
+                            <thead>
+                                <tr>
+                                    <th>ProductId</th>
+                                    <th>Image</th>
+                                    <th>Product Name</th>
+                                    <th>Until Price</th>
+                                    <th>Qty</th>
+                                    <th>Subtotal</th>
+                                    <!--<th></th>-->
+                                </tr>
+                            </thead>
+                            <tbody>
+                            <% products.forEach(function(product){ %>
+                            <tr>
+                                <td><%= product.objectId%></td>
+                                <td class="product-thumbnail">
+                                    <a href=<%= domain + 'product/' + product.objectId; %>>
+                                        <img style="width: 82px;" src=<%= domain + product.images; %> alt="">
+                                    </a>
+                                </td>
+                                <td class="product-name product-quantity">
+                                    <a href=<%= domain + 'product/' + product.objectId; %>><%= product.name %></a>
+                                    <!-- <br>
+                                            <span class="amount">$<%= product.price; %></span>
+                                            <br>
+                                            <div class="cart-plus-minus">
+                                                <input class="cart-plus-minus-box" type="text" name="qtybutton" value=<%= product.count; %>>
+                                            </div>
+                                            <br>
+                                            <span>$<%= product.price * product.count; %></span> -->
+                                </td>
+                                <td class="product-price-cart">$<span class="amount"><%= product.price; %></span></td>
+                                <td class="product-quantity">
+                                    <span><%= product.count %></span>
+                                </td>
+                                <td class="product-subtotal">$
+                                    <span class="product-subtotal-<%= product.objectId; %>"><%= product.price * product.count; %></span>
+                                </td>
+                            </tr>
+                            <% }); %>
+                            </tbody>
+                        </table>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+<footer class="footer-area bg-gray pt-100 pb-70">
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-2 col-md-4 col-sm-4">
+                <div class="copyright mb-30">
+                    <div class="footer-logo">
+                        <a href="index.html">
+                            <img alt="" src="assets/img/logo/logo.png">
+                        </a>
+                    </div>
+                    <p>© 2019 <a href="#">Flone</a>.<br> All Rights Reserved</p>
+                </div>
+            </div>
+            <div class="col-lg-2 col-md-4 col-sm-4">
+                <div class="footer-widget mb-30 ml-30">
+                    <div class="footer-title">
+                        <h3>ABOUT US</h3>
+                    </div>
+                    <div class="footer-list">
+                        <ul>
+                            <li><a href="about.html">About us</a></li>
+                            <li><a href="#">Store location</a></li>
+                            <li><a href="contact.html">Contact</a></li>
+                            <li><a href="#">Orders tracking</a></li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+            <div class="col-lg-2 col-md-4 col-sm-4">
+                <div class="footer-widget mb-30 ml-50">
+                    <div class="footer-title">
+                        <h3>USEFUL LINKS</h3>
+                    </div>
+                    <div class="footer-list">
+                        <ul>
+                            <li><a href="#">Returns</a></li>
+                            <li><a href="#">Support Policy</a></li>
+                            <li><a href="#">Size guide</a></li>
+                            <li><a href="#">FAQs</a></li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+            <div class="col-lg-2 col-md-6 col-sm-6">
+                <div class="footer-widget mb-30 ml-75">
+                    <div class="footer-title">
+                        <h3>FOLLOW US</h3>
+                    </div>
+                    <div class="footer-list">
+                        <ul>
+                            <li><a href="#">Facebook</a></li>
+                            <li><a href="#">Twitter</a></li>
+                            <li><a href="#">Instagram</a></li>
+                            <li><a href="#">Youtube</a></li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+            <div class="col-lg-4 col-md-6 col-sm-6">
+                <div class="footer-widget mb-30 ml-70">
+                    <div class="footer-title">
+                        <h3>SUBSCRIBE</h3>
+                    </div>
+                    <div class="subscribe-style">
+                        <p>Get E-mail updates about our latest shop and special offers.</p>
+                        <div id="mc_embed_signup" class="subscribe-form">
+                            <form id="mc-embedded-subscribe-form" class="validate" novalidate="" target="_blank" name="mc-embedded-subscribe-form" method="post" action="http://devitems.us11.list-manage.com/subscribe/post?u=6bbb9b6f5827bd842d9640c82&amp;id=05d85f18ef">
+                                <div id="mc_embed_signup_scroll" class="mc-form">
+                                    <input class="email" type="email" required="" placeholder="Enter your email here.." name="EMAIL" value="">
+                                    <div class="mc-news" aria-hidden="true">
+                                        <input type="text" value="" tabindex="-1" name="b_6bbb9b6f5827bd842d9640c82_05d85f18ef">
+                                    </div>
+                                    <div class="clear">
+                                        <input id="mc-embedded-subscribe" class="button" type="submit" name="subscribe" value="Subscribe">
+                                    </div>
+                                </div>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</footer>
+
+<!-- JS
+============================================ -->
+
+<!-- jQuery JS -->
+<script src=<%= domain + "js/vendor/jquery-1.12.4.min.js"; %>></script>
+<!-- Popper JS -->
+<script src=<%= domain + "js/popper.min.js"; %>></script>
+<!-- Bootstrap JS -->
+<script src=<%= domain + "js/bootstrap.min.js"; %>></script>
+<!-- jQuery Cookie JS -->
+<script src=<%= domain + "js/vendor/jquery.cookie.js"; %>></script>
+<!-- Plugins JS -->
+<script src=<%= domain + "js/plugins.js"; %>></script>
+<!-- Ajax Mail -->
+<script src=<%= domain + "js/ajax-mail.js"; %>></script>
+<!-- Modal loading JS -->
+<script src=<%= domain + "js/jquery.loadingModal.min.js"; %>></script>
+<!-- Main JS -->
+<script src=<%= domain + "js/main.js"; %>></script>
+
+</body>
+
+</html>
