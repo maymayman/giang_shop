@@ -37,7 +37,7 @@ router.get('/history', async function(req, res, next) {
   }
 });
 
-router.get('/order/:id', async function(req, res, next) {
+router.get('/:id', async function(req, res, next) {
   try {
     const user = req.user;
     const objectId = req.params.id;

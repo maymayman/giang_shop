@@ -741,7 +741,7 @@
         $('.count-style').text(Object.keys(cartProducts).length);
     });
 
-    $('.pro-details-cart').on('click', function() {
+    $('.pro-add-cart').on('click', function() {
         const productId = $(this).data('product_id');
         const price = $(this).data('price');
         const images = $(this).data('images');
