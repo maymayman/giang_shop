@@ -34,10 +34,6 @@ router.post('/order', async function(req, res, next) {
     const deliveryInfo = req.body.deliveryInfo;
     const storeIds = [];
     
-    
-
-    console.log(req.body);
-    
     let totalAmount = 0;
 
     products.forEach(product => {
