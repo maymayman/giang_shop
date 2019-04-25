@@ -47,6 +47,11 @@
               <th scope="col">Size</th>
               <th scope="col">Color</th>
               <th scope="col">Total</th>
+
+              <% if (order.status === 'NEW' && user.role === 'store') { %>
+                <th scope="col">Action</th>
+              <% } %>
+              
             </tr>
             </thead>
             <tbody>
@@ -70,6 +75,27 @@
               <td><%= order.items[product.objectId].size %></td>
               <td><%= order.items[product.objectId].color %></td>
               <td><%= '$' + product.price * product.count %></td>
+    
+                <% if (order.status === 'NEW' && !order.items[product.objectId].status && user.role === 'store') { %>
+                  <td>
+                    <button type="button" 
+                      onclick="location.href='<%= `${domain}admin/order/${order.objectId}/${product.objectId}?status=AVAILABLE`;%>'" 
+                      class="btn btn-outline-success btn-sm"
+                    >
+                        <i class="fa fa-magic"></i>
+                        &nbsp; AVAILABLE
+                    </button>
+
+                    <button type="button" 
+                      onclick="location.href='<%= `${domain}admin/order/${order.objectId}/${product.objectId}?status=OUT_OF_STOCK`;%>'"  
+                      class="btn btn-outline-warning btn-sm"
+                    >
+                        <i class="fa fa-map-marker"></i>
+                        &nbsp; OUT OF STOCK
+                    </button>
+                  </td>
+                <% } %>
+            
             </tr>
             <% }); %>
 

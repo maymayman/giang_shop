@@ -245,4 +245,68 @@ router.get('/order/:objectId', async function(req, res, next) {
   }
 });
 
+router.get('/order/completed/:orderId', async function(req, res, next) {
+  try {
+   
+    const user = req.user;
+    const orderId = req.params.orderId;
+
+    if (user.role !== 'administrator') {
+      throw 'Permission denined';
+    }
+    
+    const order = await OrderModel.findById(orderId, user);
+    
+    if (!order || order.status !== 'AVAILABLE') {
+      throw 'Order Not Found';
+    }
+
+    await OrderModel.update(orderId, {status: 'COMPLETED'}, user);
+    
+    res.redirect(`/admin/order?status=COMPLETED`);
+  } catch (error) {
+    next(error);
+  }
+});
+
+router.get('/order/:orderId/:productId', async function(req, res, next) {
+  try {
+    const user = req.user;
+    const orderId = req.params.orderId;
+    const productId = req.params.productId;
+    const status = req.query.status;
+
+    if (user.role !== 'store') {
+      throw 'Permission denined';
+    } else if (!status) {
+      throw 'status Not Found';
+    }
+    
+    const order = await OrderModel.findById(orderId, user);
+    
+    if (!order) {
+      throw 'Order Not Found';
+    }
+
+    const items = order.items;
+
+    if (!items[productId]) {
+      throw 'product Not Found';
+    }
+
+    items[productId].status = status;
+
+    const data = { items };
+    if (status === 'OUT_OF_STOCK') {
+      data.status = 'OUT_OF_STOCK';
+    }
+
+    await OrderModel.update(orderId, data, user);
+    
+    res.redirect(`/admin/order/${orderId}`);
+  } catch (error) {
+    next(error);
+  }
+});
+
 module.exports = router;

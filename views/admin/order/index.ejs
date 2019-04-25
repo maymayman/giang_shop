@@ -65,7 +65,7 @@
                                         </td>
 
                                         <td>
-                                            <span class="badge badge-<%= order.status == 'COMPLETED'
+                                            <span class="badge badge-<%= (order.status == 'COMPLETED' || order.status == 'AVAILABLE')
                                                 ? 'complete'
                                                 : (order.status == 'NEW') ? 'pending' : 'delete'
                                             %>">
@@ -73,13 +73,15 @@
                                                     ? 'Completed' 
                                                     : (order.status == 'NEW')
                                                         ? 'Pending'
-                                                        : 'Deleted';%>
+                                                        : (order.status == 'OUT_OF_STOCK') 
+                                                            ? 'Out Of Stock'
+                                                            : 'Available';%>
                                             </span>
                                         </td>
 
                                         <td>
-                                            <% if (order.status == 'NEW' && user && user.role === 'administrator') { %>
-                                                <a>
+                                            <% if (order.status == 'AVAILABLE' && user && user.role === 'administrator') { %>
+                                                <a href="<%= `${domain}admin/order/completed/${order.objectId}`; %>">
                                                     <button type="button" class="btn btn-outline-success btn-sm">
                                                         <i class="fa fa-magic"></i>
                                                         &nbsp; Completed

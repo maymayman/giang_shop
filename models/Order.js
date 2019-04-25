@@ -94,5 +94,21 @@ module.exports = {
     } catch (err) {
       throw err;
     }
+  },
+
+  update: async function(objectId, data, user) {
+    try {      
+      const Order = Parse.Object.extend('Order');
+      const query = new Parse.Query(Order);
+
+      const order = await query.get(objectId);
+
+      order.set(data);
+
+      const result = await order.save(null, {sessionToken: user.sessionToken});
+      return result;
+    } catch (err) {
+      throw err;
+    }
   }
 };

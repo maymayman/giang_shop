@@ -9,16 +9,30 @@ Parse.Cloud.beforeSave('Order', async (request) => {
     throw new Parse.Error(Parse.Error.INVALID_DATA, 'Invalid data Order');
   }
 
-  if (request.object.isNew()) {
-    request.object.set('user', request.user);
-    request.object.set('status', 'NEW');
-    
-  }
-
   const deliveryInfo = request.object.get('deliveryInfo');
   if (!deliveryInfo || !deliveryInfo.name || !deliveryInfo.phone || !deliveryInfo.address) {
     throw new Parse.Error(Parse.Error.INVALID_DATA, 'Invalid data Order deliveryInfo');
   }
+
+  if (request.object.isNew()) {
+    request.object.set('user', request.user);
+    request.object.set('status', 'NEW');
+  } else {
+    const items = request.object.get('items');
+    let available = true;
+
+    for (let id in items) {
+      if (items[id].status !== 'AVAILABLE') {
+        available = false;
+      }
+    }
+
+    console.log(request.object.get('status'));
+    if (available && request.object.get('status') === 'NEW') {
+      request.object.set('status', 'AVAILABLE');
+    }
+  }
+
 });
 
 Parse.Cloud.beforeSave(Parse.User, (request) => {
