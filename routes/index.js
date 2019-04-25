@@ -22,8 +22,9 @@ router.get('/contact', async function(req, res, next) {
   try {
     const user = req.user;
     const menus = await MenuModel.find(true);
+    const messageToUser = req.query.messageToUser || '';
 
-    res.render('contact', { menus, user });
+    res.render('contact', { menus, user, messageToUser });
   } catch (error) {
     next(error);
   }
@@ -37,7 +38,8 @@ router.post('/contact', async function(req, res, next) {
     const subject = req.body.subject ? req.body.subject : null;
     const message = req.body.message ? req.body.message : null;
     const menus = await MenuModel.find(true);
-  
+    let messageToUser = null;
+    
     if(email && name && message && subject){
       let dataContact = {
         email: email,
@@ -46,11 +48,16 @@ router.post('/contact', async function(req, res, next) {
         message: message
       };
       const contactSave = await ContactModel.create(dataContact);
+      if (contactSave && contactSave.objectId){
+        messageToUser = 'Your contact send success'
+      }else {
+        messageToUser = 'Some thing was wrong!'
+      }
+    }else {
+      messageToUser = 'Please add full contact'
     }
-    
-    
-    
-    res.render('contact', { menus, user });
+  
+    res.redirect(`/contact?messageToUser=${messageToUser}`);
   } catch (error) {
     next(error);
   }
