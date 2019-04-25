@@ -134,7 +134,7 @@ csslinks: [
 
                     <div class="row form-group">
                       <div class="col col-md-12">
-                        <label for="image1">Image</label>
+                        <label for="image1">Image (require: 400 < width < 800 and scale 3/4 and not greater than 5MB)</label>
                       </div>
                       <div class="col-12 col-md-12">
                         <div class="row">
@@ -320,6 +320,7 @@ csslinks: [
 <!--</script>-->
 <script>
   jQuery(document).ready(function ($) {
+    const fileSize = 2 * 1024 * 1024;
     $(".standardSelect").chosen({
       disable_search_threshold: 10,
       no_results_text: "Oops, nothing found!",
@@ -330,6 +331,8 @@ csslinks: [
     var reader1 = new FileReader();
     var reader2 = new FileReader();
     var reader3 = new FileReader();
+
+
     reader.onload = function (e) {
       $('#blah').attr('src', e.target.result);
     }
@@ -346,40 +349,108 @@ csslinks: [
 
 
     function readURL(input) {
-      if (input.files && input.files[0]) {
+      if (input.files && input.files[0] && input.files[0].size <= fileSize) {
         reader.readAsDataURL(input.files[0]);
+      }else {
+        alert("Image Invalid Size: " + input.files[0].size)
       }
     }
 
     function readURL1(input) {
-      if (input.files && input.files[0]) {
-        reader1.readAsDataURL(input.files[0]);
+      if (input.files && input.files[0] && input.files[0].size <= fileSize) {
+        reader.readAsDataURL(input.files[0]);
+      }else {
+        alert("Image Invalid Size: " + input.files[0].size)
       }
     }
 
     function readURL2(input) {
-      if (input.files && input.files[0]) {
-        reader2.readAsDataURL(input.files[0]);
+      if (input.files && input.files[0] && input.files[0].size <= fileSize) {
+        reader.readAsDataURL(input.files[0]);
+      }else {
+        alert("Image Invalid Size: " + input.files[0].size)
       }
     }
 
     function readURL3(input) {
-      if (input.files && input.files[0]) {
-        reader3.readAsDataURL(input.files[0]);
+      if (input.files && input.files[0] && input.files[0].size <= fileSize) {
+        reader.readAsDataURL(input.files[0]);
+      }else {
+        alert("Image Invalid Size: " + input.files[0].size)
       }
     };
 
     $("#image").change(function () {
-      readURL(this);
+      const _URL = window.URL;
+      let file, img;
+      const _this = this;
+
+      if ((file = _this.files[0])) {
+        img = new Image();
+        img.onload = function () {
+          if ( (400 < this.width && this.width < 800) && (1.3 < (this.height / this.width) && (this.height / this.width) < 1.35 ) ) {
+            readURL(_this);
+          } else {
+            alert('Image invalid' + "--Width: " + this.width + "   Height: " + this.height);
+            $("#image").val(null);
+          }
+        };
+        img.src = _URL.createObjectURL(file);
+      }
     });
     $("#image1").change(function () {
-      readURL1(this);
+      const _URL = window.URL;
+      let file, img;
+      const _this = this;
+
+      if ((file = _this.files[0])) {
+        img = new Image();
+        img.onload = function () {
+          if ( (400 < this.width && this.width < 800) && (1.3 < (this.height / this.width) && (this.height / this.width) < 1.35 ) ) {
+            readURL1(_this);
+          } else {
+            alert('Image invalid' + "--Width: " + this.width + "   Height: " + this.height);
+            $("#image1").val(null);
+          }
+        };
+        img.src = _URL.createObjectURL(file);
+      }
     });
     $("#image2").change(function () {
-      readURL2(this);
+      const _URL = window.URL;
+      let file, img;
+      const _this = this;
+
+      if ((file = _this.files[0])) {
+        img = new Image();
+        img.onload = function () {
+          if ( (400 < this.width && this.width < 800) && (1.3 < (this.height / this.width) && (this.height / this.width) < 1.35 ) ) {
+            readURL2(_this);
+          } else {
+            alert('Image invalid' + "--Width: " + this.width + "   Height: " + this.height);
+            $("#image2").val(null);
+          }
+        };
+        img.src = _URL.createObjectURL(file);
+      }
     });
     $("#image3").change(function () {
-      readURL3(this);
+      const _URL = window.URL;
+      let file, img;
+      const _this = this;
+
+      if ((file = _this.files[0])) {
+        img = new Image();
+        img.onload = function () {
+          if ( (400 < this.width && this.width < 800) && ((1.3 < (this.height / this.width) && (this.height / this.width) < 1.35 )) ) {
+            readURL3(_this);
+          } else {
+            alert('Image invalid' + "--Width: " + this.width + "   Height: " + this.height);
+            $("#image3").val(null);
+          }
+        };
+        img.src = _URL.createObjectURL(file);
+      }
     });
 
     $(document).ready(function () {
