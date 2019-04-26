@@ -147,6 +147,8 @@ module.exports = {
       product.set('description', item.description);
       product.set('userManual', item.userManual);
       product.set('shortDescription', item.shortDescription);
+      product.set('linkFacebook', item.linkFacebook);
+      product.set('linkInstagram', item.linkInstagram);
       if (item.fontSize && item.fontSize.length > 0) {
         product.set('size', item.fontSize);
       }else {
