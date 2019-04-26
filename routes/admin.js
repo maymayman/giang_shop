@@ -9,6 +9,7 @@ const numberSlice = public.length;
 const ProductModel = require('../models/Product');
 const OrderModel = require('../models/Order');
 const MenuModel = require('../models/Menu');
+const ContactModel = require('../models/Contact');
 
 const uploadFile = function (req, res, next) {
   const form = new formidable.IncomingForm();
@@ -167,6 +168,8 @@ router.post('/product/create', uploadFile, async function (req, res, next) {
     const description = req.body.description ? req.body.description : null;
     const shortDescription = req.body.shortDescription ? req.body.shortDescription : null;
     const userManual = req.body.userManual ? req.body.userManual : null;
+    const linkFacebook = req.body.linkFacebook ? req.body.linkFacebook : null;
+    const linkInstagram = req.body.linkInstagram ? req.body.linkInstagram : null;
     var colors = req.body.color ? req.body.color : null;
     var fontSize = req.body.fontSize ? req.body.fontSize : null;
     var sizeNumber = req.body.sizeNumber ? req.body.sizeNumber : null;
@@ -212,6 +215,8 @@ router.post('/product/create', uploadFile, async function (req, res, next) {
       description: description,
       userManual: userManual,
       shortDescription: shortDescription,
+      linkInstagram: linkInstagram,
+      linkFacebook: linkFacebook,
     };
     const productSave = await ProductModel.create(product);
     res.redirect('/admin/product?status=PENDING');
@@ -308,5 +313,48 @@ router.get('/order/:orderId/:productId', async function(req, res, next) {
     next(error);
   }
 });
+
+router.get('/contact', async function (req, res, next) {
+  try {
+    const user = req.user;
+    const status = req.query.status || 'PENDING';
+    const page = parseInt(req.query.page) || 1;
+    const limit = parseInt(req.query.limit) || 20;
+    const options = {
+      page : page,
+      limit : limit,
+      status: status
+    };
+    
+    const contacts = await ContactModel.findAllContact(options);
+    const count = await ContactModel.count(options);
+  
+  
+    res.render('../admin/contact', {contacts,
+      user,
+      status,
+      page,
+      nextPage: page + 1,
+      prePage: page - 1,
+      limit,
+      totalPage: count ? Math.ceil(count/limit) : 0});
+  } catch (error) {
+    next(error);
+  }
+});
+
+router.get('/contact/:id', async function (req, res, next) {
+  try {
+    const user = req.user;
+    const objectId = req.params.id;
+    
+    const contact = await ContactModel.findByIdAndUpdate(objectId, user.sessionToken);
+  
+    res.redirect('/admin/contact');
+  } catch (error) {
+    next(error);
+  }
+});
+
 
 module.exports = router;

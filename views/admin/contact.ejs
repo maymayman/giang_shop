@@ -1,0 +1,138 @@
+<!doctype html>
+<!--[if lt IE 7]>      <html class="no-js lt-ie9 lt-ie8 lt-ie7" lang=""> <![endif]-->
+<!--[if IE 7]>         <html class="no-js lt-ie9 lt-ie8" lang=""> <![endif]-->
+<!--[if IE 8]>         <html class="no-js lt-ie9" lang=""> <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js" lang=""> <!--<![endif]-->
+
+<%- include('./common/head', {}); %>
+
+<body>
+    <!-- Left Panel -->
+    
+    <aside id="left-panel" class="left-panel">
+        <%- include('./common/navbar', {}); %>
+    </aside>
+
+    <!-- /#left-panel -->
+    <!-- Right Panel -->
+    <div id="right-panel" class="right-panel">
+        <!-- Header-->
+        <%- include('./common/header', {}); %>
+        <!-- /#header -->
+        <!-- Content -->
+        <div class="content">
+            <!-- Animated -->
+            <div class="col-lg-12">
+                <div class="card">
+                    <div class="card-header">
+                        <strong class="card-title">Contacts</strong>
+                    </div>
+                    <div class="card-body">
+                        <table class="table order-table table-striped table-bordered">
+                            <thead>
+                                <tr>
+                                    <th scope="col" style="width: 10%">Name</th>
+                                    <th scope="col" style="width: 12%">Subject</th>
+                                    <th scope="col">Email</th>
+                                    <th scope="col">Message</th>
+                                    <th scope="col" style="width: 10%">status </th>
+                                    <th scope="col">Action</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <% contacts.forEach(function(contact){ %>
+                                    <tr>
+                                        <td>
+                                            <%= contact.name  %>
+                                        </td>
+                                        <td><%= contact.subject %></td>
+                                        <td>
+                                            <%= contact.email  %>
+                                        </td>
+
+                                        <td>
+                                            <%= contact.message%>
+                                        </td>
+                                        <td>
+                                            <%= contact.status%>
+                                        </td>
+
+                                        <td>
+                                            <% if(contact.status == 'PENDING'){%>
+                                                <a>
+                                                <button type="button" class="btn btn-outline-success btn-sm"
+                                                        onclick="location.href = './contact/<%= contact.objectId; %>'">
+                                                    <i class="fa fa-eye"></i>
+                                                    &nbsp; Approve
+                                                </button>
+                                            </a>
+                                            <%}%>
+                                        </td>
+                                    </tr>
+                            
+                                <% }); %>
+
+
+                            </tbody>
+                        </table>
+                    </div>
+                    <div class="col-md-6 offset-md-3 mr-auto ml-auto">
+                        <ul class="col-md-12 offset-md-12 mr-auto ml-auto" style="text-align: center">
+                            <% if (prePage > 0) { %>
+                            <li class="btn btn-outline-primary"><a class="prev" href=
+                                        <%= domain + 'admin/'
+                                        + 'contact?page=' + prePage
+                                        + '&limit=' + limit
+                                        + '&status=' + status
+                                        %>>
+                                    <i class="fa fa-angle-double-left"></i></a>
+                            </li>
+                            <% if (prePage > 1) { %>
+                            <li class="btn btn-outline-primary"><a class="" href="#">...</a></li>
+                            <% } %>
+                            <li class="btn btn-outline-primary"><a href= <%= domain + 'admin/'
+                                + 'contact?page=' + prePage
+                                + '&limit=' + limit
+                                + '&status=' + status
+                                %>><%= prePage; %></a>
+                            </li>
+                            <% } %>
+
+                            <% if (totalPage) { %>
+                            <li class="btn btn-outline-primary" style="color: #fff;background-color: #007bff;border-color: #007bff;">
+                                <a class="active" href="#" style="color: black"><%= page; %></a></li>
+                            <% } %>
+
+                            <% if (nextPage <= totalPage) { %>
+                            <li class="btn btn-outline-primary"><a href=<%= domain + 'admin/'
+                                + 'contact?page=' + nextPage
+                                + '&limit=' + limit
+                                + '&status=' + status
+                                %>><%= nextPage; %></a>
+                            </li>
+                            <% if (nextPage <= (totalPage - 1)) { %>
+                            <li class="btn btn-outline-primary"><a class="" href="#">...</a></li>
+                            <% } %>
+                            <li class="btn btn-outline-primary"><a class="next" href=<%= domain + 'admin/'
+                                + 'contact?page=' + nextPage
+                                + '&limit=' + limit
+                                + '&status=' + status
+                                %>>
+                                    <i class="fa fa-angle-double-right"></i></a>
+                            </li>
+                            <% } %>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+            <!-- .animated -->
+        </div>
+        <!-- /.content -->
+        <div class="clearfix"></div>
+        <!-- Footer -->
+        <%- include('./common/footer', {}); %>
+        <!-- /.site-footer -->
+    </div>
+    <!-- /#right-panel -->
+</body>
+</html>
