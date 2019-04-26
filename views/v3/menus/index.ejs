@@ -6,7 +6,7 @@
               <% menu.categories.forEach(function(category){ %>
                 <li>
                   <ul>
-                      <li class="mega-menu-title"><a href="#"><%= category.name %></a></li>
+                      <li class="mega-menu-title"><a href="<%= domain + 'product?category=' + category.objectId; %>"><%= category.name %></a></li>
                       <% category.items.forEach(function(item){ %>
                         <li><a href=<%= domain + 'product?category=' + item.objectId; %>><%= item.name %></a></li>
                       <% }); %>
@@ -173,17 +173,17 @@
           </li>
         </ul>
       </li> -->
-    <li><a href="#">Blog <i class="fa fa-angle-down"></i></a>
+    <li><a href="#">About <i class="fa fa-angle-down"></i></a>
       <ul class="submenu">
-        <li><a href="blog.html">blog standard</a></li>
-        <li><a href="blog-no-sidebar.html">blog no sidebar</a></li>
-        <li><a href="blog-right-sidebar.html">blog right sidebar</a></li>
+        <li><a href="#">For Store</a></li>
+        <li><a href="#">For Customer</a></li>
+        <!-- <li><a href="blog-right-sidebar.html">blog right sidebar</a></li>
         <li><a href="blog-details.html">blog details 1</a></li>
         <li><a href="blog-details-2.html">blog details 2</a></li>
-        <li><a href="blog-details-3.html">blog details 3</a></li>
+        <li><a href="blog-details-3.html">blog details 3</a></li> -->
       </ul>
     </li>
-    <li><a href="about.html"> About </a></li>
+    <!-- <li><a href="about.html"> About </a></li> -->
     <li><a href="contact"> Contact</a></li>
   </ul>
 </nav>

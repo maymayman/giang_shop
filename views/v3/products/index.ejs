@@ -16,7 +16,10 @@
                     : domain + product.images[0]; %> alt="">
               </a>
 
-              <span class="pink">NEW</span>
+                <% if (new Date() - new Date(product.createdAt) < (3600*24*1000*7) ) { %>
+                    <span class="pink">NEW</span>
+                <% } %>
+              
               <!--<div class="product-action-2">-->
                   <!--<a title="Add To Cart" -->
                   <!--data-product_id=<%= product.objectId; %>-->

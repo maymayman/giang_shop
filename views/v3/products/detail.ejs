@@ -145,7 +145,8 @@
             <ul>
               <% if(product && product.linkFacebook){%>
               <li><a href=<%= product.linkFacebook%> target="_blank"><i class="fa fa-facebook"></i></a></li>
-              <%}else if(product && product.linkInstagram){%>
+              <%} %>
+              <% if(product && product.linkInstagram){%>
               <li><a href=<%= product.linkInstagram %> target="_blank"><i class="fa fa-instagram"></i></a></li>
               <%}%>
               <!--<li><a href="#"><i class="fa fa-pinterest-p"></i></a></li>-->
