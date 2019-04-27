@@ -145,10 +145,9 @@ router.get('/account', async function(req, res, next) {
   try {
     const user = req.user;
     const menus = await MenuModel.find(true);
-    const orders = await OrderModel.myOrders(user.objectId);
     const active = req.query.active;
     
-    res.render('account', { menus, user, orders, active });
+    res.render('account', { menus, user, active });
   } catch (error) {
     next(error);
   }
