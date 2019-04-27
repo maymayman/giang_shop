@@ -5455,7 +5455,9 @@ a.default-btn {
     padding: 14px 44px;
     margin: -64px 0 0;
     z-index: 99;
-    position: relative; }
+    position: relative;
+    width: 70%;
+  }
     @media only screen and (min-width: 992px) and (max-width: 1199px) {
       .blog-wrap .blog-content-wrap .blog-content {
         padding: 14px 30px;
