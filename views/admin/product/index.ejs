@@ -71,6 +71,14 @@
                                                     </button>
                                                 </a>
                                             <% } %>
+                                            <% if (product.status == 'PENDING' && user && user.role === 'store') { %>
+                                                <a>
+                                                    <button type="button" onclick="location.href ='./product/<%= product.objectId %>/edit'" class="btn btn-outline-success btn-sm">
+                                                        <i class="fa fa-magic"></i>
+                                                        &nbsp; Edit
+                                                    </button>
+                                                </a>
+                                            <% } %>
             
                                             <a target="_blank" href="../product/<%= product.objectId %>">
                                                 <button type="button" class="btn btn-outline-success btn-sm" >

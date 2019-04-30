@@ -224,6 +224,93 @@ router.post('/product/create', uploadFile, async function (req, res, next) {
     next(error);
   }
 });
+
+
+router.get('/product/:objectId/edit', async function(req, res, next) {
+  const user = req.user;
+  const menus = await MenuModel.find(true);
+  const product = await ProductModel.findByObjectId(req.params.objectId, user);
+  const listCategory = await MenuModel.find(true);
+  
+  res.render('../admin/product/edit', { menus, product, user, listCategory });
+});
+
+router.post('/product/:objectId/edit', uploadFile, async function(req, res, next) {
+  const user = req.user;
+  const sessionToken = req.user.sessionToken;
+  const objectId = req.params.objectId || null;
+  const information = req.body.information ? req.body.information : null;
+  const name = req.body.name ? req.body.name : null;
+  const price = req.body.price ? req.body.price : null;
+  const quantity = req.body.quantity ? req.body.quantity : 0;
+  const images = req.files ? req.files : null;
+  const category = req.body.category ? req.body.category : null;
+  const description = req.body.description ? req.body.description : null;
+  const shortDescription = req.body.shortDescription ? req.body.shortDescription : null;
+  const userManual = req.body.userManual ? req.body.userManual : null;
+  const linkFacebook = req.body.linkFacebook ? req.body.linkFacebook : null;
+  const linkInstagram = req.body.linkInstagram ? req.body.linkInstagram : null;
+  var colors = req.body.color ? req.body.color : null;
+  var fontSize = req.body.fontSize ? req.body.fontSize : null;
+  var sizeNumber = req.body.sizeNumber ? req.body.sizeNumber : null;
+  const error = [];
+  if(user && user.role != 'store'){
+    return res.json('permission denied');
+  }
+  if (!objectId) {
+    error.push('objectId is require.')
+  }
+  if (!name) {
+    error.push('name is require.')
+  }
+  if (!price) {
+    error.push('price is require.')
+  }
+  if (!images) {
+    error.push('images is require.')
+  }
+  if (!category) {
+    error.push('category is require.')
+  }
+  if (fontSize && !Array.isArray(fontSize)) {
+    fontSize = [fontSize]
+  }
+  if (sizeNumber && !Array.isArray(sizeNumber)) {
+    sizeNumber = [sizeNumber]
+  }
+  if (!Array.isArray(colors)) {
+    colors = [colors]
+  }
+  if (error && error.length > 0) {
+    return res.json({success: false, error: error, data: null});
+  }
+  const product = {
+    userId: user.objectId,
+    objectId: objectId,
+    information: information,
+    name: name,
+    price: parseInt(price),
+    quantity: parseInt(quantity),
+    images: images,
+    fontSize: fontSize,
+    sizeNumber: sizeNumber,
+    colors: colors,
+    category: category,
+    description: description,
+    userManual: userManual,
+    shortDescription: shortDescription,
+    linkInstagram: linkInstagram,
+    linkFacebook: linkFacebook,
+  };
+  
+  const productSave = await ProductModel.findByIdToEdit(product, sessionToken);
+  
+  res.redirect('/admin/product?status=PENDING');
+});
+
+
+
+
 router.get('/order/:objectId', async function(req, res, next) {
   try {
     const user = req.user;
