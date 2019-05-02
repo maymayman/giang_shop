@@ -1,0 +1,205 @@
+<!doctype html>
+<!--[if lt IE 7]>
+<html class="no-js lt-ie9 lt-ie8 lt-ie7" lang=""> <![endif]-->
+<!--[if IE 7]>
+<html class="no-js lt-ie9 lt-ie8" lang=""> <![endif]-->
+<!--[if IE 8]>
+<html class="no-js lt-ie9" lang=""> <![endif]-->
+<!--[if gt IE 8]><!-->
+<html class="no-js" lang=""> <!--<![endif]-->
+
+<%- include('./common/head', {
+csslinks: [
+`http://netdna.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap.css`,
+`http://cdnjs.cloudflare.com/ajax/libs/summernote/0.8.11/summernote.css`,
+`${domain}assets/css/lib/chosen/chosen.min.css`
+]
+}); %>
+
+<style>
+  .btn-file {
+    position: relative;
+    overflow: hidden;
+  }
+
+  .btn-file input[type=file] {
+    position: absolute;
+    top: 0;
+    right: 0;
+    min-width: 100%;
+    min-height: 100%;
+    font-size: 100px;
+    text-align: right;
+    filter: alpha(opacity=0);
+    opacity: 0;
+    outline: none;
+    background: white;
+    cursor: inherit;
+    display: block;
+  }
+
+  .content-submit {
+    padding: 10px 10px 10px 0;
+    border-top: 1px solid #e1e1e1;
+    text-align: right;
+    background-color: #f0f3f5;
+  }
+
+  .multi-select {
+    border-radius: 1px;
+  }
+
+  .yellow {
+    color: yellow;
+  }
+
+  .gray {
+    color: gray;
+  }
+
+  .green {
+    color: green;
+  }
+
+  .blue {
+    color: blue;
+  }
+
+  .maroon {
+    color: maroon;
+  }
+
+  .columns .chosen-container, .column .chosen-container {
+    width: 100% !important;
+    margin-bottom: 1rem;
+  }
+
+</style>
+
+<body>
+<!-- Left Panel -->
+
+<aside id="left-panel" class="left-panel">
+  <%- include('./common/navbar', {}); %>
+</aside>
+
+<!-- /#left-panel -->
+<!-- Right Panel -->
+<div id="right-panel" class="right-panel">
+  <!-- Header-->
+  <%- include('./common/header', {}); %>
+  <!-- /#header -->
+  <!-- Content -->
+  <div class="content">
+
+    <!-- Animated -->
+    <form id="myForm" action="./create" method="post" enctype="multipart/form-data">
+      <div class="row">
+        <div class="col-lg-12 col-md-12 col-sm-12" style="padding: 3px; margin-right: auto; margin-left: auto">
+          <div class="animated fadeIn">
+            <div class="row">
+              <div class="col-lg-6" style="margin-right: auto; margin-left: auto">
+                <div class="card">
+                  <div class="card-body card-block">
+                    <div class="row form-group">
+                      <div class="col col-md-12">
+                        <label for="image1">Image (require: 400 < width < 800 and scale 3/4 and not greater than
+                          2MB)</label>
+                      </div>
+                      <div class="col-12 col-md-12">
+                        <div class="row">
+                          <div class=" col-12 col-md-12">
+                            <img id="blah"
+                                 src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAGQAAABkCAMAAABHPGVmAAAAXVBMVEXa2trc3NxWVlZQUFDi4uJMTExwcHBVVVXJyclsbGyAgIBJSUmYmJh0dHTq6uq2trbQ0NBgYGDU1NRcXFy6urrAwMCjo6OwsLDr6+uVlZVmZmaPj4+fn598fHyKiopxX3gCAAABPUlEQVRoge3W3Y6CMBCGYToztZYqVCu4/uD9X+ZWjG52tSabTPdg8z0HxHDAy0BBmgYAAAAAAAD+KfOWTkMOfr0o8a1ORabARcErRVqmUoN4oRWxyRckvUjYxNeHMutQMyJiqkdkGLemckQGClP1yMUmHqRKxHzt4sR9jYhcdnLfNQab8j71iInOP95U5uTzIPoRObM9zaPk1WvEXH/qT+LzS2Q+/f1jGWhHpGci3myN2VJ7vzfqkdaSI9uKjGwPUiUiy+QysqPky5a3NSLdKg+SI7w5syM33xz9y5XPfx7F8bylQX91NbtbIx//1uJjVH93Nde19Q0vGu0nvul//s+7MKnfk9g/2UftSbpnHyKdYsSmw+ql89HqRcgWOMVPIipivY+7VGokpzSJict3VBp/81UPAAAAAAAAv/IJ3PkWrDb8/5QAAAAASUVORK5CYII="
+                                 width="100%;" alt="your image"/>
+
+                            <label class="btn btn-default btn-file no-padding"
+                                   style="background-color: cadetblue; width: 100%; margin-top: 10px;">
+                              <span class="new-button-color">chose imange</span>
+
+                              <input class="btn btn-default btn-file" type="file" id="image" name="image">
+                            </label>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+
+
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+
+        <div class="col-12 col-md-12 mt-5">
+          <button type="submit" onclick="submit()" class="btn btn-sm btn-primary float-right">
+            <i class="fa fa-dot-circle-o"></i> Submit
+          </button>
+        </div>
+      </div>
+    </form>
+  </div>
+</div>
+<!-- .animated -->
+
+<!-- /.content -->
+<div class="clearfix"></div>
+<!-- Footer -->
+<%- include('./common/footer', {}); %>
+<!-- /.site-footer -->
+</div>
+<!-- /#right-panel -->
+<!--<script>-->
+<!--function submit() {-->
+<!--document.getElementById("myForm").submit();-->
+<!--}-->
+<!--</script>-->
+<script>
+  jQuery(document).ready(function ($) {
+    const fileSize = 2 * 1024 * 1024;
+
+    var reader = new FileReader();
+
+
+    reader.onload = function (e) {
+      $('#blah').attr('src', e.target.result);
+    }
+
+    function readURL(input) {
+      if (input.files && input.files[0] && input.files[0].size <= fileSize) {
+        reader.readAsDataURL(input.files[0]);
+      } else {
+        alert("Image Invalid Size: " + input.files[0].size)
+      }
+    }
+
+
+    $("#image").change(function () {
+      const _URL = window.URL;
+      let file, img;
+      const _this = this;
+
+      if ((file = _this.files[0])) {
+        img = new Image();
+        img.onload = function () {
+          if ((400 < this.width && this.width < 1024) && (0 < (this.height / this.width) && (this.height / this.width) < 5)) {
+            readURL(_this);
+          } else {
+            alert('Image invalid' + "--Width: " + this.width + "   Height: " + this.height);
+            $("#image").val(null);
+          }
+        };
+        img.src = _URL.createObjectURL(file);
+      }
+    });
+  });
+
+  function submit() {
+    document.getElementById("myForm").submit();
+  }
+</script>
+
+</body>
+</html>

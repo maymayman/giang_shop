@@ -5,6 +5,7 @@ const util = require('util');
 const fs = require('fs');
 const public = process.env.PUBLIC_FOLDER || '/public';
 const uploadDir = `.${public}/media`;
+const folderImage = `.${public}/img/banner`;
 const numberSlice = public.length;
 const ProductModel = require('../models/Product');
 const OrderModel = require('../models/Order');
@@ -443,5 +444,65 @@ router.get('/contact/:id', async function (req, res, next) {
   }
 });
 
+router.get('/manage/image', uploadFile, async function (req, res, next) {
+  try {
+    const user = req.user;
+    const listBanner = [];
+    // const folder = '../../public/image/banner';
+  
+    fs.readdirSync(folderImage).forEach(function(image) {
+      listBanner.push(image)
+    });;
+  
+    res.render('../admin/list-banner', {listBanner});
+  } catch (error) {
+    next(error);
+  }
+});
+
+router.get('/manage/image/:image', uploadFile, async function (req, res, next) {
+  try {
+    const user = req.user;
+    const image = req.params.image;
+    if(user && user.role === 'store'){
+      fs.readdirSync(folderImage).forEach(function(img) {
+        if(image === img){
+          fs.unlinkSync(folderImage + '/' + img);
+        }
+      });
+    }else {
+      return res.json('permission denied')
+    }
+    
+    res.redirect('');
+  } catch (error) {
+    next(error);
+  }
+});
+
+router.get('/manage/add-new', uploadFile, async function (req, res, next) {
+  try {
+    const user = req.user;
+   if (user && !user.role == 'store') {
+     return res.json('permission denied')
+   }
+    res.render('../admin/add-new-banner');
+  } catch (error) {
+    next(error);
+  }
+});
+
+router.post('/manage/add-new', uploadFile, async function (req, res, next) {
+  try {
+    const user = req.user;
+    const imageBanner = req.files ? req.files : null;
+   if (user && !user.role == 'store') {
+     return res.json('permission denied')
+   }
+    res.render('../admin/index', {imageBanner})
+  } catch (error) {
+    next(error);
+  }
+});
 
 module.exports = router;
