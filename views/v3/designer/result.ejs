@@ -1,0 +1,15 @@
+<% for (let group in categories) { %>
+    <div class="block-one col-lg-3 col-md-3 col-sm-12 row-eq-height" style="display: inline-block;margin-top: 10px;margin-bottom: 10px;">
+        <div class="col-12">
+            <ul id="designers_123" class="list-regular">
+                <li>
+                    <h2 class="mb20"><a href="#" class="designers-list-item-title"><%= group; %></a></h2> 
+                </li>
+
+                <% categories[group].forEach(function(category){ %>
+                    <li class="force-ltr designersResultsBrands"> <a data-href="#" href="<%= domain + 'product?category=' + category.objectId; %>" class="open-persistent-tooltip" data-gender="249"><%= category.name; %></a> </li>
+                <% }); %>
+            </ul>
+        </div>
+    </div>
+<% } %>

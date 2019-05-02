@@ -1581,7 +1581,7 @@ a.default-btn {
       -o-transition: all 0.5s ease 0s;
       transition: all 0.5s ease 0s;
       visibility: hidden;
-      width: 700px;
+      width: 100%;
       z-index: 999;
       -webkit-box-shadow: 0 1px 7px -2px rgba(0, 0, 0, 0.3);
       box-shadow: 0 1px 7px -2px rgba(0, 0, 0, 0.3); }
@@ -1593,7 +1593,7 @@ a.default-btn {
         float: left;
         margin-left: 0;
         padding: 0;
-        width: 33.33%; }
+        width: 14%; }
         .main-menu nav ul li ul.mega-menu > li ul li.mega-menu-title {
           float: inherit;
           width: 100%; }

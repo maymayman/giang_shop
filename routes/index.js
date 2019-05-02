@@ -32,12 +32,10 @@ router.get('/contact', async function(req, res, next) {
 
 router.post('/contact', async function(req, res, next) {
   try {
-    const user = req.user;
     const email = req.body.email ? req.body.email : null;
     const name = req.body.name ? req.body.name : null;
     const subject = req.body.subject ? req.body.subject : null;
     const message = req.body.message ? req.body.message : null;
-    const menus = await MenuModel.find(true);
     let messageToUser = null;
     
     if(email && name && message && subject){
