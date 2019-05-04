@@ -1,0 +1,284 @@
+<!doctype html>
+<!--[if lt IE 7]>
+<html class="no-js lt-ie9 lt-ie8 lt-ie7" lang=""> <![endif]-->
+<!--[if IE 7]>
+<html class="no-js lt-ie9 lt-ie8" lang=""> <![endif]-->
+<!--[if IE 8]>
+<html class="no-js lt-ie9" lang=""> <![endif]-->
+<!--[if gt IE 8]><!-->
+<html class="no-js" lang=""> <!--<![endif]-->
+
+<%- include('../common/head', {}); %>
+
+<body>
+<!-- Left Panel -->
+
+<aside id="left-panel" class="left-panel">
+  <%- include('../common/navbar', {}); %>
+</aside>
+
+<!-- /#left-panel -->
+<!-- Right Panel -->
+<div id="right-panel" class="right-panel">
+  <!-- Header-->
+  <%- include('../common/header', {}); %>
+  <!-- /#header -->
+  <!-- Content -->
+  <div class="content">
+    <!------ message ---->
+    <%if(errorMessage){%>
+    <div class="col-lg-12 alert alert-danger text-center">
+      <span class="error-message"><%= errorMessage%></span>
+    </div>
+    <%}%>
+    <!-- Animated -->
+    <div class="col-lg-12 no-padding">
+      <div class="card">
+        <div class="card-header">
+          <%if(user && user.role == 'administrator'){%>
+          <button type="button" class="btn btn-primary btn-sm float-right btn-create" style="width: auto">Add New</button>
+          <%}%>
+          <strong class="card-title">Menus</strong>
+
+        </div>
+        <div class="card-body">
+          <table class="table order-table table-striped table-bordered">
+            <thead>
+            <tr>
+              <th scope="col" style="width: 10%">ID</th>
+              <th scope="col" style="width: 12%">Name</th>
+              <th scope="col" style="width: 10%">Status</th>
+              <th scope="col" style="width: 10%">Position</th>
+              <th scope="col">Action</th>
+            </tr>
+            </thead>
+            <tbody>
+            <% menus.forEach(function(menu){ %>
+            <tr>
+              <th scope="serial"><%= menu.objectId %></th>
+              <td><%= menu.name %></td>
+              <td>
+                <span><%= menu.status %></span>
+              </td>
+              <td>
+                <span><%= menu.position%></span>
+              </td>
+
+              <td>
+                <button type="button"  class="btn btn-outline-success btn-sm btn-detail"
+                        data-id="<%=menu.objectId%>"
+                        data-name="<%=menu.name%>"
+                        data-status="<%=menu.status%>"
+                        data-position="<%=menu.position%>">
+                  <i class="fa fa-eye"></i>
+                  &nbsp; Edit
+                </button>
+              </td>
+            </tr>
+
+            <% }); %>
+
+            </tbody>
+          </table>
+        </div>
+        <div class="col-md-6 offset-md-3 mr-auto ml-auto">
+          <ul class="col-md-12 offset-md-12 mr-auto ml-auto" style="text-align: center">
+            <% if (prePage > 0) { %>
+            <li class="btn btn-outline-primary"><a class="prev" href=
+                      <%= domain + 'admin/'
+                      + 'menus?page=' + prePage
+                      + '&limit=' + limit
+                      + '&status=' + status
+                      %>>
+                <i class="fa fa-angle-double-left"></i></a>
+            </li>
+            <% if (prePage > 1) { %>
+            <li class="btn btn-outline-primary"><a class="" href="#">...</a></li>
+            <% } %>
+            <li class="btn btn-outline-primary"><a href= <%= domain + 'admin/'
+              + 'menus?page=' + prePage
+              + '&limit=' + limit
+              + '&status=' + status
+              %>><%= prePage; %></a>
+            </li>
+            <% } %>
+
+            <% if (totalPage) { %>
+            <li class="btn btn-outline-primary" style="color: #fff;background-color: #007bff;border-color: #007bff;">
+              <a class="active" href="#" style="color: black"><%= page; %></a></li>
+            <% } %>
+
+            <% if (nextPage <= totalPage) { %>
+            <li class="btn btn-outline-primary"><a href=<%= domain + 'admin/'
+              + 'menus?page=' + nextPage
+              + '&limit=' + limit
+              + '&status=' + status
+              %>><%= nextPage; %></a>
+            </li>
+            <% if (nextPage <= (totalPage - 1)) { %>
+            <li class="btn btn-outline-primary"><a class="" href="#">...</a></li>
+            <% } %>
+            <li class="btn btn-outline-primary"><a class="next" href=<%= domain + 'admin/'
+              + 'menus?page=' + nextPage
+              + '&limit=' + limit
+              + '&status=' + status
+              %>>
+                <i class="fa fa-angle-double-right"></i></a>
+            </li>
+            <% } %>
+          </ul>
+        </div>
+      </div>
+    </div>
+    <!-- .animated -->
+  </div>
+  <!-- /.content -->
+  <div class="clearfix"></div>
+  <!-- Footer -->
+  <%- include('../common/footer', {}); %>
+  <!-- /.site-footer -->
+</div>
+<!-- /#right-panel -->
+<!-- Modal -->
+<div  class="modal fade" id="editMenu" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+        <h5 class="modal-title" id="exampleModalLabel">Information Menu</h5>
+      </div>
+      <div class="modal-body">
+        <div class="col-lg-12">
+          <div class="">
+            <div class="card-body card-block">
+              <form id="menuDetail" action="#" method="post" enctype="multipart/form-data" class="form-horizontal">
+                <input type="text" id="objectId" name="objectId" class="form-control" style="display: none">
+
+                <div class="row form-group">
+                  <div class="col col-md-3">
+                    <label for="text-input" class=" form-control-label">Name</label>
+                  </div>
+                  <div class="col-12 col-md-9">
+                    <input type="text" id="name" name="name" class="form-control">
+                    <!--<small class="form-text text-muted">This is a help text</small>-->
+                  </div>
+                </div>
+
+                <div class="row form-group">
+                  <div class="col col-md-3">
+                    <label for="text-input" class=" form-control-label">Status</label>
+                  </div>
+                  <div class="col-12 col-md-9" style="width: auto">
+                    <select id="status" name="status" class="form-control">
+                      <option value="INACTIVE">INACTIVE</option>
+                      <option value="ACTIVE">ACTIVE</option>
+                    </select>
+                  </div>
+                </div>
+
+                <div class="row form-group">
+                  <div class="col col-md-3">
+                    <label for="text-input" class=" form-control-label">Position</label>
+                  </div>
+                  <div class="col-12 col-md-9">
+                    <input type="number" name="position" id="position" class="form-control">
+                  </div>
+                </div>
+              </form>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary"  data-dismiss="modal">Close</button>
+        <button type="button" class="btn btn-primary btn-save-edit-menu">Save changes</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div  class="modal fade" id="createMenu" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+        <h5 class="modal-title" id="exampleModalLabel">Menu</h5>
+      </div>
+      <div class="modal-body">
+        <div class="col-lg-12">
+          <div class="">
+            <div class="card-body card-block">
+              <form id="formCreateMenu" action="./menus/create" method="post" enctype="multipart/form-data" class="form-horizontal">
+
+                <div class="row form-group">
+                  <div class="col col-md-3">
+                    <label for="text-input" class=" form-control-label">Name</label>
+                  </div>
+                  <div class="col-12 col-md-9">
+                    <input type="text" id="newName" name="newName" class="form-control">
+                  </div>
+                </div>
+
+                <div class="row form-group">
+                  <div class="col col-md-3">
+                    <label for="text-input" class=" form-control-label">Status</label>
+                  </div>
+                  <div class="col-12 col-md-9" style="width: auto">
+                    <select id="newStatus" name="newStatus" class="form-control">
+                      <option value="ACTIVE">ACTIVE</option>
+                      <option value="INACTIVE">INACTIVE</option>
+                    </select>
+                  </div>
+                </div>
+
+                <div class="row form-group">
+                  <div class="col col-md-3">
+                    <label for="text-input" class=" form-control-label">Position</label>
+                  </div>
+                  <div class="col-12 col-md-9">
+                    <input type="number" name="newPosition" id="newPosition" class="form-control">
+                  </div>
+                </div>
+              </form>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary"  data-dismiss="modal">Close</button>
+        <button type="submit" class="btn btn-primary btn-save-new-menu">Add New</button>
+      </div>
+    </div>
+  </div>
+</div>
+<script>
+  jQuery(document).ready(function($){
+    $('.btn-detail').on('click', function() {
+      $('#editMenu').modal('show');
+      $('#objectId').val($(this).data('id'));
+      $('#name').val($(this).data('name'));
+      $('#status').val($(this).data('status'));
+      $('#position').val($(this).data('position'));
+    });
+
+    $('.btn-save-edit-menu').on('click', function() {
+      $('#editMenu').modal('hide');
+      document.getElementById('menuDetail').submit()
+    });
+
+    $('.btn-create').on('click', function () {
+      $('#createMenu').modal('show');
+    })
+
+    $('.btn-save-new-menu').on('click', function() {
+      $('#createMenu').modal('hide');
+      document.getElementById('formCreateMenu').submit();
+    });
+  })
+</script>
+</body>
+</html>

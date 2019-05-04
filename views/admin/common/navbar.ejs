@@ -48,7 +48,29 @@
                     <i class="menu-icon fa fa-table"></i>Contact
                 </a>
             </li>
-            
+
+            <% if(user && user.role == 'administrator'){%>
+            <li class="menu-item-has-children dropdown">
+                <a href="#" class="dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                    <i class="menu-icon fa fa-book"></i>Categories
+                </a>
+                <ul class="sub-menu children dropdown-menu">
+                    <li>
+                        <i class="fa fa-book"></i>
+                        <a href=<%= domain + 'admin/menus';%>>List Menu</a>
+                    </li>
+                    <li>
+                        <i class="fa fa-book"></i>
+                        <a href=<%= domain + 'admin/categories-parent';%>>Categories Parent</a>
+                    </li>
+                    <li>
+                        <i class="fa fa-book"></i>
+                        <a href=<%= domain + 'admin/categories-children';%>>Categories Children</a>
+                    </li>
+                </ul>
+            </li>
+            <%}%>
+
         </ul>
     </div><!-- /.navbar-collapse -->
 </nav>

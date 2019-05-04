@@ -1,21 +1,21 @@
 const helper = require('./helper');
 
 const Help = {
-  findCategoriesByMenu: async function(menu) {
+  findCategoriesByMenu: async function (menu) {
     try {
       const Category = Parse.Object.extend('Category');
       const query = new Parse.Query(Category);
       query.equalTo('menu', menu);
       query.equalTo('status', "ACTIVE");
-
+      
       let categories = await query.find();
-
+      
       if (categories.length) {
         let promises = [];
         categories.forEach(category => {
           promises.push(Help.findSubCategoriesByCategory(category));
         });
-
+        
         categories = await Promise.all(promises);
       }
       
@@ -25,18 +25,18 @@ const Help = {
       throw err;
     }
   },
-
-  findSubCategoriesByCategory: async function(category) {
+  
+  findSubCategoriesByCategory: async function (category) {
     try {
       const Category = Parse.Object.extend('Category');
       const query = new Parse.Query(Category);
       query.equalTo('parent', category);
       query.equalTo('status', "ACTIVE");
-
+      
       const subCategories = await query.find();
-
+      
       category.set('items', helper.toJSON(subCategories));
-
+      
       return category;
     } catch (err) {
       throw err;
@@ -45,36 +45,109 @@ const Help = {
 };
 
 module.exports = {
-  find: async function(hasCategories, trigger) {
+  count: async function (options) {
+    try {
+      const Menu = Parse.Object.extend('Menu');
+      const query = new Parse.Query(Menu);
+      
+      if (!options && !options.user && !options.user.role == 'administrator') {
+        query.equalTo('status', "ACTIVE");
+      }
+      
+      const count = await query.count();
+      
+      return count;
+    } catch (err) {
+      throw err;
+    }
+  },
+  
+  findByAdmin: async function (options) {
+    try {
+      const {skip, limit} = helper.pagination(options);
+  
+      const Menu = Parse.Object.extend('Menu');
+      const query = new Parse.Query(Menu);
+      
+      query.skip(skip);
+      query.limit(limit);
+      query.ascending('position');
+      
+      const menus = await query.find();
+      
+      return helper.toJSON(menus);
+    } catch (err) {
+      throw err;
+    }
+  },
+  
+  find: async function (hasCategories, trigger) {
     try {
       if (Parse.Cache.Menus && !trigger) {
         return Parse.Cache.Menus;
       }
-
+      
       const Menu = Parse.Object.extend('Menu');
       const query = new Parse.Query(Menu);
       query.equalTo('status', "ACTIVE");
-
+      
       const menus = await query.find();
-
+      
       if (!hasCategories) {
         return helper.toJSON(menus);
       }
-
+      
       const promises = [];
-
+      
       menus.forEach(menu => {
-        promises.push(Help.findCategoriesByMenu(menu)); 
+        promises.push(Help.findCategoriesByMenu(menu));
       });
-
+      
       const parseMenus = await Promise.all(promises);
       const results = helper.toJSON(parseMenus);
-
+      
       Parse.Cache.Menus = results;
-
+      
       return results;
     } catch (err) {
       throw err;
     }
+  },
+  
+  findByIdToUpdate: async function (options, sessionToken) {
+    try {
+      const Menu = Parse.Object.extend('Menu');
+      const query = new Parse.Query(Menu);
+      query.equalTo('objectId', options.objectId);
+      
+      const result = await query.first();
+      
+      result.set('name', options.name);
+      result.set('status', options.status);
+      result.set('position', options.position);
+      
+      const menu = await result.save(null, {sessionToken});
+      
+      return helper.toJSON(menu);
+    } catch (err) {
+      throw err;
+    }
+  },
+  
+  create: async function(options, sessionToken){
+    try {
+      const Menu = Parse.Object.extend('Menu');
+      const menu = new Menu();
+  
+      menu.set('name', options.name);
+      menu.set('status', options.status);
+      menu.set('position', options.position);
+    
+      const menuSaved = await menu.save(null, {sessionToken});
+    
+      return helper.toJSON(menuSaved);
+    } catch (err) {
+      throw err;
+    }
   }
-}
+};
