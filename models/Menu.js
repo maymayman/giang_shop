@@ -1,9 +1,11 @@
 const helper = require('./helper');
 
+const Category = Parse.Object.extend('Category');
+const Menu = Parse.Object.extend('Menu');
+
 const Help = {
   findCategoriesByMenu: async function (menu) {
     try {
-      const Category = Parse.Object.extend('Category');
       const query = new Parse.Query(Category);
       query.equalTo('menu', menu);
       query.equalTo('status', "ACTIVE");
@@ -28,7 +30,6 @@ const Help = {
   
   findSubCategoriesByCategory: async function (category) {
     try {
-      const Category = Parse.Object.extend('Category');
       const query = new Parse.Query(Category);
       query.equalTo('parent', category);
       query.equalTo('status', "ACTIVE");
@@ -86,8 +87,6 @@ module.exports = {
       if (Parse.Cache.Menus && !trigger) {
         return Parse.Cache.Menus;
       }
-      
-      const Menu = Parse.Object.extend('Menu');
       const query = new Parse.Query(Menu);
       query.equalTo('status', "ACTIVE");
       
@@ -116,7 +115,6 @@ module.exports = {
   
   findByIdToUpdate: async function (options, sessionToken) {
     try {
-      const Menu = Parse.Object.extend('Menu');
       const query = new Parse.Query(Menu);
       query.equalTo('objectId', options.objectId);
       
@@ -136,7 +134,6 @@ module.exports = {
   
   create: async function(options, sessionToken){
     try {
-      const Menu = Parse.Object.extend('Menu');
       const menu = new Menu();
   
       menu.set('name', options.name);
@@ -149,5 +146,48 @@ module.exports = {
     } catch (err) {
       throw err;
     }
-  }
+  },
+
+  findCategories: async function(options) {
+    try {
+      const query = new Parse.Query(Category);
+      query.equalTo('status', "ACTIVE");
+      query.select(['name']);
+
+      if (options.parentId) {
+        const pointerCate = new Category();
+        pointerCate.id = options.parentId;
+        query.equalTo('parent', pointerCate);
+      }
+
+      if (options.keyword) {
+        query.matches('name', new RegExp(options.keyword, 'i'));
+      }
+
+      const results = await query.find();
+
+      return helper.toJSON(results);
+    } catch (err) {
+      throw (err);
+    }
+  },
+  findParentCategories: async function(options) {
+    try {
+      const Menu = Parse.Object.extend('Menu');
+      const pointerMenu = new Menu();
+      pointerMenu.id = options.menuId;
+
+      const query = new Parse.Query(Category);
+      query.equalTo('status', "ACTIVE");
+      query.equalTo('menu', pointerMenu);
+      query.select(['name'])
+
+      const results = await query.find();
+
+      return helper.toJSON(results);
+    } catch (err) {
+      throw (err);
+    }
+  },
 };
+
