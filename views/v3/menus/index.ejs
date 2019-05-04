@@ -1,18 +1,43 @@
 <nav>
   <ul>
       <% menus.forEach(function(menu){ %>
-        <li><a href=<%= domain + 'product?menu=' + menu.objectId; %>> <%= menu.name %> <i class="fa fa-angle-down"></i> </a>
+        <li style="position: unset;"><a href=<%= domain + 'product?menu=' + menu.objectId; %>> <%= menu.name %> <i class="fa fa-angle-down"></i> </a>
           <ul class="mega-menu">
-              <% menu.categories.forEach(function(category){ %>
-                <li>
-                  <ul>
-                      <li class="mega-menu-title"><a href="#"><%= category.name %></a></li>
-                      <% category.items.forEach(function(item){ %>
-                        <li><a href=<%= domain + 'product?category=' + item.objectId; %>><%= item.name %></a></li>
-                      <% }); %>
-                  </ul>
-                </li>
-              <% }); %>
+            <% menu.categories.forEach(function(category){ %>
+              <!-- <% 
+                let page = category.items.length / 15;
+                let pageShow = Math.floor(Math.ceil(page)/2);
+              %>
+              <% for (let i = 0; i < Math.ceil(page) ; i++) { %>
+                <% 
+                  let start = (i == 0) ? 0 : (i * 15);
+                  let end = ((page - i) < 1) ? Math.round(page * 15) : ((i + 1) * 15);
+                %>
+                  <li>
+                    <ul>
+                        <% if ( i === pageShow ) { %>
+                          <li class="mega-menu-title">
+                            <a href="<%= domain + 'product?category=' + category.objectId; %>">
+                              <%= category.name %>
+                            </a>
+                          </li>
+                          
+                        <% } %>
+                        <% for (let j = start; j < end ; j++) { %>
+                          <li><a href=<%= domain + 'product?category=' + category.items[j].objectId; %>><%= category.items[j].name %></a></li>
+                        <% } %>
+                    </ul>
+                  </li>
+              <% } %> -->
+              <li>
+                <ul>
+                    <li class="mega-menu-title"><a href="<%= domain + 'product?category=' + category.objectId; %>"><%= category.name %></a></li>
+                    <% category.items.forEach(function(item){ %>
+                      <li><a href=<%= domain + 'product?category=' + item.objectId; %>><%= item.name %></a></li>
+                    <% }); %>
+                </ul>
+              </li>
+            <% }); %>
           </ul>
         </li>
       <% }); %>
@@ -173,17 +198,17 @@
           </li>
         </ul>
       </li> -->
-    <li><a href="#">Blog <i class="fa fa-angle-down"></i></a>
+    <li><a href="#">About <i class="fa fa-angle-down"></i></a>
       <ul class="submenu">
-        <li><a href="blog.html">blog standard</a></li>
-        <li><a href="blog-no-sidebar.html">blog no sidebar</a></li>
-        <li><a href="blog-right-sidebar.html">blog right sidebar</a></li>
+        <li><a href="https://www.facebook.com/notes/consignista-saigon/h%C6%B0%E1%BB%9Bng-d%E1%BA%ABn-cho-kh%C3%A1chshop-b%C3%A1n/2359119507702083/" target="_blank">For Store</a></li>
+        <li><a href="https://www.facebook.com/notes/consignista-saigon/h%C6%B0%E1%BB%9Bng-d%E1%BA%ABn-cho-kh%C3%A1ch-mua/2359118731035494/" target="_blank">For Customer</a></li>
+        <!-- <li><a href="blog-right-sidebar.html">blog right sidebar</a></li>
         <li><a href="blog-details.html">blog details 1</a></li>
         <li><a href="blog-details-2.html">blog details 2</a></li>
-        <li><a href="blog-details-3.html">blog details 3</a></li>
+        <li><a href="blog-details-3.html">blog details 3</a></li> -->
       </ul>
     </li>
-    <li><a href="about.html"> About </a></li>
+    <!-- <li><a href="about.html"> About </a></li> -->
     <li><a href="contact"> Contact</a></li>
   </ul>
 </nav>
