@@ -33,6 +33,8 @@ const Help = {
       const query = new Parse.Query(Category);
       query.equalTo('parent', category);
       query.equalTo('status', "ACTIVE");
+      query.ascending('position');
+      query.limit(15);
       
       const subCategories = await query.find();
       

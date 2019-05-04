@@ -2,36 +2,12 @@
   <ul>
       <% menus.forEach(function(menu){ %>
         <li style="position: unset;"><a href=<%= domain + 'product?menu=' + menu.objectId; %>> <%= menu.name %> <i class="fa fa-angle-down"></i> </a>
-          <ul class="mega-menu">
+          <ul class="mega-menu" style="display: flex;">
             <% menu.categories.forEach(function(category){ %>
-              <!-- <% 
-                let page = category.items.length / 15;
-                let pageShow = Math.floor(Math.ceil(page)/2);
-              %>
-              <% for (let i = 0; i < Math.ceil(page) ; i++) { %>
-                <% 
-                  let start = (i == 0) ? 0 : (i * 15);
-                  let end = ((page - i) < 1) ? Math.round(page * 15) : ((i + 1) * 15);
-                %>
-                  <li>
-                    <ul>
-                        <% if ( i === pageShow ) { %>
-                          <li class="mega-menu-title">
-                            <a href="<%= domain + 'product?category=' + category.objectId; %>">
-                              <%= category.name %>
-                            </a>
-                          </li>
-                          
-                        <% } %>
-                        <% for (let j = start; j < end ; j++) { %>
-                          <li><a href=<%= domain + 'product?category=' + category.items[j].objectId; %>><%= category.items[j].name %></a></li>
-                        <% } %>
-                    </ul>
-                  </li>
-              <% } %> -->
               <li>
                 <ul>
                     <li class="mega-menu-title"><a href="<%= domain + 'product?category=' + category.objectId; %>"><%= category.name %></a></li>
+                    <li><a href=<%= `${domain}menu/categories?menu=${menu.objectId}&parent=${category.objectId}` ; %>><%= 'All ' + category.name %></a></li>
                     <% category.items.forEach(function(item){ %>
                       <li><a href=<%= domain + 'product?category=' + item.objectId; %>><%= item.name %></a></li>
                     <% }); %>
@@ -41,163 +17,7 @@
           </ul>
         </li>
       <% }); %>
-      <!-- <li><a href="shop.html"> Men <i class="fa fa-angle-down"></i> </a>
-        <ul class="mega-menu">
-          <li>
-            <ul>
-              <li class="mega-menu-title"><a href="#">Coats</a></li>
-              <li><a href="shop.html">standard style</a></li>
-              <li><a href="shop-filter.html">Grid filter style</a></li>
-              <li><a href="shop-grid-2-col.html">Grid 2 column</a></li>
-              <li><a href="shop-no-sidebar.html">Grid No sidebar</a></li>
-              <li><a href="shop-grid-fw.html">Grid full wide </a></li>
-              <li><a href="shop-right-sidebar.html">Grid right sidebar</a></li>
-              <li><a href="shop-list.html">list 1 column box </a></li>
-              <li><a href="shop-list-fw.html">list 1 column full wide </a></li>
-              <li><a href="shop-list-fw-2col.html">list 2 column  full wide</a></li>
-            </ul>
-          </li>
-          <li>
-            <ul>
-              <li class="mega-menu-title"><a href="#">Jackets</a></li>
-              <li><a href="product-details.html">tab style 1</a></li>
-              <li><a href="product-details-2.html">tab style 2</a></li>
-              <li><a href="product-details-3.html">tab style 3</a></li>
-              <li><a href="product-details-4.html">sticky style</a></li>
-              <li><a href="product-details-5.html">gallery style </a></li>
-              <li><a href="product-details-slider-box.html">Slider style</a></li>
-              <li><a href="product-details-affiliate.html">affiliate style</a></li>
-              <li><a href="product-details-6.html">fixed image style </a></li>
-            </ul>
-          </li>
-          <li>
-            <ul>
-              <li class="mega-menu-title"><a href="#">Denim</a></li>
-              <li><a href="product-details.html">tab style 1</a></li>
-              <li><a href="product-details-2.html">tab style 2</a></li>
-              <li><a href="product-details-3.html">tab style 3</a></li>
-              <li><a href="product-details-4.html">sticky style</a></li>
-              <li><a href="product-details-5.html">gallery style </a></li>
-              <li><a href="product-details-slider-box.html">Slider style</a></li>
-              <li><a href="product-details-affiliate.html">affiliate style</a></li>
-              <li><a href="product-details-6.html">fixed image style </a></li>
-            </ul>
-          </li>
-          <li>
-            <ul>
-              <li class="mega-menu-img"><a href="shop.html"><img src="img/banner/banner-12.png" alt=""></a></li>
-            </ul>
-          </li>
-        </ul>
-      </li>
-      <li><a href="shop.html"> Shop <i class="fa fa-angle-down"></i> </a>
-        <ul class="mega-menu">
-          <li>
-            <ul>
-              <li class="mega-menu-title"><a href="#">shop layout</a></li>
-              <li><a href="shop.html">standard style</a></li>
-              <li><a href="shop-filter.html">Grid filter style</a></li>
-              <li><a href="shop-grid-2-col.html">Grid 2 column</a></li>
-              <li><a href="shop-no-sidebar.html">Grid No sidebar</a></li>
-              <li><a href="shop-grid-fw.html">Grid full wide </a></li>
-              <li><a href="shop-right-sidebar.html">Grid right sidebar</a></li>
-              <li><a href="shop-list.html">list 1 column box </a></li>
-              <li><a href="shop-list-fw.html">list 1 column full wide </a></li>
-              <li><a href="shop-list-fw-2col.html">list 2 column  full wide</a></li>
-            </ul>
-          </li>
-          <li>
-            <ul>
-              <li class="mega-menu-title"><a href="#">product details</a></li>
-              <li><a href="product-details.html">tab style 1</a></li>
-              <li><a href="product-details-2.html">tab style 2</a></li>
-              <li><a href="product-details-3.html">tab style 3</a></li>
-              <li><a href="product-details-4.html">sticky style</a></li>
-              <li><a href="product-details-5.html">gallery style </a></li>
-              <li><a href="product-details-slider-box.html">Slider style</a></li>
-              <li><a href="product-details-affiliate.html">affiliate style</a></li>
-              <li><a href="product-details-6.html">fixed image style </a></li>
-            </ul>
-          </li>
-          <li>
-            <ul>
-              <li class="mega-menu-img"><a href="shop.html"><img src="img/banner/banner-12.png" alt=""></a></li>
-            </ul>
-          </li>
-        </ul>
-      </li>
-      <li><a href="shop.html"> Shop <i class="fa fa-angle-down"></i> </a>
-        <ul class="mega-menu">
-          <li>
-            <ul>
-              <li class="mega-menu-title"><a href="#">shop layout</a></li>
-              <li><a href="shop.html">standard style</a></li>
-              <li><a href="shop-filter.html">Grid filter style</a></li>
-              <li><a href="shop-grid-2-col.html">Grid 2 column</a></li>
-              <li><a href="shop-no-sidebar.html">Grid No sidebar</a></li>
-              <li><a href="shop-grid-fw.html">Grid full wide </a></li>
-              <li><a href="shop-right-sidebar.html">Grid right sidebar</a></li>
-              <li><a href="shop-list.html">list 1 column box </a></li>
-              <li><a href="shop-list-fw.html">list 1 column full wide </a></li>
-              <li><a href="shop-list-fw-2col.html">list 2 column  full wide</a></li>
-            </ul>
-          </li>
-          <li>
-            <ul>
-              <li class="mega-menu-title"><a href="#">product details</a></li>
-              <li><a href="product-details.html">tab style 1</a></li>
-              <li><a href="product-details-2.html">tab style 2</a></li>
-              <li><a href="product-details-3.html">tab style 3</a></li>
-              <li><a href="product-details-4.html">sticky style</a></li>
-              <li><a href="product-details-5.html">gallery style </a></li>
-              <li><a href="product-details-slider-box.html">Slider style</a></li>
-              <li><a href="product-details-affiliate.html">affiliate style</a></li>
-              <li><a href="product-details-6.html">fixed image style </a></li>
-            </ul>
-          </li>
-          <li>
-            <ul>
-              <li class="mega-menu-img"><a href="shop.html"><img src="img/banner/banner-12.png" alt=""></a></li>
-            </ul>
-          </li>
-        </ul>
-      </li>
-      <li><a href="shop.html"> Shop <i class="fa fa-angle-down"></i> </a>
-        <ul class="mega-menu">
-          <li>
-            <ul>
-              <li class="mega-menu-title"><a href="#">shop layout</a></li>
-              <li><a href="shop.html">standard style</a></li>
-              <li><a href="shop-filter.html">Grid filter style</a></li>
-              <li><a href="shop-grid-2-col.html">Grid 2 column</a></li>
-              <li><a href="shop-no-sidebar.html">Grid No sidebar</a></li>
-              <li><a href="shop-grid-fw.html">Grid full wide </a></li>
-              <li><a href="shop-right-sidebar.html">Grid right sidebar</a></li>
-              <li><a href="shop-list.html">list 1 column box </a></li>
-              <li><a href="shop-list-fw.html">list 1 column full wide </a></li>
-              <li><a href="shop-list-fw-2col.html">list 2 column  full wide</a></li>
-            </ul>
-          </li>
-          <li>
-            <ul>
-              <li class="mega-menu-title"><a href="#">product details</a></li>
-              <li><a href="product-details.html">tab style 1</a></li>
-              <li><a href="product-details-2.html">tab style 2</a></li>
-              <li><a href="product-details-3.html">tab style 3</a></li>
-              <li><a href="product-details-4.html">sticky style</a></li>
-              <li><a href="product-details-5.html">gallery style </a></li>
-              <li><a href="product-details-slider-box.html">Slider style</a></li>
-              <li><a href="product-details-affiliate.html">affiliate style</a></li>
-              <li><a href="product-details-6.html">fixed image style </a></li>
-            </ul>
-          </li>
-          <li>
-            <ul>
-              <li class="mega-menu-img"><a href="shop.html"><img src="img/banner/banner-12.png" alt=""></a></li>
-            </ul>
-          </li>
-        </ul>
-      </li> -->
+
     <li><a href="#">About <i class="fa fa-angle-down"></i></a>
       <ul class="submenu">
         <li><a href="https://www.facebook.com/notes/consignista-saigon/h%C6%B0%E1%BB%9Bng-d%E1%BA%ABn-cho-kh%C3%A1chshop-b%C3%A1n/2359119507702083/" target="_blank">For Store</a></li>
