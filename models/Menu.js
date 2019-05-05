@@ -30,6 +30,7 @@ const Help = {
   
   findSubCategoriesByCategory: async function (category) {
     try {
+      const Category = Parse.Object.extend('Category');
       const query = new Parse.Query(Category);
       query.equalTo('parent', category);
       query.equalTo('status', "ACTIVE");
@@ -50,8 +51,29 @@ const Help = {
 module.exports = {
   count: async function (options) {
     try {
-      const Menu = Parse.Object.extend('Menu');
       const query = new Parse.Query(Menu);
+      
+      if (!options && !options.user && !options.user.role == 'administrator') {
+        query.equalTo('status', "ACTIVE");
+      }
+      
+      const count = await query.count();
+      
+      return count;
+    } catch (err) {
+      throw err;
+    }
+  },
+  
+  countCategory: async function (options, filter) {
+    try {
+      const query = new Parse.Query(Category);
+  
+      const pointerToMenu = new Menu();
+      pointerToMenu.id = filter;
+      
+      query.equalTo('menu', pointerToMenu);
+      query.exists('menu');
       
       if (!options && !options.user && !options.user.role == 'administrator') {
         query.equalTo('status', "ACTIVE");
@@ -69,7 +91,6 @@ module.exports = {
     try {
       const {skip, limit} = helper.pagination(options);
   
-      const Menu = Parse.Object.extend('Menu');
       const query = new Parse.Query(Menu);
       
       query.skip(skip);
@@ -134,6 +155,25 @@ module.exports = {
     }
   },
   
+  findByIdToUpdateCategory: async function (options, sessionToken) {
+    try {
+      const query = new Parse.Query(Category);
+      query.equalTo('objectId', options.objectId);
+      
+      const result = await query.first();
+      
+      result.set('name', options.name);
+      result.set('status', options.status);
+      result.set('position', options.position);
+      
+      const category = await result.save(null, {sessionToken});
+      
+      return helper.toJSON(category);
+    } catch (err) {
+      throw err;
+    }
+  },
+  
   create: async function(options, sessionToken){
     try {
       const menu = new Menu();
@@ -145,6 +185,49 @@ module.exports = {
       const menuSaved = await menu.save(null, {sessionToken});
     
       return helper.toJSON(menuSaved);
+    } catch (err) {
+      throw err;
+    }
+  },
+  
+  createCategory: async function(options, sessionToken){
+    try {
+      const category = new Category();
+      const pointerToMenu = new Menu();
+      pointerToMenu.id = options.menuId;
+      
+      category.set('menu', pointerToMenu);
+      category.set('name', options.name);
+      category.set('status', options.status);
+      category.set('position', options.position);
+    
+      const categorySaved = await category.save(null, {sessionToken});
+    
+      return helper.toJSON(categorySaved);
+    } catch (err) {
+      throw err;
+    }
+  },
+  
+  findCategoriesByAdmin: async function(options, filter){
+    try {
+  
+      const {skip, limit} = helper.pagination(options);
+      const query = new Parse.Query(Category);
+  
+      const pointerToMenu = new Menu();
+      pointerToMenu.id = filter;
+      
+      query.skip(skip);
+      query.limit(limit);
+      query.equalTo('menu', pointerToMenu);
+      query.ascending('position');
+      query.exists('menu');
+      query.include('menu');
+  
+      const categories = await query.find();
+  
+      return helper.toJSON(categories);
     } catch (err) {
       throw err;
     }
@@ -175,14 +258,13 @@ module.exports = {
   },
   findParentCategories: async function(options) {
     try {
-      const Menu = Parse.Object.extend('Menu');
       const pointerMenu = new Menu();
       pointerMenu.id = options.menuId;
 
       const query = new Parse.Query(Category);
       query.equalTo('status', "ACTIVE");
       query.equalTo('menu', pointerMenu);
-      query.select(['name'])
+      query.select(['name']);
 
       const results = await query.find();
 
@@ -192,4 +274,3 @@ module.exports = {
     }
   },
 };
-
