@@ -1,58 +1,12 @@
 const express = require('express');
 const router = express.Router();
-const formidable = require('formidable');
-const util = require('util');
-const fs = require('fs');
-const public = process.env.PUBLIC_FOLDER || '/public';
-const uploadDir = `.${public}/media`;
-const numberSlice = public.length;
 const ProductModel = require('../models/Product');
 const OrderModel = require('../models/Order');
 const MenuModel = require('../models/Menu');
 const ContactModel = require('../models/Contact');
 const validate = require('../models/validate/validation');
+const helper = require('../models/helper/index');
 
-const uploadFile = function (req, res, next) {
-  const form = new formidable.IncomingForm();
-  const removeFile = [];
-  const files = [];
-  req.body = {};
-  form.uploadDir = uploadDir;
-  
-  form.parse(req)
-    .on('field', function (field, value) {
-      if (req.body[field]) {
-        if (!Array.isArray(req.body[field])) {
-          const tmp = req.body[field];
-          req.body[field] = [tmp];
-        }
-        req.body[field].push(value);
-      } else {
-        req.body[field] = value;
-      }
-    })
-    .on('file', function (field, file) {
-      if (file && file.type == 'application/octet-stream') {
-        removeFile.push(file.path);
-      }
-      if (file && file.type != 'application/octet-stream') {
-        const type = file.type.split('/')[1];
-        const newPath = file.path + "." + type;
-        fs.renameSync(file.path, newPath);
-        const link = newPath.slice(numberSlice);
-        files.push(link);
-      }
-    })
-    .on('end', function () {
-      if (removeFile && removeFile.length > 0){
-        for (let i = 0; i < removeFile.length; i++){
-          fs.unlinkSync(removeFile[i]);
-        }
-      }
-      req.files = files;
-      next();
-    });
-};
 
 const checkUser = function(req, res, next){
   try {
@@ -69,6 +23,14 @@ const checkUser = function(req, res, next){
 };
 
 router.use(checkUser);
+
+router.use('/menus', require('./admin/menu'));
+
+router.use('/menus/create', require('./admin/menu'));
+
+router.use('/categories-parent', require('./admin/categories-parent'));
+
+router.use('/categories-parent/create', require('./admin/categories-parent'));
 
 router.get('/', async function (req, res, next) {
   try {
@@ -135,8 +97,9 @@ router.get('/order', async function(req, res, next) {
 
 router.get('/product/create', async function (req, res, next) {
   try {
+    const user = req.user;
     const listCategory = await MenuModel.find(true);
-    res.render('../admin/product/create', {listCategory});
+    res.render('../admin/product/create', {listCategory, user});
   } catch (error) {
     next(error);
   }
@@ -158,7 +121,7 @@ router.get('/product/:id/approve', async function (req, res, next) {
   }
 });
 
-router.post('/product/create', uploadFile, async function (req, res, next) {
+router.post('/product/create', helper.uploadFile, async function (req, res, next) {
   try {
     const user = req.user;
     const information = req.body.information ? req.body.information : null;
@@ -358,100 +321,5 @@ router.get('/contact/:id', async function (req, res, next) {
   }
 });
 
-router.get('/menus', async function (req, res, next) {
-  try {
-    const user = req.user;
-    const errorMessage = req.query.errorMessage ? req.query.errorMessage : '';
-    const status = req.query.status || 'ACTIVE';
-    const page = parseInt(req.query.page) || 1;
-    const limit = parseInt(req.query.limit) || 20;
-    const options = {
-      user: user,
-      page : page,
-      limit : limit,
-      status: status
-    };
-    
-    const menus = await MenuModel.findByAdmin(options);
-    const count = await MenuModel.count(options);
-    
-    res.render('../admin/menus/list-menus', {menus,
-      errorMessage,
-      user,
-      status,
-      page,
-      nextPage: page + 1,
-      prePage: page - 1,
-      limit,
-      totalPage: count ? Math.ceil(count/limit) : 0
-    });
-  } catch (error) {
-    next(error);
-  }
-});
-
-router.post('/menus', uploadFile, async function (req, res, next) {
-  try {
-    const user = req.user;
-    const sessionToken = req.user.sessionToken;
-    const objectId = req.body.objectId ? req.body.objectId : null;
-    const status = req.body.status || 'ACTIVE';
-    const name = req.body.name ? req.body.name : null;
-    const position = req.body.position ? parseInt(req.body.position) : 9999;
-    const options = {
-      objectId : objectId,
-      name : name,
-      status: status,
-      position: position
-    };
-    if(user && user.role == 'administrator'){
-      const isValidate = await validate.validationMenu(options, 'EDIT');
-      if(isValidate){
-        const menus = await MenuModel.findByIdToUpdate(options, sessionToken);
-      }else {
-        const errorMessage = 'name or position is exist already';
-        return res.redirect(`/admin/menus?errorMessage=${errorMessage}`);
-      }
-    }else {
-      const errorMessage = 'permission denied';
-      return res.redirect(`/admin/menus?errorMessage=${errorMessage}`);
-    }
-    
-    res.redirect('/admin/menus');
-  } catch (error) {
-    next(error);
-  }
-});
-
-router.post('/menus/create', uploadFile, async function (req, res, next) {
-  try {
-    const user = req.user;
-    const sessionToken = req.user.sessionToken;
-    const status = req.body.newStatus || 'ACTIVE';
-    const name = req.body.newName ? req.body.newName : null;
-    const position = req.body.newPosition ? parseInt(req.body.newPosition) : 9999;
-    const options = {
-      name : name,
-      status: status,
-      position: position
-    };
-    if(user && user.role == 'administrator'){
-      const isValidate = await validate.validationMenu(options, 'CREATE');
-      if(isValidate){
-        const menus = await MenuModel.create(options, sessionToken);
-      }else {
-        const errorMessage = 'name or position is exist already';
-        return res.redirect(`/admin/menus?errorMessage=${errorMessage}`);
-      }
-    }else {
-      const errorMessage = 'permission denied';
-      return res.redirect(`/admin/menus?errorMessage=${errorMessage}`);
-    }
-    
-    res.redirect('/admin/menus');
-  } catch (error) {
-    next(error);
-  }
-});
 
 module.exports = router;
