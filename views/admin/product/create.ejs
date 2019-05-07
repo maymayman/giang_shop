@@ -102,55 +102,39 @@ csslinks: [
                 <div class="card">
                   <div class="card-body card-block">
 
-
-                    <div class="row form-group">
-                      <div class="col col-md-12">
-                        <label for="name" class=" form-control-label">Name</label>
-                        <input type="text" id="name" name="name" class="form-control">
-                      </div>
-                    </div>
-
-                    <div class="row form-group">
-                      <div class="col col-md-12">
-                        <label for="price" class=" form-control-label">Price</label>
-                        <input type="number" id="price" name="price" class="form-control">
-                      </div>
-                    </div>
-
-                    <div class="row form-group">
-                      <div class="col col-md-12">
-                        <label for="shortDescription" class=" form-control-label">Short Description</label>
-                        <textarea type="text" id="shortDescription" name="shortDescription"
-                                  class="form-control"></textarea>
-                      </div>
-                    </div>
-
-                    <div class="row form-group">
-                      <div class="col col-md-12">
-                        <label for="Description" class=" form-control-label">Description</label>
-                        <textarea type="text" id="Description" name="description" class="form-control"></textarea>
-                      </div>
-                    </div>
-
-                    <div class="row form-group">
+                    <div class="col-12">
                       <div class="col col-md-12">
                         <label for="image1">Image (require: 400 < width < 800 and scale 3/4 and not greater than 2MB)</label>
                       </div>
                       
                       <div class="col-12 col-md-12 images">
                         <div class="pic col-lg-3 col-md-3 col-sm-6">
-                            <img src="data:image/png;base64,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" alt="Smiley face">
-                          <!-- <span class="text-add">add</span>  -->
+                          <img class="default-image"
+                            src="data:image/png;base64,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" alt="Smiley face">
                       </div>
                       </div>
-                      <!-- <div>
-                        <a href="#">
-                          <span id="send">send</span>
-                        </a>                        
-                      </div> -->
                     </div>
 
-                    <div class="row form-group">
+                    <div class="form-group col-lg-6 col-md-6 col-sm-12">
+                      <div class="col-lg-12">
+                        <label for="shortDescription" class=" form-control-label">Short Description</label>
+                        <textarea type="text" id="shortDescription" name="shortDescription"
+                          class="form-control"
+                          style="height: 150px;"></textarea>
+                      </div>
+                    </div>
+
+                    <div class="form-group col-lg-6 col-md-6 col-sm-12">
+                      <div class="col-md-12">
+                        <label for="Description" class=" form-control-label">Description</label>
+                        <textarea type="text" id="Description" name="description" 
+                          class="form-control"
+                          style="height: 150px;"
+                        ></textarea>
+                      </div>
+                    </div>
+
+                    <div class="form-group col-lg-6 col-md-6 col-sm-12">
                       <div class="col-md-12 col-sm-12">
                         <label class=" form-control-label">Information</label></div>
                       <div class="col-md-12 col-sm-12">
@@ -159,11 +143,11 @@ csslinks: [
                     </div>
 
 
-                    <div class="row form-group">
+                    <div class="form-group col-lg-6 col-md-6 col-sm-12">
                       <div class="col-md-12 col-sm-12">
                         <label class=" form-control-label">User manual</label></div>
                       <div class="col-md-12 col-sm-12">
-                        <textarea id="summernote2" name="userManual" width="100px"></textarea>
+                        <textarea id="summernote1" name="userManual" width="100px"></textarea>
                       </div>
                     </div>
                     
@@ -180,6 +164,19 @@ csslinks: [
               <div class="col-lg-12">
                 <div class="card">
                   <div class="card-body card-block">
+                    <div class="row form-group">
+                      <div class="col col-md-12">
+                        <label for="name" class=" form-control-label">Name</label>
+                        <input type="text" id="name" name="name" class="form-control">
+                      </div>
+                    </div>
+
+                    <div class="row form-group">
+                      <div class="col col-md-12">
+                        <label for="price" class=" form-control-label">Price</label>
+                        <input type="number" id="price" name="price" class="form-control">
+                      </div>
+                    </div>
                     <div class="row form-group">
                       <div class="col col-md-12">
                         <label for="quantity" class=" form-control-label">Quantity</label>
@@ -428,17 +425,16 @@ csslinks: [
     });
 
     $(document).ready(function () {
-      $('#summernote').summernote();
+      $('#summernote').summernote({
+        height: 200,
+      });
     });
 
     $(document).ready(function () {
-      $('#summernote1').summernote();
+      $('#summernote1').summernote({
+        height: 200,
+      });
     });
-
-    $(document).ready(function () {
-      $('#summernote2').summernote();
-    });
-
   });
 
   function submit() {

@@ -3,6 +3,9 @@
   flex-wrap:  wrap;
   margin-top: 20px;
 }
+.default-image{
+  padding: 98px 0px;
+}
 .images .img,
 .images .pic {
   /* flex-basis: 31%; */
@@ -39,6 +42,7 @@
   border-radius: 4px;
   opacity: 0;
   position: absolute;
+  top: 0;
 }
 .images .img:hover::after {
   display: block;
@@ -79,5 +83,8 @@
     flex-basis: 46%;
     margin-bottom: 10px;
     border-radius: 4px;
+  }
+  .default-image{
+    padding: 64px 0px;
   }
 }
