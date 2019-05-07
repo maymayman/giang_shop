@@ -121,6 +121,14 @@ router.get('/product/:id/approve', async function (req, res, next) {
   }
 });
 
+router.post('/product/create/test', helper.uploadFile, async function (req, res, next) {
+  console.log(req.body, req.files);
+  const body = req.body;
+  const images = req.files ? req.files : undefined;
+
+  res.json({images, body});
+});
+
 router.post('/product/create', helper.uploadFile, async function (req, res, next) {
   try {
     const user = req.user;
