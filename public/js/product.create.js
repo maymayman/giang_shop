@@ -39,10 +39,17 @@ function b64toBlob(b64Data, contentType, sliceSize) {
   
           image.onload = function() {
             // access image size here 
-            console.log(this.width);
-          };
-          images.prepend('<div class="img" style="background-image: url(\'' + event.target.result + '\');" rel="'+ event.target.result  +'"><span>remove</span></div>');
-          $('.img-loading').remove();
+            const fileSize = 2 * 1024 * 1024;
+            const ratio = this.height / this.width;
+            const success = (1.3 < ratio && ratio < 1.35) ? true : false;
+            
+            $('.img-loading').remove();
+            if (uploader[0].files[0].size > fileSize || !success) {
+              alert(`INVALID IMAGE: size should less than ${fileSize} and ratio width/height should be 3/4 `)
+            } else {
+              images.prepend('<div class="img" style="background-image: url(\'' + event.target.result + '\');" rel="'+ event.target.result  +'"><span>remove</span></div>');
+            }
+          };          
         }
         reader.readAsDataURL(uploader[0].files[0]);
       });
@@ -53,6 +60,8 @@ function b64toBlob(b64Data, contentType, sliceSize) {
     });
 
     $('#send').on('click', function () {
+      const $this = $(this);
+      $this.attr("disabled", "disabled");
       const images = $('.images .img');
       const form = document.getElementById("myForm");
       const formDataToUpload = new FormData(form);
@@ -73,7 +82,7 @@ function b64toBlob(b64Data, contentType, sliceSize) {
       }     
       
       $.ajax({
-        url: '/admin/product/create/test',
+        url: '/admin/product/create',
         data: formDataToUpload,// the formData function is available in almost all new browsers.
         type:"POST",
         contentType:false,
@@ -84,13 +93,21 @@ function b64toBlob(b64Data, contentType, sliceSize) {
           console.log('before');
         },
         error:function(err){
-          console.error(err);
+          $this.removeAttr("disabled", "disabled");
+          alert(err);
         },
         success:function(data){
           console.log(data);
         },
-        complete:function(response){
-          console.log("Request finished.", response.responseJSON);
+        complete:function(response) {
+          const { status, responseJSON } = response;
+          if (status != 200 || !responseJSON || !responseJSON.success ) {
+            $this.removeAttr("disabled", "disabled");
+            alert(responseJSON.error);
+          } else {
+            console.log("Request finished.", response);
+            window.location.replace('/admin/product?status=PENDING')
+          }          
         }
       });
     })

@@ -83,13 +83,11 @@ const help = {
   });
 
   $('.designers-search').on('input', async function() {
-    console.time('time');
     const search_keyword = $('.keyword-search').val();
     const search_menuId = $('.menu').children("option:selected").val();
     const search_parentId = $('.parent').children("option:selected").val();
 
     const data = await help.getCategories(search_keyword, search_menuId, search_parentId);
-    console.timeEnd('time');
 
     $('.designers-result').html(data);
   });

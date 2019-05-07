@@ -1,10 +1,11 @@
 .images {
   display: flex;
   flex-wrap:  wrap;
-  margin-top: 20px;
+  margin-top: 10px;
+  padding-bottom: 10px;
 }
 .default-image{
-  padding: 98px 0px;
+  padding: 78px 0px;
 }
 .images .img,
 .images .pic {
@@ -15,7 +16,8 @@
 }
 .images .img {
   width: 23.1%;
-  padding-top: 30.8%;
+  /* padding-top: 30.8%; */
+  height: 270px;
   background-size: cover;
   margin: 10px 5px;
   background-position: center;
@@ -56,7 +58,7 @@
 .images .pic {
   /* background-color: #3f7fde; */
   align-self: center;
-  /* text-align: center; */
+  text-align: center;
   text-transform: uppercase;
   color: #848EA1;
   font-size: 12px;
@@ -74,6 +76,7 @@
 
 @media (max-width: 576px) {
   .images .img {
+    height: 170px;
     flex-basis: 45%;
     margin-bottom: 10px;
     border-radius: 4px;
@@ -84,7 +87,10 @@
     margin-bottom: 10px;
     border-radius: 4px;
   }
-  .default-image{
-    padding: 64px 0px;
+  .images {
+    margin-top: 50px;
+  }
+  .default-image {
+    padding: 58px 0px;
   }
 }
