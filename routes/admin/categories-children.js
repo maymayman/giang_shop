@@ -13,37 +13,44 @@ router.get('/', async function (req, res, next) {
     const status = req.query.status || 'ACTIVE';
     const page = parseInt(req.query.page) || 1;
     const limit = parseInt(req.query.limit) || 20;
-    const fetch = req.query.fetch;
+    let parent = req.query.parent ? req.query.parent : '';
     let menu = req.query.menu ? req.query.menu : '';
     let categories = [];
+    let subCategories = [];
     let count = null;
     
     const options = {
       user: user,
-      status: status,
+      status: status
     };
     const menus = await MenuModel.findByAdmin(options);
-  
-    if(menu){
-      options.page = page;
-      options.limit = limit;
+    if (!menu){
+      options.menu = menus[0].objectId;
+      categories = await MenuModel.findCategoriesByAdmin(options);
+    }else {
       options.menu = menu;
       categories = await MenuModel.findCategoriesByAdmin(options);
-      count = await MenuModel.countCategory(options);
+    }
+    
+    if(parent){
+      options.parent = parent;
+      options.page = page;
+      options.limit = limit;
+      subCategories = await MenuModel.findSubCategoriesByAdmin(options);
+      count = await MenuModel.countSubCategory(options);
     }else {
-      menu = menus[0].objectId;
-      categories = await MenuModel.findCategoriesByAdmin(options);
-      count = await MenuModel.countCategory(options);
+      parent = menus[0].objectId;
+      options.parent = categories[0].objectId;
+      subCategories = await MenuModel.findSubCategoriesByAdmin(options);
+      count = await MenuModel.countSubCategory(options);
     }
     
-    if (fetch){
-      return res.json({menus, categories});
-    }
-    
-    res.render('../admin/menus/list-categories-parent', {
+    res.render('../admin/menus/list-categories-children', {
       menus,
+      parent,
       menu,
       categories,
+      subCategories,
       errorMessage,
       user,
       status,
@@ -62,32 +69,34 @@ router.post('/', helper.uploadFile, async function (req, res, next) {
   try {
     const user = req.user;
     const sessionToken = req.user.sessionToken;
-    const objectId = req.body.objectId ? req.body.objectId : null;
-    const menuId = req.body.menuId ? req.body.menuId : null;
+    const objectId = req.body.objectId ? req.body.objectId : undefined;
+    const menuId = req.body.menuId ? req.body.menuId : undefined;
+    const parentId = req.body.parentId ? req.body.parentId : undefined;
     const status = req.body.status || 'ACTIVE';
-    const name = req.body.name ? req.body.name : null;
+    const name = req.body.name ? req.body.name : undefined;
     const position = req.body.position ? parseInt(req.body.position) : 9999;
     const options = {
       objectId : objectId,
       menuId : menuId,
+      parentId : parentId,
       name : name,
       status: status,
       position: position,
     };
     if(user && user.role == 'administrator'){
-      const isValidate = await validate.validationCategory(options, 'EDIT');
+      const isValidate = await validate.validationSubCategory(options, 'EDIT');
       if(isValidate){
-        const category = await MenuModel.findByIdToUpdateCategory(options, sessionToken);
+        const subCategory = await MenuModel.findByIdToUpdateCategory(options, sessionToken);
       }else {
         const errorMessage = 'name or position is exist already';
-        return res.redirect(`/admin/categories-parent?errorMessage=${errorMessage}`);
+        return res.redirect(`/admin/categories-children?errorMessage=${errorMessage}`);
       }
     }else {
       const errorMessage = 'permission denied';
-      return res.redirect(`/admin/categories-parent?errorMessage=${errorMessage}`);
+      return res.redirect(`/admin/categories-children?errorMessage=${errorMessage}`);
     }
     
-    res.redirect('/admin/categories-parent');
+    res.redirect('/admin/categories-children');
   } catch (error) {
     next(error);
   }
@@ -98,29 +107,31 @@ router.post('/create', helper.uploadFile, async function (req, res, next) {
     const user = req.user;
     const sessionToken = req.user.sessionToken;
     const status = req.body.newStatus || 'ACTIVE';
-    const name = req.body.newName ? req.body.newName : null;
-    const menuId = req.body.newMenuId ? req.body.newMenuId : null;
+    const name = req.body.newName ? req.body.newName : undefined;
+    const menuId = req.body.newMenuId ? req.body.newMenuId : undefined;
+    const parentId = req.body.newParentId ? req.body.newParentId : undefined;
     const position = req.body.newPosition ? parseInt(req.body.newPosition) : 9999;
     const options = {
       menuId : menuId,
+      parentId : parentId,
       name : name,
       status: status,
       position: position
     };
     if(user && user.role == 'administrator'){
-      const isValidate = await validate.validationCategory(options, 'CREATE');
+      const isValidate = await validate.validationSubCategory(options, 'CREATE');
       if(isValidate){
-        const category = await MenuModel.createCategory(options, sessionToken);
+        const category = await MenuModel.createSubCategory(options, sessionToken);
       }else {
         const errorMessage = 'name or position is exist already';
-        return res.redirect(`/admin/categories-parent?errorMessage=${errorMessage}`);
+        return res.redirect(`/admin/categories-children?errorMessage=${errorMessage}`);
       }
     }else {
       const errorMessage = 'permission denied';
-      return res.redirect(`/admin/categories-parent?errorMessage=${errorMessage}`);
+      return res.redirect(`/admin/categories-children?errorMessage=${errorMessage}`);
     }
     
-    res.redirect('/admin/categories-parent');
+    res.redirect('/admin/categories-children');
   } catch (error) {
     next(error);
   }

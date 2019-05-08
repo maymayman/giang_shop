@@ -31,6 +31,43 @@
       <span class="error-message"><%= errorMessage%></span>
     </div>
     <%}%>
+
+    <div class="col-lg-12 no-padding">
+      <div class="mb-2">
+        <div class="card-header">
+          <div class="row form-group">
+            <div class="col col-md-6">
+              <input type="text" class="form-control" placeholder="name">
+            </div>
+
+            <div class="col col-md-2">
+              <select id="filterMenuId" name="filterMenuId" class="btn btn-outline-secondary ml-2" style="width: auto">
+                <% menus.forEach(function (m) {%>
+                <option value="<%=m.objectId%>" <%= m.objectId == menu ? 'selected' : ''%> ><%=m.name%></option>
+                <%}) %>
+              </select>
+            </div>
+
+            <div class="col col-md-2">
+              <select id="filterParentId" name="filterParentId" class="btn btn-outline-secondary" style="width: auto">
+                <% categories.forEach(function (category) {%>
+                <option value="<%=category.objectId%>" <%= category.objectId == parent ? 'selected' : ''%> ><%=category.name%></option>
+                <%}) %>
+              </select>
+            </div>
+
+            <div class="col col-md-2">
+              <select id="filterStatus" name="filterStatus" selected="<%=status%>" class="btn btn-outline-secondary ml-2" style="width: auto">
+                <option value="ACTIVE" <%= 'ACTIVE' == status ? 'selected' : '' %>>ACTIVE</option>
+                <option value="INACTIVE" <%= 'INACTIVE' == status ? 'selected' : '' %>>INACTIVE</option>
+              </select>
+            </div>
+          </div>
+
+        </div>
+      </div>
+
+    </div>
     <!-- Animated -->
     <div class="col-lg-12 no-padding">
       <div class="card">
@@ -39,49 +76,46 @@
           <button type="button" class="btn btn-primary btn-sm float-right btn-create" style="width: auto">Add New</button>
           <%}%>
 
-          <strong class="card-title">Categories</strong>
-          <select id="filterMenuId" name="filterMenuId" class="btn btn-outline-secondary btn-sm ml-2" style="width: auto">
-            <% menus.forEach(function (menu) {%>
-            <option value="<%=menu.objectId%>" <%= menu.objectId == menu ? 'selected' : ''%> ><%=menu.name%></option>
-            <%}) %>
-          </select>
+          <strong class="card-title">Categories Children</strong>
+
         </div>
         <div class="card-body">
           <table class="table order-table table-striped table-bordered">
             <thead>
             <tr>
               <th scope="col" style="width: 10%">ID</th>
-              <th scope="col" style="width: 10%">Menu</th>
-              <th scope="col" style="width: 12%">Name</th>
+              <th scope="col" style="width: auto; text-align: center">Category Parent</th>
+              <th scope="col" style="width: auto">Name</th>
               <th scope="col" style="width: 10%">Status</th>
               <th scope="col" style="width: 10%">Position</th>
               <th scope="col">Action</th>
             </tr>
             </thead>
             <tbody>
-            <% categories.forEach(function(category){ %>
+            <% subCategories.forEach(function(subCategory){ %>
             <tr>
-              <th scope="serial"><%= category.objectId %></th>
-              <td>
-                <span><%= category.menu && category.menu.name ? category.menu.name : '' %></span>
+              <th scope="serial"><%= subCategory.objectId %></th>
+              <td style="text-align: center">
+                <span ><%= subCategory.parent && subCategory.parent.name ? subCategory.parent.name : '' %></span>
               </td>
-              <td><%= category.name %></td>
+              <td><%= subCategory.name %></td>
               <td>
-                <span><%= category.status %></span>
+                <span><%= subCategory.status %></span>
               </td>
               <td>
-                <span><%= category.position %></span>
+                <span><%= subCategory.position %></span>
               </td>
 
 
               <td>
                 <button type="button"  class="btn btn-outline-success btn-sm btn-detail"
-                        data-id="<%=category.objectId%>"
-                        data-name="<%=category.name%>"
-                        data-position="<%=category.position%>"
-                        data-status="<%=category.status%>"
-                        data-menu-name="<%= category.menu && category.menu.name ? category.menu.name : ''%>"
-                        data-menu-id="<%= category.menu && category.menu.objectId ? category.menu.objectId : null%>">
+                        data-id="<%=subCategory.objectId%>"
+                        data-name="<%=subCategory.name%>"
+                        data-position="<%=subCategory.position%>"
+                        data-status="<%=subCategory.status%>"
+                        data-menu-id="<%=subCategory.parent && subCategory.parent.menu && subCategory.parent.menu ? subCategory.parent.menu.objectId : undefined %>"
+                        data-parent-name="<%= subCategory.parent && subCategory.parent.name ? subCategory.parent.name : ''%>"
+                        data-parent-id="<%= subCategory.parent && subCategory.parent.objectId ? subCategory.parent.objectId : undefined%>">
                   <i class="fa fa-eye"></i>
                   &nbsp; Edit
                 </button>
@@ -98,9 +132,11 @@
             <% if (prePage > 0) { %>
             <li class="btn btn-outline-primary"><a class="prev" href=
                       <%= domain + 'admin/'
-                      + 'categories-parent?page=' + prePage
+                      + 'categories-children?page=' + prePage
                       + '&limit=' + limit
                       + '&status=' + status
+                      + '&menu=' + menu
+                      + '&parent=' + parent
                       %>>
                 <i class="fa fa-angle-double-left"></i></a>
             </li>
@@ -108,9 +144,11 @@
             <li class="btn btn-outline-primary"><a class="" href="#">...</a></li>
             <% } %>
             <li class="btn btn-outline-primary"><a href= <%= domain + 'admin/'
-              + 'categories-parent?page=' + prePage
+              + 'categories-children?page=' + prePage
               + '&limit=' + limit
               + '&status=' + status
+              + '&menu=' + menu
+              + '&parent=' + parent
               %>><%= prePage; %></a>
             </li>
             <% } %>
@@ -122,18 +160,22 @@
 
             <% if (nextPage <= totalPage) { %>
             <li class="btn btn-outline-primary"><a href=<%= domain + 'admin/'
-              + 'categories-parent?page=' + nextPage
+              + 'categories-children?page=' + nextPage
               + '&limit=' + limit
               + '&status=' + status
+              + '&menu=' + menu
+              + '&parent=' + parent
               %>><%= nextPage; %></a>
             </li>
             <% if (nextPage <= (totalPage - 1)) { %>
             <li class="btn btn-outline-primary"><a class="" href="#">...</a></li>
             <% } %>
             <li class="btn btn-outline-primary"><a class="next" href=<%= domain + 'admin/'
-              + 'categories-parent?page=' + nextPage
+              + 'categories-children?page=' + nextPage
               + '&limit=' + limit
               + '&status=' + status
+              + '&menu=' + menu
+              + '&parent=' + parent
               %>>
                 <i class="fa fa-angle-double-right"></i></a>
             </li>
@@ -168,6 +210,7 @@
               <form id="menuDetail" action="#" method="post" enctype="multipart/form-data" class="form-horizontal">
                 <input type="text" id="objectId" name="objectId" class="form-control" style="display: none">
                 <input type="text" id="menuId" name="menuId" class="form-control" style="display: none">
+                <input type="text" id="parentId" name="parentId" class="form-control" style="display: none">
 
                 <div class="row form-group">
                   <div class="col col-md-3">
@@ -192,10 +235,10 @@
 
                 <div class="row form-group">
                   <div class="col col-md-3">
-                    <label for="text-input" class=" form-control-label">Menu</label>
+                    <label for="text-input" class=" form-control-label">Category Parent</label>
                   </div>
                   <div class="col-12 col-md-9">
-                    <input type="text" id="menuName" name="menuName"  disabled="true" class="form-control">
+                    <input type="text" id="parentName" name="parentName"  disabled="true" class="form-control">
                   </div>
                 </div>
 
@@ -233,7 +276,7 @@
         <div class="col-lg-12">
           <div class="">
             <div class="card-body card-block">
-              <form id="formCreateMenu" action="./categories-parent/create" method="post" enctype="multipart/form-data" class="form-horizontal">
+              <form id="formCreateMenu" action="./categories-children/create" method="post" enctype="multipart/form-data" class="form-horizontal">
 
                 <div class="row form-group">
                   <div class="col col-md-3">
@@ -262,8 +305,21 @@
                   </div>
                   <div class="col-12 col-md-9" style="width: auto">
                     <select id="newMenuId" name="newMenuId" class="form-control">
-                      <% menus.forEach(function (menu) {%>
-                      <option value="<%=menu.objectId%>"><%=menu.name%></option>
+                      <% menus.forEach(function (me) {%>
+                      <option value="<%=me.objectId%>"><%=me.name%></option>
+                      <%}) %>
+                    </select>
+                  </div>
+                </div>
+
+                <div class="row form-group">
+                  <div class="col col-md-3">
+                    <label for="newMenu" class=" form-control-label">Parent</label>
+                  </div>
+                  <div class="col-12 col-md-9" style="width: auto">
+                    <select id="newParentId" name="newParentId" class="form-control">
+                      <% categories.forEach(function (category) {%>
+                      <option value="<%=category.objectId%>"><%=category.name%></option>
                       <%}) %>
                     </select>
                   </div>
@@ -295,11 +351,12 @@
     $('.btn-detail').on('click', function() {
       $('#editMenu').modal('show');
       $('#objectId').val($(this).data('id'));
-      $('#position').val($(this).data('position'));
       $('#menuId').val($(this).data('menu-id'));
+      $('#position').val($(this).data('position'));
+      $('#parentId').val($(this).data('parent-id'));
       $('#name').val($(this).data('name'));
       $('#status').val($(this).data('status'));
-      $('#menuName').val($(this).data('menu-name'));
+      $('#parentName').val($(this).data('parent-name'));
     });
 
     $('.btn-save-edit-menu').on('click', function() {
@@ -316,14 +373,57 @@
       document.getElementById('formCreateMenu').submit();
     });
 
-    $('#filterMenuId').on('change', function() {
+    $('#filterParentId').on('change', function() {
+      var parentIdFilter = $('#filterParentId').val();
       var menuIdFilter = $('#filterMenuId').val();
-      var url = `/admin/categories-parent?menu=${menuIdFilter}`
+      var url = `/admin/categories-children?menu=${menuIdFilter}&parent=${parentIdFilter}`
       if (url) { // require a URL
         window.location = url; // redirect
       }
       return false;
     });
+    $('#filterMenuId').on('change', function() {
+      var menuIdFilter = $('#filterMenuId').val();
+      var url = `/admin/categories-children?menu=${menuIdFilter}`
+      if (url) { // require a URL
+        window.location = url; // redirect
+      }
+      return false;
+    });
+    $('#filterStatus').on('change', function() {
+      var menuIdFilter = $('#filterMenuId').val();
+      var parentIdFilter = $('#filterParentId').val();
+      var statusFilter = $('#filterStatus').val();
+
+      var url = `/admin/categories-children?menu=${menuIdFilter}&parent=${parentIdFilter}&status=${statusFilter}`
+      if (url) { // require a URL
+        window.location = url; // redirect
+      }
+      return false;
+    });
+    $('#newMenuId').on('change',async function () {
+       let menuId = $('#newMenuId').val()
+      var callUrl = `/admin/categories-parent?menu=${menuId}&fetch=${true}`
+      let data = await fetch(callUrl, {
+        method: "GET", // *GET, POST, PUT, DELETE, etc.
+        mode: "cors", // no-cors, cors, *same-origin
+        cache: "no-cache", // *default, no-cache, reload, force-cache, only-if-cached
+        credentials: "same-origin", // include, *same-origin, omit
+        headers: {
+          // 'Accept': 'application/json',
+          "Content-Type": "application/json",
+          // "Content-Type": "application/x-www-form-urlencoded",
+        }})
+      data = await data.json()
+       console.log('result: ', data)
+
+      $('#newParentId').empty();
+      data.categories.forEach(element => {
+        $('#newParentId').append($("<option></option>").attr("value", element.objectId).text(element.name));
+      });
+    })
+
+
   })
 </script>
 </body>

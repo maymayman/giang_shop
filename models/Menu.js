@@ -65,15 +65,47 @@ module.exports = {
     }
   },
   
-  countCategory: async function (options, filter) {
+  countCategory: async function (options) {
     try {
       const query = new Parse.Query(Category);
-  
-      const pointerToMenu = new Menu();
-      pointerToMenu.id = filter;
       
-      query.equalTo('menu', pointerToMenu);
+      if (options && options.filter){
+        const pointerToMenu = new Menu();
+        pointerToMenu.id = options.menu;
+  
+        query.equalTo('menu', pointerToMenu);
+      }
+     
       query.exists('menu');
+      
+      if (!options && !options.user && !options.user.role == 'administrator') {
+        query.equalTo('status', "ACTIVE");
+      }
+      
+      const count = await query.count();
+      
+      return count;
+    } catch (err) {
+      throw err;
+    }
+  },
+  
+  countSubCategory: async function (options) {
+    try {
+      const query = new Parse.Query(Category);
+      
+      if (options && options.parent){
+        const pointerToParent = new Category();
+        pointerToParent.id = options.parent;
+  
+        query.equalTo('parent', pointerToParent);
+      }
+     
+      if (options && options.status){
+        query.equalTo('status', options.status);
+      }
+      
+      query.doesNotExist('menu');
       
       if (!options && !options.user && !options.user.role == 'administrator') {
         query.equalTo('status', "ACTIVE");
@@ -89,12 +121,17 @@ module.exports = {
   
   findByAdmin: async function (options) {
     try {
-      const {skip, limit} = helper.pagination(options);
   
       const query = new Parse.Query(Menu);
       
-      query.skip(skip);
-      query.limit(limit);
+      if(options && options.page && options.limit){
+        const {skip, limit} = helper.pagination(options);
+        query.skip(skip);
+        query.limit(limit);
+      }
+      if (options && options.menu) {
+        query.equalTo('objectId', options.menu)
+      }
       query.ascending('position');
       
       const menus = await query.find();
@@ -209,18 +246,23 @@ module.exports = {
     }
   },
   
-  findCategoriesByAdmin: async function(options, filter){
+  findCategoriesByAdmin: async function(options){
     try {
   
-      const {skip, limit} = helper.pagination(options);
       const query = new Parse.Query(Category);
   
-      const pointerToMenu = new Menu();
-      pointerToMenu.id = filter;
-      
-      query.skip(skip);
-      query.limit(limit);
-      query.equalTo('menu', pointerToMenu);
+      if(options && options.menu){
+        const pointerToMenu = new Menu();
+        pointerToMenu.id = options.menu;
+        
+        query.equalTo('menu', pointerToMenu);
+      }
+      if(options && options.page && options.limit){
+        const {skip, limit} = helper.pagination(options);
+        query.skip(skip);
+        query.limit(limit);
+      }
+     
       query.ascending('position');
       query.exists('menu');
       query.include('menu');
@@ -256,6 +298,7 @@ module.exports = {
       throw (err);
     }
   },
+  
   findParentCategories: async function(options) {
     try {
       const pointerMenu = new Menu();
@@ -273,4 +316,59 @@ module.exports = {
       throw (err);
     }
   },
+  
+  findSubCategoriesByAdmin: async function(options){
+    try {
+      const query = new Parse.Query(Category);
+  
+      if(options && options.parent){
+        const pointerToParent = new Category();
+        pointerToParent.id = options.parent;
+    
+        query.equalTo('parent', pointerToParent);
+      }
+      
+      if (options && options.status){
+        query.equalTo('status', options.status);
+      }
+      
+      if (options && options.page && options.limit){
+        const {skip, limit} = helper.pagination(options);
+        query.skip(skip);
+        query.limit(limit);
+      }
+     
+      query.ascending('position');
+      query.doesNotExist('menu');
+      query.include('parent');
+  
+      const subCategories = await query.find();
+  
+      return helper.toJSON(subCategories);
+    }catch (err) {
+      throw (err)
+    }
+  },
+  
+  createSubCategory: async function(options, sessionToken){
+    try {
+      const subCategory = new Category();
+      const pointerToParent = new Category();
+      pointerToParent.id = options.parentId;
+      // const pointerToMenu = new Menu();
+      // pointerToMenu.id = options.menuId;
+  
+      // subCategory.set('menu', pointerToMenu);
+      subCategory.set('parent', pointerToParent);
+      subCategory.set('name', options.name);
+      subCategory.set('status', options.status);
+      subCategory.set('position', options.position);
+  
+      const subCategorySaved = await subCategory.save(null, {sessionToken});
+  
+      return helper.toJSON(subCategorySaved);
+    }catch (err) {
+      throw (err)
+    }
+  }
 };

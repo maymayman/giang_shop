@@ -32,6 +32,11 @@ router.use('/categories-parent', require('./admin/categories-parent'));
 
 router.use('/categories-parent/create', require('./admin/categories-parent'));
 
+router.use('/categories-children', require('./admin/categories-children'));
+
+router.use('/categories-children/create', require('./admin/categories-children'));
+
+
 router.get('/', async function (req, res, next) {
   try {
     const user = req.user;
