@@ -101,5 +101,67 @@ module.exports = {
     } catch (err) {
       throw err
     }
+  },
+  
+  validationSubCategory: async function (options, action) {
+    try {
+      const Category = Parse.Object.extend('Category');
+      const Menu = Parse.Object.extend('Menu');
+      
+      const pointerToMenu = new Menu();
+      pointerToMenu.id = options.menuId;
+  
+      const pointerToParent = new Category();
+      pointerToParent.id = options.parentId;
+      
+      const query = new Parse.Query(Category);
+      const query1 = new Parse.Query(Category);
+      
+      switch (action) {
+        case 'EDIT':
+          query.notEqualTo('objectId', options.objectId);
+          query1.notEqualTo('objectId', options.objectId);
+      
+          query.equalTo('position', options.position);
+          query1.equalTo('name', options.name);
+      
+          query.equalTo('menu', pointerToMenu);
+          query1.equalTo('menu', pointerToMenu);
+          
+          query.equalTo('parent', pointerToParent);
+          query1.equalTo('parent', pointerToParent);
+      
+          const compoundQuery = Parse.Query.or(query, query1);
+      
+          const result = await compoundQuery.first();
+          if (result){
+            return false;
+          }else {
+            return true;
+          }
+          break;
+        case 'CREATE':
+          query.equalTo('position', options.position);
+          query1.equalTo('name', options.name);
+      
+          query.equalTo('menu', pointerToMenu);
+          query1.equalTo('menu', pointerToMenu);
+          
+          query.equalTo('parent', pointerToParent);
+          query1.equalTo('parent', pointerToParent);
+          
+          const compoundQueryCreate = Parse.Query.or(query, query1);
+      
+          const resultCreate = await compoundQueryCreate.first();
+          if (resultCreate){
+            return false;
+          }else {
+            return true;
+          }
+          break;
+      }
+    } catch (err) {
+      throw err
+    }
   }
 };
