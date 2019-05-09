@@ -148,35 +148,35 @@ router.post('/product/create', helper.uploadFile, async function (req, res, next
     const userManual = req.body.userManual ? req.body.userManual : null;
     const linkFacebook = req.body.linkFacebook ? req.body.linkFacebook : null;
     const linkInstagram = req.body.linkInstagram ? req.body.linkInstagram : null;
-    var colors = req.body.color ? req.body.color : null;
-    var fontSize = req.body.fontSize ? req.body.fontSize : null;
-    var sizeNumber = req.body.sizeNumber ? req.body.sizeNumber : null;
-    const error = [];
+    let colors = req.body.color ? req.body.color : null;
+    let fontSize = req.body.fontSize ? req.body.fontSize : null;
+    let sizeNumber = req.body.sizeNumber ? req.body.sizeNumber : null;
+    let error;
     if(user && user.role != 'store'){
-      return res.json('permission denied');
+      error = 'permission denied';
     }
     if (!name) {
-      error.push('name is require.')
+      error = 'name is require.';
     }
     if (!price) {
-      error.push('price is require.')
+      error = 'price is require.';
     }
     if (!images) {
-      error.push('images is require.')
+      error = 'images is require.';
     }
     if (!category) {
-      error.push('category is require.')
+      error = 'category is require.';
     }
     if (fontSize && !Array.isArray(fontSize)) {
-      fontSize = [fontSize]
+      fontSize = [fontSize];
     }
     if (sizeNumber && !Array.isArray(sizeNumber)) {
-      sizeNumber = [sizeNumber]
+      sizeNumber = [sizeNumber];
     }
     if (!Array.isArray(colors)) {
-      colors = [colors]
+      colors = [colors];
     }
-    if (error && error.length > 0) {
+    if (error) {
       return res.json({success: false, error: error, data: null});
     }
     const product = {
@@ -197,7 +197,7 @@ router.post('/product/create', helper.uploadFile, async function (req, res, next
       linkFacebook: linkFacebook,
     };
     const productSave = await ProductModel.create(product);
-    res.redirect('/admin/product?status=PENDING');
+    return res.json({success: true, error: null, data: productSave});
   } catch (error) {
     next(error);
   }
