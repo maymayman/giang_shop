@@ -4625,11 +4625,11 @@ a.default-btn {
 	}
 }
 
-@media only screen and (max-width: 767px) {
+/* @media only screen and (max-width: 767px) {
 	.single-slider-2 {
-		/* background-position: 30%; */
+		background-position: 30%;
 	}
-}
+} */
 
 @media only screen and (min-width: 576px) and (max-width: 767px) {
 	.single-slider-2 {
