@@ -4,9 +4,10 @@ const ProductModel = require('../models/Product');
 const OrderModel = require('../models/Order');
 const MenuModel = require('../models/Menu');
 const ContactModel = require('../models/Contact');
+const BannerModel = require('../models/Banner');
 const validate = require('../models/validate/validation');
 const helper = require('../models/helper/index');
-
+const _ = require('lodash');
 
 const checkUser = function(req, res, next){
   try {
@@ -28,7 +29,10 @@ router.use('/menus', require('./admin/menu'));
 
 router.use('/menus/create', require('./admin/menu'));
 
+
 router.use('/categories-parent', require('./admin/categories-parent'));
+
+router.use('/categories-parent/list', require('./admin/categories-parent'));
 
 router.use('/categories-parent/create', require('./admin/categories-parent'));
 
@@ -329,6 +333,103 @@ router.get('/contact/:id', async function (req, res, next) {
     const contact = await ContactModel.findByIdAndUpdate(objectId, user.sessionToken);
   
     res.redirect('/admin/contact');
+  } catch (error) {
+    next(error);
+  }
+});
+
+
+router.get('/banner/list', helper.uploadFile, async function (req, res, next) {
+  try {
+    const user = req.user;
+    const page = parseInt(req.query.page) || 1;
+    const limit = parseInt(req.query.limit) || 20;
+    const userId = _.get(user, 'objectId', undefined);
+    const options = {
+      page: page,
+      limit: limit,
+      userId: userId
+    };
+    if(!userId || user.role != 'administrator'){
+      const errorMessage = 'permission denied';
+      return res.redirect(`/admin/banner/list?errorMessage=${errorMessage}`);
+    }
+    const listBanner = await BannerModel.findAllBanner(options);
+  
+    res.render('../admin/banner/list-banner', {user, listBanner});
+  } catch (error) {
+    next(error);
+  }
+});
+
+router.get('/banner/list/:bannerId', helper.uploadFile, async function (req, res, next) {
+  try {
+    const user = req.user;
+    const sessionToken = req.user.sessionToken;
+    const bannerId = req.params.bannerId;
+    const userId = _.get(user, 'objectId', undefined);
+    if(!userId || user.role != 'administrator' || !bannerId){
+      const errorMessage = 'permission denied';
+      return res.redirect(`/admin/banner/?errorMessage=${errorMessage}`);
+    }
+    const options = {
+      status: 'ACTIVE',
+      objectId: bannerId
+    };
+    
+    const bannerSaved = await BannerModel.findByIdAndUpdate(options, sessionToken);
+    
+    res.redirect('/');
+  } catch (error) {
+    next(error);
+  }
+});
+
+router.get('/banner/create', helper.uploadFile, async function (req, res, next) {
+  try {
+    const user = req.user;
+    const userId = _.get(user, 'objectId', undefined);
+  
+    if(!userId || user.role != 'administrator'){
+      const errorMessage = 'permission denied';
+      return res.redirect(`/admin/banner/list-banner?errorMessage=${errorMessage}`);
+    }
+    res.render('../admin/banner/create-banner', {user});
+  } catch (error) {
+    next(error);
+  }
+});
+
+router.post('/banner/create', helper.uploadFile, async function (req, res, next) {
+  try {
+    const user = req.user;
+    const userId = _.get(user, 'objectId', undefined);
+    const title = req.body.title ? req.body.title : undefined;
+    const link = req.body.link ? req.body.link : undefined;
+    const description = req.body.description ? req.body.description : undefined;
+    const status = req.body.status ? req.body.status : 'ACTIVE';
+    const image = req.files ? req.files : undefined;
+    if (!image && !image.length){
+      let errorMessage = 'Image is require';
+      return res.redirect(`/admin/banner/list?errorMessage=${errorMessage}`);
+    }
+    
+    if(!userId || user.role != 'administrator'){
+      let errorMessage = 'permission denied';
+      return res.redirect(`/admin/banner/list?errorMessage=${errorMessage}`);
+    }else {
+      const banner = {
+        userId: userId,
+        title: title,
+        link: link,
+        status: status,
+        image: image[0],
+        description: description,
+      };
+      const bannerSave = await BannerModel.create(banner);
+      
+      res.redirect('/admin/banner/list');
+    }
   } catch (error) {
     next(error);
   }
