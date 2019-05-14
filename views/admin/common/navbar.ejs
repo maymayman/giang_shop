@@ -71,6 +71,15 @@
             </li>
             <%}%>
 
+            <% if(user && user.role == 'administrator'){%>
+                <li class=" dropdown">
+                    <a href=<%= domain + 'admin/banner/list';%>  aria-expanded="false">
+                        <i class="menu-icon fa fa-pencil-square-o"></i>Banners
+                    </a>
+                </li>
+
+            <%}%>
+
         </ul>
     </div><!-- /.navbar-collapse -->
 </nav>
