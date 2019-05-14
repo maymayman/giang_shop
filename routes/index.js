@@ -1,9 +1,11 @@
 const express = require('express');
 const router = express.Router();
 
+const url = require('url');
 const MenuModel = require('../models/Menu');
 const ProductModel = require('../models/Product');
 const ContactModel = require('../models/Contact');
+const BannerModel = require('../models/Banner');
 
 /* GET home page. */
 router.get('/', async function(req, res, next) {
@@ -11,8 +13,13 @@ router.get('/', async function(req, res, next) {
     const user = req.user;
     const menus = await MenuModel.find(true);
     const products = await ProductModel.find({skip: 0, limit: 10});
+    const banners = await BannerModel.findBannerIndex({userId: user.objectId});
+   
+    banners.forEach(banner =>{
+      banner.image = url.parse(banner.image).href;
+    });
 
-    res.render('index', { menus, products, user });
+    res.render('index', { menus, products, user, banners });
   } catch (error) {
     next(error);
   } 

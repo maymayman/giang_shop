@@ -403,7 +403,7 @@
     });
     $('#newMenuId').on('change',async function () {
        let menuId = $('#newMenuId').val()
-      var callUrl = `/admin/categories-parent?menu=${menuId}&fetch=${true}`
+      var callUrl = `/admin/categories-parent/list?menu=${menuId}`
       let data = await fetch(callUrl, {
         method: "GET", // *GET, POST, PUT, DELETE, etc.
         mode: "cors", // no-cors, cors, *same-origin

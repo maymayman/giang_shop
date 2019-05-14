@@ -126,4 +126,18 @@ router.post('/create', helper.uploadFile, async function (req, res, next) {
   }
 });
 
+router.get('/list', async function (req, res, next) {
+  try {
+    const user = req.user;
+    let menuId = req.query.menu ? req.query.menu : '';
+    const options = {
+      menuId: menuId
+    };
+    const categories = await MenuModel.findParentCategories(options);
+    res.json({categories: categories});
+  }catch (error) {
+    next(error);
+  }
+});
+
 module.exports = router;
