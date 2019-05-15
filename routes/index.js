@@ -13,12 +13,12 @@ router.get('/', async function(req, res, next) {
     const user = req.user;
     const menus = await MenuModel.find(true);
     const products = await ProductModel.find({skip: 0, limit: 10});
-    const banners = undefined;
-    // const banners = await BannerModel.findBannerIndex({userId: user.objectId});
+    let banners = undefined;
+    banners = await BannerModel.findBannerIndex({userId: user.objectId});
    
-    // banners.forEach(banner =>{
-    //   banner.image = url.parse(banner.image).href;
-    // });
+    banners.forEach(banner =>{
+      banner.image = url.parse(banner.image).href;
+    });
 
     res.render('index', { menus, products, user, banners });
   } catch (error) {
