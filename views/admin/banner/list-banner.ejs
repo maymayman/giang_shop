@@ -19,6 +19,7 @@
         <%- include('../common/header', {}); %>
         <!-- /#header -->
         <!-- Content -->
+
         <div class="breadcrumbs">
             <div class="breadcrumbs-inner">
                 <div class="row m-0">
@@ -42,6 +43,11 @@
             </div>
         </div>
         <div class="content">
+            <%if(errorMessage){%>
+            <div class="col-lg-12 alert alert-danger text-center">
+                <span class="error-message"><%= errorMessage%></span>
+            </div>
+            <%}%>
             <!-- Animated -->
             <div class="animated fadeIn">
                 <!-- Widgets  -->
@@ -55,6 +61,7 @@
                                 <h4 class="card-title mb-3"><%= banner.title %></h4>
                                 <p class="card-text"><%= banner.status %></p>
                                 <p class="card-text"><%= banner.link %></p>
+                                <p class="card-text"><%= banner.position %></p>
                                 <p class="card-text"><%- banner.description %></p>
                                 <button type="button" onclick="location.href = './list/<%= banner.objectId %>'" class="btn btn-outline-success btn-sm">Apply</button>
                                 <!--<button type="button" onclick="location.href = './banner/<%= banner.objectId %>'" class="btn btn-outline-success btn-sm float-right">Delete</button>-->
