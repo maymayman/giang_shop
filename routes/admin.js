@@ -342,6 +342,7 @@ router.get('/contact/:id', async function (req, res, next) {
 router.get('/banner/list', helper.uploadFile, async function (req, res, next) {
   try {
     const user = req.user;
+    let errorMessage = req.query.errorMessage ? req.query.errorMessage : '';
     const page = parseInt(req.query.page) || 1;
     const limit = parseInt(req.query.limit) || 20;
     const userId = _.get(user, 'objectId', undefined);
@@ -351,12 +352,12 @@ router.get('/banner/list', helper.uploadFile, async function (req, res, next) {
       userId: userId
     };
     if(!userId || user.role != 'administrator'){
-      const errorMessage = 'permission denied';
+      errorMessage = 'permission denied';
       return res.redirect(`/admin/banner/list?errorMessage=${errorMessage}`);
     }
     const listBanner = await BannerModel.findAllBanner(options);
   
-    res.render('../admin/banner/list-banner', {user, listBanner});
+    res.render('../admin/banner/list-banner', {user, listBanner, errorMessage});
   } catch (error) {
     next(error);
   }
@@ -370,7 +371,7 @@ router.get('/banner/list/:bannerId', helper.uploadFile, async function (req, res
     const userId = _.get(user, 'objectId', undefined);
     if(!userId || user.role != 'administrator' || !bannerId){
       const errorMessage = 'permission denied';
-      return res.redirect(`/admin/banner/?errorMessage=${errorMessage}`);
+      return res.redirect(`/admin/banner/list?errorMessage=${errorMessage}`);
     }
     const options = {
       status: 'ACTIVE',
@@ -388,13 +389,14 @@ router.get('/banner/list/:bannerId', helper.uploadFile, async function (req, res
 router.get('/banner/create', helper.uploadFile, async function (req, res, next) {
   try {
     const user = req.user;
+    let errorMessage = req.query.errorMessage ? req.query.errorMessage : '';
     const userId = _.get(user, 'objectId', undefined);
   
     if(!userId || user.role != 'administrator'){
-      const errorMessage = 'permission denied';
-      return res.redirect(`/admin/banner/list-banner?errorMessage=${errorMessage}`);
+      errorMessage = 'permission denied';
+      return res.redirect(`/admin/banner/create?errorMessage=${errorMessage}`);
     }
-    res.render('../admin/banner/create-banner', {user});
+    res.render('../admin/banner/create-banner', {user, errorMessage});
   } catch (error) {
     next(error);
   }
@@ -406,6 +408,7 @@ router.post('/banner/create', helper.uploadFile, async function (req, res, next)
     const userId = _.get(user, 'objectId', undefined);
     const title = req.body.title ? req.body.title : undefined;
     const link = req.body.link ? req.body.link : undefined;
+    const position = req.body.position ? req.body.position : undefined;
     const description = req.body.description ? req.body.description : undefined;
     const status = req.body.status ? req.body.status : 'ACTIVE';
     const image = req.files ? req.files : undefined;
@@ -421,11 +424,17 @@ router.post('/banner/create', helper.uploadFile, async function (req, res, next)
       const banner = {
         userId: userId,
         title: title,
+        position: position,
         link: link,
         status: status,
         image: image[0],
         description: description,
       };
+      const isCheck = await validate.validationBanner(banner);
+      if(isCheck){
+        let errorMessage = 'name or position is exist already';
+        return res.redirect(`/admin/banner/list?errorMessage=${errorMessage}`);
+      }
       const bannerSave = await BannerModel.create(banner);
       
       res.redirect('/admin/banner/list');

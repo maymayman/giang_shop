@@ -163,5 +163,24 @@ module.exports = {
     } catch (err) {
       throw err
     }
+  },
+  
+  validationBanner: async function (options) {
+    try {
+      const Banner = Parse.Object.extend('Banner');
+      const query = new Parse.Query(Banner);
+      const query1 = new Parse.Query(Banner);
+      query.equalTo('name', options.title);
+      query1.equalTo('position', options.position);
+      const compoundQueryCreate = Parse.Query.or(query, query1);
+      const resultCreate = await compoundQueryCreate.first();
+      if (resultCreate){
+        return true;
+      }else {
+        return false;
+      }
+    } catch (err) {
+      throw err
+    }
   }
 };

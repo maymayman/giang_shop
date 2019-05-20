@@ -30,7 +30,7 @@ module.exports = {
       }
       
       query.equalTo('userId', options.userId);
-      query.descending('createdAt');
+      query.ascending('position');
   
       const results = await query.find();
   
@@ -46,8 +46,9 @@ module.exports = {
       const Banner = Parse.Object.extend('Banner');
       const query = new Parse.Query(Banner);
   
-      query.equalTo('userId', options.userId);
+      // query.equalTo('userId', options.userId);
       query.equalTo('status', 'ACTIVE');
+      query.ascending('position');
   
       const results = await query.find();
   
@@ -64,10 +65,11 @@ module.exports = {
   
       banner.set('userId', item.userId);
       banner.set('title', item.title);
+      banner.set('position', item.position);
       banner.set('link', item.link);
       banner.set('description', item.description);
       banner.set('image', item.image);
-      banner.set('status', 'INACTIVE');
+      banner.set('status', item.status);
       const newBanner = await banner.save();
       
       return helper.toJSON(newBanner);
