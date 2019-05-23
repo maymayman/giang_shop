@@ -16,6 +16,7 @@ csslinks: [
 ]
 }); %>
 
+
 <style>
   .btn-file {
     position: relative;
@@ -74,9 +75,54 @@ csslinks: [
     margin-bottom: 1rem;
   }
 
+  .cropit-preview {
+        background-color: #f8f8f8;
+        background-size: cover;
+        border: 1px solid #ccc;
+        border-radius: 3px;
+        margin-top: 7px;
+        width: 300px;
+        height: 400px;
+      }
+      .cropit-preview-image-container {
+        cursor: move;
+      }
+      .cropit-preview-image-container img {
+        max-width: none;
+      }
+      .image-size-label {
+        margin-top: 10px;
+      }
+      input {
+        display: block;
+      }
+      input.cropit-image-input {
+  visibility: hidden;
+}
+
+.select-image-btn {
+    background: #52a0c7;
+    color: #fff;
+    padding: 5px 10px;
+    text-align: center;
+    -webkit-user-select: none;
+    -moz-user-select: none;
+    -ms-user-select: none;
+    user-select: none;
+    cursor: pointer;
+    display: inline-block;
+    position: relative;
+    -webkit-box-shadow: 0 2px #3784aa;
+    box-shadow: 0 2px #3784aa;
+}
+
+.image-editor {
+  text-align: center;
+}
+  
 </style>
 
-<body class="open">
+<body class="">
 <!-- Left Panel -->
 
 <aside id="left-panel" class="left-panel">
@@ -91,7 +137,6 @@ csslinks: [
   <!-- /#header -->
   <!-- Content -->
   <div class="content">
-
     <!-- Animated -->
     <form id="myForm" action="" method="post" enctype="multipart/form-data">
       <div class="row">
@@ -99,16 +144,18 @@ csslinks: [
           <div class="animated fadeIn card card-body card-block">
             <div class="col col-md-12">
               <label for="image1">Image (require: 400 < width < 800 and scale 3/4 and not greater than 2MB)</label>
+              <a role="button" id="crop" data-target="#cropImage" class="btn btn-primary float-right demo-crop">Add new image</a>
+
             </div>
-            
-            <div class="col-12 col-md-12 images">
-              <div class="pic col-lg-3 col-md-3 col-sm-6">
+
+            <div class="col-12 col-md-12 images" style="min-height: 300px">
+              <!-- <div class="pic col-lg-3 col-md-3 col-sm-6">
                 <img class="default-image"
                   src="data:image/png;base64,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" alt="Smiley face">
-              </div>
+              </div> -->
             </div>
           </div>
-          
+
         </div>
         <div class="col-lg-8 col-md-8 col-sm-12">
           <div class="animated fadeIn">
@@ -129,7 +176,7 @@ csslinks: [
                     <div class="form-group col-lg-6 col-md-6 col-sm-12">
                       <div class="col-md-12">
                         <label for="Description" class=" form-control-label">Description</label>
-                        <textarea type="text" id="Description" name="description" 
+                        <textarea type="text" id="Description" name="description"
                           class="form-control"
                           style="height: 150px;"
                         ></textarea>
@@ -152,7 +199,7 @@ csslinks: [
                         <textarea id="summernote1" name="userManual" width="100px"></textarea>
                       </div>
                     </div>
-                    
+
                   </div>
                 </div>
               </div>
@@ -261,10 +308,11 @@ csslinks: [
                           <% } %>
                         </select>
                       </div>
-                      
+
                       <div class="col-12 col-md-12 mt-5" >
                         <!-- <button type="submit" id="send" class="btn btn-sm btn-primary float-right"> -->
-                          <button type="button" id="send" class="col-12 col-md-12 mt-5 btn btn-outline-link">Link</button>
+
+                        <button type="button" id="send" class="col-12 col-md-12 mt-5 btn btn-outline-link">Create</button>
                           <!-- <i class="fa fa-dot-circle-o"></i> Submit -->
                         <!-- </button> -->
                       </div>
@@ -280,12 +328,49 @@ csslinks: [
     <!-- .animated -->
   </div>
 
+
+  <div  class="modal" id="cropImage" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-md" role="document">
+      <div class="modal-content">
+        <div class="modal-header">
+          <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+          </button>
+          <h5 class="modal-title" id="exampleModalLabel">Edit Image </h5>
+        </div>
+        <div class="modal-body">
+          <div class="image-editor">
+            <input type="file" class="cropit-image-input">
+            <div class="cropit-preview" style="margin: auto;"></div>
+            <div class="image-size-label">
+              Resize image
+            </div>
+            <input type="range" class="cropit-image-zoom-input">
+            <div class="btn select-image-btn">
+              <span class="icon icon-image"></span>Select new image
+            </div>
+          </div>
+      
+  
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-secondary"  data-dismiss="modal">Close</button>
+          <button type="submit" class="btn btn-primary btn-save-new-menu export">Crop</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
   <!-- /.content -->
   <div class="clearfix"></div>
   <!-- Footer -->
   <%- include('../common/footer', {}); %>
   <!-- /.site-footer -->
 </div>
+
+
+
+<!--end Crop image -->
 <!-- /#right-panel -->
 <!--<script>-->
 <!--function submit() {-->
@@ -308,7 +393,6 @@ csslinks: [
     $('#summernote1').summernote({
       height: 350,
     });
-
   });
 </script>
 
