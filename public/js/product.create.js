@@ -110,6 +110,21 @@ function b64toBlob(b64Data, contentType, sliceSize) {
           }          
         }
       });
+    });
+    $('#crop').on('click', function () {
+      $('#cropImage').modal('show');
     })
+
+    $('.image-editor').cropit({});
+    $('.select-image-btn').click(function() {
+      $('.cropit-image-input').click();
+    });
+ 
+    $('.export').click(function() {
+      const imageData = $('.image-editor').cropit('export');
+      const images = $('.images');
+      images.append('<div class="img" style="background-image: url(\'' + imageData + '\');" rel="'+ imageData  +'"><span>remove</span></div>');
+      $('#cropImage').modal('hide');
+    });
   })
 })(jQuery);
