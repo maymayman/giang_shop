@@ -126,5 +126,9 @@ function b64toBlob(b64Data, contentType, sliceSize) {
       images.append('<div class="img" style="background-image: url(\'' + imageData + '\');" rel="'+ imageData  +'"><span>remove</span></div>');
       $('#cropImage').modal('hide');
     });
+
+    $('.images').on('click', '.img', function () {
+      $(this).remove();
+    });
   })
 })(jQuery);
