@@ -27,7 +27,7 @@ module.exports = {
       }
       
       if (options.menuId) {
-        query.equalTo('menuId', options.menuId);
+        query.equalTo('menuIds', options.menuId);
       }
 
       if (options.categoryId) {
@@ -124,14 +124,14 @@ module.exports = {
     }
   },
   
-  create: async function(item) {
+  create: async function(item, sessionToken) {
     try {
       const Product = Parse.Object.extend('Product');
       const product = new Product();
   
-      const Category = Parse.Object.extend('Category');
-      const pointerToCategory = new Category();
-      pointerToCategory.id = item.category;
+      // const Category = Parse.Object.extend('Category');
+      // const pointerToCategory = new Category();
+      // pointerToCategory.id = item.category;
   
       const pointerToStore = new Parse.User();
       pointerToStore.id = item.userId;
@@ -142,7 +142,8 @@ module.exports = {
       product.set('price', item.price);
       product.set('quantity', item.quantity);
       product.set('images', item.images);
-      product.set('category', pointerToCategory);
+      product.set('categoryIds', item.categoryIds);
+      product.set('menuIds', item.menuIds);
       product.set('colors', item.colors);
       product.set('description', item.description);
       product.set('userManual', item.userManual);
@@ -154,7 +155,7 @@ module.exports = {
       }else {
         product.set('size', item.sizeNumber);
       }
-      const newProduct = await product.save();
+      const newProduct = await product.save(null, {sessionToken});
   
       return helper.toJSON(newProduct);
     }  catch (err) {

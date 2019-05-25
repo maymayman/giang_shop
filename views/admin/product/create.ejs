@@ -291,7 +291,7 @@ csslinks: [
 
                       <div class="col-12 col-md-12 mt-3">
                         <label for="category" class=" form-control-label">Categories</label>
-                        <select id="category" name="category" class="standardSelect">
+                        <select multiple id="category" name="category" class="standardSelect">
                           <% if(listCategory && listCategory.length){ %>
                           <% listCategory.forEach(function(categories){ %>
                           <optgroup label="<%= categories.name %>">
@@ -299,7 +299,7 @@ csslinks: [
                             <% categories.categories.forEach(function(category){ %>
                             <optgroup label="&nbsp;&nbsp;&nbsp;&nbsp;<%= category.name %>">
                               <% category.items.forEach(function(item){ %>
-                              <option value="<%= item.objectId %>">&nbsp;&nbsp;&nbsp;&nbsp; <%= item.name %></option>
+                              <option value="<%= `${categories.objectId}:${category.objectId}:${item.objectId}` %>">&nbsp;&nbsp;&nbsp;&nbsp; <%= item.name %></option>
                               <% }); %>
                             </optgroup>
                             <% }); %>

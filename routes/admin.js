@@ -141,12 +141,13 @@ router.post('/product/create/test', helper.uploadFile, async function (req, res,
 router.post('/product/create', helper.uploadFile, async function (req, res, next) {
   try {
     const user = req.user;
+    const sessionToken = req.user.sessionToken;
     const information = req.body.information ? req.body.information : null;
     const name = req.body.name ? req.body.name : null;
     const price = req.body.price ? req.body.price : null;
     const quantity = req.body.quantity ? req.body.quantity : 0;
-    const images = req.files ? req.files : null;
-    const category = req.body.category ? req.body.category : null;
+    const images = req.files ? req.files :  null;
+    let category = req.body.category ? req.body.category : null;
     const description = req.body.description ? req.body.description : null;
     const shortDescription = req.body.shortDescription ? req.body.shortDescription : null;
     const userManual = req.body.userManual ? req.body.userManual : null;
@@ -171,6 +172,9 @@ router.post('/product/create', helper.uploadFile, async function (req, res, next
     if (!category) {
       error = 'category is require.';
     }
+    if (category && !Array.isArray(category)) {
+      category = [category];
+    }
     if (fontSize && !Array.isArray(fontSize)) {
       fontSize = [fontSize];
     }
@@ -183,6 +187,8 @@ router.post('/product/create', helper.uploadFile, async function (req, res, next
     if (error) {
       return res.json({success: false, error: error, data: null});
     }
+    const newMenuCategory = await validate.validationMenuCategoyBeforeSave(category);
+  
     const product = {
       userId: user.objectId,
       information: information,
@@ -193,14 +199,15 @@ router.post('/product/create', helper.uploadFile, async function (req, res, next
       fontSize: fontSize,
       sizeNumber: sizeNumber,
       colors: colors,
-      category: category,
+      categoryIds: newMenuCategory.categoryIds,
+      menuIds: newMenuCategory.menuIds,
       description: description,
       userManual: userManual,
       shortDescription: shortDescription,
       linkInstagram: linkInstagram,
       linkFacebook: linkFacebook,
     };
-    const productSave = await ProductModel.create(product);
+    const productSave = await ProductModel.create(product, sessionToken);
     return res.json({success: true, error: null, data: productSave});
   } catch (error) {
     next(error);

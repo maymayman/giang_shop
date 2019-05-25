@@ -182,5 +182,22 @@ module.exports = {
     } catch (err) {
       throw err
     }
+  },
+  
+  validationMenuCategoyBeforeSave: async function (options) {
+    try {
+      let menuIds = [];
+      let categoryIds = [];
+      options.forEach(function (option) {
+        if (!menuIds.includes(option.split(':')[0])) {
+          menuIds.push(option.split(':')[0]);
+        }
+        categoryIds.push(option.split(':')[1]) ;
+        categoryIds.push(option.split(':')[2]) ;
+      });
+      return { menuIds: menuIds, categoryIds: categoryIds };
+    } catch (err) {
+      throw err
+    }
   }
 };
