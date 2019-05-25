@@ -130,5 +130,19 @@ function b64toBlob(b64Data, contentType, sliceSize) {
     $('.images').on('click', '.img', function () {
       $(this).remove();
     });
+
+    $(".standardSelect").chosen({
+      disable_search_threshold: 10,
+      no_results_text: "Oops, nothing found!",
+      width: "100%"
+    });
+
+    $('#summernote').summernote({
+      height: 350,
+    });
+
+    $('#summernote1').summernote({
+      height: 350,
+    });
   })
 })(jQuery);
