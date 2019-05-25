@@ -1,0 +1,443 @@
+<!doctype html>
+<!--[if lt IE 7]>
+<html class="no-js lt-ie9 lt-ie8 lt-ie7" lang=""> <![endif]-->
+<!--[if IE 7]>
+<html class="no-js lt-ie9 lt-ie8" lang=""> <![endif]-->
+<!--[if IE 8]>
+<html class="no-js lt-ie9" lang=""> <![endif]-->
+<!--[if gt IE 8]><!-->
+<html class="no-js" lang=""> <!--<![endif]-->
+
+<%- include('../common/head', {
+csslinks: [
+`http://netdna.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap.css`,
+`http://cdnjs.cloudflare.com/ajax/libs/summernote/0.8.11/summernote.css`,
+`${domain}assets/css/lib/chosen/chosen.min.css`
+]
+}); %>
+
+
+<style>
+  .btn-file {
+    position: relative;
+    overflow: hidden;
+  }
+
+  .btn-file input[type=file] {
+    position: absolute;
+    top: 0;
+    right: 0;
+    min-width: 100%;
+    min-height: 100%;
+    font-size: 100px;
+    text-align: right;
+    filter: alpha(opacity=0);
+    opacity: 0;
+    outline: none;
+    background: white;
+    cursor: inherit;
+    display: block;
+  }
+
+  .content-submit {
+    padding: 10px 10px 10px 0;
+    border-top: 1px solid #e1e1e1;
+    text-align: right;
+    background-color: #f0f3f5;
+  }
+
+  .multi-select {
+    border-radius: 1px;
+  }
+
+  .yellow {
+    color: yellow;
+  }
+
+  .gray {
+    color: gray;
+  }
+
+  .green {
+    color: green;
+  }
+
+  .blue {
+    color: blue;
+  }
+
+  .maroon {
+    color: maroon;
+  }
+
+  .columns .chosen-container, .column .chosen-container {
+    width: 100% !important;
+    margin-bottom: 1rem;
+  }
+
+  .cropit-preview {
+        background-color: #f8f8f8;
+        background-size: cover;
+        border: 1px solid #ccc;
+        border-radius: 3px;
+        margin-top: 7px;
+        width: 300px;
+        height: 400px;
+      }
+      .cropit-preview-image-container {
+        cursor: move;
+      }
+      .cropit-preview-image-container img {
+        max-width: none;
+      }
+      .image-size-label {
+        margin-top: 10px;
+      }
+      input {
+        display: block;
+      }
+      input.cropit-image-input {
+  visibility: hidden;
+}
+
+.select-image-btn {
+    background: #52a0c7;
+    color: #fff;
+    padding: 5px 10px;
+    text-align: center;
+    -webkit-user-select: none;
+    -moz-user-select: none;
+    -ms-user-select: none;
+    user-select: none;
+    cursor: pointer;
+    display: inline-block;
+    position: relative;
+    -webkit-box-shadow: 0 2px #3784aa;
+    box-shadow: 0 2px #3784aa;
+}
+
+.image-editor {
+  text-align: center;
+}
+  
+</style>
+
+<body class="">
+<!-- Left Panel -->
+
+<aside id="left-panel" class="left-panel">
+  <%- include('../common/navbar', {}); %>
+</aside>
+
+<!-- /#left-panel -->
+<!-- Right Panel -->
+<div id="right-panel" class="right-panel">
+  <!-- Header-->
+  <%- include('../common/header', {}); %>
+  <!-- /#header -->
+  <!-- Content -->
+  <div class="content">
+    <!-- Animated -->
+    <form id="updateFrom" action="" method="post" enctype="multipart/form-data">
+      <div class="row">
+        <div class="col-lg-12 col-md-12 col-sm-12">
+          <div class="animated fadeIn card card-body card-block">
+            <div class="col col-md-12">
+              <label for="image1">Image (require: 400 < width < 800 and scale 3/4 and not greater than 2MB)</label>
+              <a role="button" id="crop" data-target="#cropImage" class="btn btn-primary float-right demo-crop">Add new image</a>
+
+            </div>
+
+            <div class="col-12 col-md-12 images" style="min-height: 300px">
+              <!-- <div class="pic col-lg-3 col-md-3 col-sm-6">
+                <img class="default-image"
+                  src="data:image/png;base64,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" alt="Smiley face">
+              </div> -->
+              <%if (product && product.images.forEach){%>
+              <%product.images.forEach(function (image) { %>
+              <img class="default-image"
+                   src="<%= domain + image%>" alt="Smiley face">
+              <%})%>
+              <%}%>
+            </div>
+          </div>
+
+        </div>
+        <div class="col-lg-8 col-md-8 col-sm-12">
+          <div class="animated fadeIn">
+            <div class="row">
+              <div class="col-lg-12">
+                <div class="card">
+                  <div class="card-body card-block">
+
+                    <div class="form-group col-lg-6 col-md-6 col-sm-12">
+                      <div class="col-lg-12">
+                        <label for="shortDescription" class=" form-control-label">Short Description</label>
+                        <textarea type="text" id="shortDescription" name="shortDescription"
+                                  class="form-control"
+                                  style="height: 150px;"><%= product.shortDescription ? product.shortDescription : '' %>
+                        </textarea>
+                      </div>
+                    </div>
+
+                    <div class="form-group col-lg-6 col-md-6 col-sm-12">
+                      <div class="col-md-12">
+                        <label for="Description" class=" form-control-label">Description</label>
+                        <textarea type="text" id="Description" name="description"
+                          class="form-control"
+                          style="height: 150px;"><%= product.description ? product.description : '' %>
+                        </textarea>
+                      </div>
+                    </div>
+
+                    <div class="form-group col-lg-6 col-md-6 col-sm-12">
+                      <div class="col-md-12 col-sm-12">
+                        <label class=" form-control-label">Information</label></div>
+                      <div class="col-md-12 col-sm-12">
+                        <textarea id="summernote" name="information"
+                                  width="100px">
+                          <%- product.information ? product.information : '' %>
+                        </textarea>
+                      </div>
+                    </div>
+
+
+                    <div class="form-group col-lg-6 col-md-6 col-sm-12">
+                      <div class="col-md-12 col-sm-12">
+                        <label class=" form-control-label">User manual</label></div>
+                      <div class="col-md-12 col-sm-12">
+                        <textarea id="summernote1" name="userManual"
+                                  width="100px">
+                          <%- product.userManual ? product.userManual : ''%>
+                        </textarea>
+                      </div>
+                    </div>
+
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="col-lg-4 col-md-4 col-sm-12">
+          <div class="animated fadeIn">
+            <div class="row">
+              <div class="col-lg-12">
+                <div class="card">
+                  <div class="card-body card-block">
+                    <div class="row form-group">
+                      <div class="col col-md-12">
+                        <label for="name" class=" form-control-label">Name</label>
+                        <input type="text" id="name" name="name"
+                               value="<%= product.name ? product.name : '' %>"
+                               class="form-control">
+                      </div>
+                    </div>
+
+                    <div class="row form-group">
+                      <div class="col col-md-12">
+                        <label for="price" class=" form-control-label">Price</label>
+                        <input type="number"
+                               id="price"
+                               name="price"
+                               value="<%= product.price ? product.price : 0 %>"
+                               class="form-control">
+                      </div>
+                    </div>
+                    <div class="row form-group">
+                      <div class="col col-md-12">
+                        <label for="quantity" class=" form-control-label">Quantity</label>
+                        <input type="number"
+                               id="quantity"
+                               name="quantity"
+                               value="<%= product.quantity ? product.quantity : 0 %>"
+                               class="form-control">
+                      </div>
+                    </div>
+                    <div class="row form-group">
+                      <div class="col col-md-12">
+                        <label for="linkFacebook" class=" form-control-label">Link FaceBook</label>
+                        <input type="text"
+                               id="linkFacebook"
+                               name="linkFacebook"
+                               value="<%= product.linkFacebook ? product.linkFacebook : '' %>"
+                               class="form-control">
+                      </div>
+                    </div>
+                    <div class="row form-group">
+                      <div class="col col-md-12">
+                        <label for="linkInstagram" class=" form-control-label">Link Instagram</label>
+                        <input type="text"
+                               id="linkInstagram"
+                               name="linkInstagram"
+                               value="<%= product.linkInstagram ? product.linkInstagram : '' %>"
+                               class="form-control">
+                      </div>
+                    </div>
+                    <div class="row">
+                      <div class="col-12 col-md-12">
+                        <label for="fontSize" class=" form-control-label">Font Size</label>
+
+                        <select id="fontSize" name="fontSize" data-placeholder="Choose size..." multiple
+                                class="standardSelect">
+                          <option value="" label="default"></option>
+                          <% product.size.forEach(function(s){%>
+                          <option value="S" <%= s == 'S' ? 'selected' : ''%>>Size S</option>
+                          <option value="M" <%= s == 'M' ? 'selected' : ''%>>Size M</option>
+                          <option value="L" <%= s == 'L' ? 'selected' : ''%>>Size L</option>
+                          <option value="XL" <%= s == 'XL' ? 'selected' : ''%>>Size XL</option>
+                          <option value="XXL" <%= s == 'XXL' ? 'selected' : ''%>>Size XXL</option>
+                          <option value="XXXL" <%= s == 'XXL' ? 'selected' : ''%>>Size XXXL</option>
+                          <%})%>
+                        </select>
+                      </div>
+
+                      <div class="col-12 col-md-12 mt-3">
+                        <label for="sizeNumber" class=" form-control-label">Size Number</label>
+                        <select id="sizeNumber" name="sizeNumber" data-placeholder="Choose size..." multiple
+                                class="standardSelect">
+                          <% product.size.forEach(function(sn){%>
+                          <option value="" label="default"></option>
+                          <option value="35" <%= sn == '35' ? 'selected' : ''%>>Size 35</option>
+                          <option value="36" <%= sn == '36' ? 'selected' : ''%>>Size 36</option>
+                          <option value="37" <%= sn == '37' ? 'selected' : ''%>>Size 37</option>
+                          <option value="38" <%= sn == '38' ? 'selected' : ''%>>Size 38</option>
+                          <option value="39" <%= sn == '39' ? 'selected' : ''%>>Size 39</option>
+                          <option value="40" <%= sn == '40' ? 'selected' : ''%>>Size 40</option>
+                          <option value="41" <%= sn == '41' ? 'selected' : ''%>>Size 41</option>
+                          <option value="42" <%= sn == '42' ? 'selected' : ''%>>Size 42</option>
+                          <%})%>
+                        </select>
+                      </div>
+
+                      <div class="col-12 col-md-12 mt-3">
+                        <label for="color" class=" form-control-label">Color</label>
+                        <select id="color" name="color" data-placeholder="Choose size..." multiple
+                                class="standardSelect">
+                          <% product.colors.forEach(function(cl){%>
+                          <option value="" label="default"></option>
+                          <option value="blue" class="blue" <%= cl == 'blue' ? 'selected' : ''%>>Blue</option>
+                          <option value="maroon" class="maroon" <%= cl == 'maroon' ? 'selected' : ''%>>Maroon</option>
+                          <option value="gray" class="gray" <%= cl == 'gray' ? 'selected' : ''%>>Gray</option>
+                          <option value="green" class="green" <%= cl == 'green' ? 'selected' : ''%>>Green</option>
+                          <option value="yellow" class="yellow" <%= cl == 'yellow' ? 'selected' : ''%>>Yellow</option>
+                          <%})%>
+                        </select>
+                      </div>
+
+                      <div class="col-12 col-md-12 mt-3">
+                        <label for="category" class=" form-control-label">Categories</label>
+                        <select multiple id="category" name="category" class="standardSelect">
+                          <% if(listCategory && listCategory.length){ %>
+                          <% product && product.categoryIds.forEach(function (id) {%>
+                          <% listCategory.forEach(function(categories){ %>
+                          <optgroup label="<%= categories.name %>">
+                            <option style="display: none">&nbsp;</option>
+                            <% categories.categories.forEach(function(category){ %>
+                            <optgroup label="&nbsp;&nbsp;&nbsp;&nbsp;<%= category.name %>">
+                              <% category.items.forEach(function(item){ %>
+                              <option value="<%= `${categories.objectId}:${category.objectId}:${item.objectId}` %>" <%= id == item.objectId  ? 'selected' : ''%>>&nbsp;&nbsp;&nbsp;&nbsp; <%= item.name %></option>
+                              <% }); %>
+                            </optgroup>
+                            <% }); %>
+                            <% }); %>
+                          </optgroup>
+                          <%})%>
+                          <% } %>
+                        </select>
+                      </div>
+
+                      <div class="col-12 col-md-12 mt-5" >
+                        <!-- <button type="submit" id="send" class="btn btn-sm btn-primary float-right"> -->
+
+                        <button type="button" id="sendUpdate" class="col-12 col-md-12 mt-5 btn btn-outline-link">Update</button>
+                          <!-- <i class="fa fa-dot-circle-o"></i> Submit -->
+                        <!-- </button> -->
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div><!-- .animated -->
+        </div>
+      </div>
+    </form>
+    <!-- .animated -->
+  </div>
+
+
+  <div  class="modal" id="cropImage" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-md" role="document">
+      <div class="modal-content">
+        <div class="modal-header">
+          <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+          </button>
+          <h5 class="modal-title" id="exampleModalLabel">Edit Image </h5>
+        </div>
+        <div class="modal-body">
+          <div class="image-editor">
+            <input type="file" class="cropit-image-input">
+            <div class="cropit-preview" style="margin: auto;"></div>
+            <div class="image-size-label">
+              Resize image
+            </div>
+            <input type="range" class="cropit-image-zoom-input">
+            <div class="btn select-image-btn">
+              <span class="icon icon-image"></span>Select new image
+            </div>
+          </div>
+      
+  
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-secondary"  data-dismiss="modal">Close</button>
+          <button type="submit" class="btn btn-primary btn-save-new-menu export">Crop</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- /.content -->
+  <div class="clearfix"></div>
+  <!-- Footer -->
+  <%- include('../common/footer', {}); %>
+  <!-- /.site-footer -->
+</div>
+
+
+
+<!--end Crop image -->
+<!-- /#right-panel -->
+<!--<script>-->
+<!--function submit() {-->
+<!--document.getElementById("myForm").submit();-->
+<!--}-->
+<!--</script>-->
+<script>
+  jQuery(document).ready(function ($) {
+    const fileSize = 2 * 1024 * 1024;
+    $(".standardSelect").chosen({
+      disable_search_threshold: 10,
+      no_results_text: "Oops, nothing found!",
+      width: "100%"
+    });
+
+    $('#summernote').summernote({
+      height: 350,
+    });
+
+    $('#summernote1').summernote({
+      height: 350,
+    });
+    $('#sendUpdate').on('click', function () {
+      document.getElementById("updateFrom").submit();
+    })
+  });
+
+</script>
+
+</body>
+</html>

@@ -163,6 +163,40 @@ module.exports = {
     }
   },
   
+  update: async function(item) {
+    try {
+      const Product = Parse.Object.extend('Product');
+      const query = new Parse.Query(Product);
+      query.equalTo('objectId', item.objectId);
+  
+      const result = await query.first();
+      
+      result.set('information', (item.information ? item.information : ''));
+      result.set('name', item.name);
+      result.set('price', item.price);
+      result.set('quantity', item.quantity);
+      result.set('images', item.images);
+      result.set('categoryIds', item.categoryIds);
+      result.set('menuIds', item.menuIds);
+      result.set('colors', item.colors);
+      result.set('description', item.description);
+      result.set('userManual', item.userManual);
+      result.set('shortDescription', item.shortDescription);
+      result.set('linkFacebook', item.linkFacebook);
+      result.set('linkInstagram', item.linkInstagram);
+      if (item.fontSize && item.fontSize.length > 0) {
+        result.set('size', item.fontSize);
+      }else {
+        result.set('size', item.sizeNumber);
+      }
+      const productUpdated = await result.save();
+  
+      return helper.toJSON(productUpdated);
+    }  catch (err) {
+      throw err;
+    }
+  },
+  
   findByIds: async function(objectIds, user) {
     try {
       const Product = Parse.Object.extend('Product');
