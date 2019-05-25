@@ -70,7 +70,7 @@ module.exports = {
       }
       
       if (options.menuId) {
-        query.equalTo('menuId', options.menuId);
+        query.equalTo('menuIds', options.menuId);
       }
 
       if (options.categoryId) {
