@@ -138,7 +138,7 @@ csslinks: [
   <!-- Content -->
   <div class="content">
     <!-- Animated -->
-    <form id="myForm" action="" method="post" enctype="multipart/form-data">
+    <form id="updateFrom" action="" method="post" enctype="multipart/form-data">
       <div class="row">
         <div class="col-lg-12 col-md-12 col-sm-12">
           <div class="animated fadeIn card card-body card-block">
@@ -281,8 +281,8 @@ csslinks: [
 
                         <select id="fontSize" name="fontSize" data-placeholder="Choose size..." multiple
                                 class="standardSelect">
-                          <% product.size.forEach(function(s){%>
                           <option value="" label="default"></option>
+                          <% product.size.forEach(function(s){%>
                           <option value="S" <%= s == 'S' ? 'selected' : ''%>>Size S</option>
                           <option value="M" <%= s == 'M' ? 'selected' : ''%>>Size M</option>
                           <option value="L" <%= s == 'L' ? 'selected' : ''%>>Size L</option>
@@ -337,7 +337,7 @@ csslinks: [
                             <% categories.categories.forEach(function(category){ %>
                             <optgroup label="&nbsp;&nbsp;&nbsp;&nbsp;<%= category.name %>">
                               <% category.items.forEach(function(item){ %>
-                              <option value="<%= item.objectId %>" <%= id == item.objectId  ? 'selected' : ''%>>&nbsp;&nbsp;&nbsp;&nbsp; <%= item.name %></option>
+                              <option value="<%= `${categories.objectId}:${category.objectId}:${item.objectId}` %>" <%= id == item.objectId  ? 'selected' : ''%>>&nbsp;&nbsp;&nbsp;&nbsp; <%= item.name %></option>
                               <% }); %>
                             </optgroup>
                             <% }); %>
@@ -351,7 +351,7 @@ csslinks: [
                       <div class="col-12 col-md-12 mt-5" >
                         <!-- <button type="submit" id="send" class="btn btn-sm btn-primary float-right"> -->
 
-                        <button type="button" id="send" class="col-12 col-md-12 mt-5 btn btn-outline-link">Update</button>
+                        <button type="button" id="sendUpdate" class="col-12 col-md-12 mt-5 btn btn-outline-link">Update</button>
                           <!-- <i class="fa fa-dot-circle-o"></i> Submit -->
                         <!-- </button> -->
                       </div>
@@ -432,7 +432,11 @@ csslinks: [
     $('#summernote1').summernote({
       height: 350,
     });
+    $('#sendUpdate').on('click', function () {
+      document.getElementById("updateFrom").submit();
+    })
   });
+
 </script>
 
 </body>

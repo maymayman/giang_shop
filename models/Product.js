@@ -166,7 +166,7 @@ module.exports = {
     try {
       const Product = Parse.Object.extend('Product');
       const query = new Parse.Query(Product);
-      query.equalTo('objectId', objectId);
+      query.equalTo('objectId', item.objectId);
   
       const result = await query.first();
       

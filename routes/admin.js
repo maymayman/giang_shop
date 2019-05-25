@@ -228,10 +228,11 @@ router.get('/product/:id/update', async function (req, res, next) {
   }
 });
 
-router.post('/product/:id/update', async function (req, res, next) {
+router.post('/product/:id/update', helper.uploadFile, async function (req, res, next) {
   try {
     const user = req.user;
     const sessionToken = req.user.sessionToken;
+    const objectId = req.params.id ? req.params.id : undefined;
     const information = req.body.information ? req.body.information : undefined;
     const name = req.body.name ? req.body.name : undefined;
     const price = req.body.price ? req.body.price : undefined;
@@ -280,6 +281,7 @@ router.post('/product/:id/update', async function (req, res, next) {
     const newMenuCategory  = await validate.validationMenuCategoyBeforeSave(category);
     const product = {
       userId: user.objectId,
+      objectId: objectId,
       information: information,
       name: name,
       price: parseInt(price),
