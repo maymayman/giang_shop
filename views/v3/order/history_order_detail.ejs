@@ -55,12 +55,16 @@
                                             <br>
                                             <span>$<%= product.price * product.count; %></span> -->
                                 </td>
-                                <td class="product-price-cart">$<span class="amount"><%= product.price; %></span></td>
+                                <td class="product-price-cart">
+                                    <span class="amount"><%= product.price; %></span>
+                                    &nbsp; VND
+                                </td>
                                 <td class="product-quantity">
                                     <span><%= product.count %></span>
                                 </td>
-                                <td class="product-subtotal">$
+                                <td class="product-subtotal">
                                     <span class="product-subtotal-<%= product.objectId; %>"><%= product.price * product.count; %></span>
+                                    &nbsp; VND
                                 </td>
                             </tr>
                             <% }); %>

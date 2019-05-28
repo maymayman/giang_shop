@@ -41,7 +41,9 @@
                                             <span><img style="width: 82px;" src=<%= domain + Object.values(order.items)[0].images; %> alt=""></span>
                                         </td>
                                         <td class="product-price-cart"><span class="amount"><%= order.status; %></span></td>
-                                        <td class="product-price-cart">$<span class="amount"><%= order.amount; %></span></td>
+                                        <td class="product-price-cart"></td>
+                                            <span class="amount"><%= order.amount; %></span>&nbsp; VND
+                                        </td>
                                         <td class="product-detail ">
                                             <a class="btn btn-primary" href="<%= domain + 'order/' + order.objectId; %>" role="button">Detail</a>
                                         </td>

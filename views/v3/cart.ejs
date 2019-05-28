@@ -54,7 +54,7 @@
                                             <br>
                                             <span>$<%= product.price * product.count; %></span> -->
                                         </td>
-                                        <td class="product-price-cart">$<span class="amount"><%= product.price; %></span></td>
+                                        <td class="product-price-cart"><span class="amount"><%= product.price; %></span>&nbsp; VND</td>
                                         <td class="product-quantity">
                                             <div class="cart-plus-minus">
                                                 <input class="cart-plus-minus-box"
@@ -64,8 +64,9 @@
                                                     type="text" name="qtybutton" value=<%= product.count; %>>
                                             </div>
                                         </td>
-                                        <td class="product-subtotal">$
+                                        <td class="product-subtotal">
                                             <span class="product-subtotal-<%= product.objectId; %>"><%= product.price * product.count; %></span>
+                                            &nbsp; VND
                                         </td>
                                         <!--<td class="product-remove">-->
                                             <!--&lt;!&ndash;<a href="#"><i class="fa fa-pencil"></i></a>&ndash;&gt;-->
@@ -153,11 +154,14 @@
                             <div class="total-shipping">
                                 <h5>Total shipping</h5>
                                 <ul>
-                                    <li> Standard <span>$0</span></li>
+                                    <li> Standard <span>0</span>&nbsp; VND</li>
                                     <!-- <li><input type="checkbox"> Express <span>$30.00</span></li> -->
                                 </ul>
                             </div>
-                            <h4 class="grand-totall-title">Grand Total  <span>$<span class="total-amount"><%= totalAmount; %></span></span></h4>
+                            <h4 class="grand-totall-title">Grand Total  <span>
+                                <span class="total-amount"><%= totalAmount; %></span>
+                                &nbsp; VND
+                            </span></h4>
                             <a class="cart-order">Proceed to Checkout</a>
                         </div>
                     </div>

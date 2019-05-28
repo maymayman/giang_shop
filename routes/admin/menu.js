@@ -4,8 +4,6 @@ const MenuModel = require('../../models/Menu');
 const validate = require('../../models/validate/validation');
 const helper = require('../../models/helper/index');
 
-
-
 router.get('/', async function (req, res, next) {
   try {
     const user = req.user;
