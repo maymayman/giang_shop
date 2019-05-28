@@ -38,7 +38,7 @@
                                     <th scope="col" style="width: 10%">ID</th>
                                     <th scope="col" style="width: 12%">Image</th>
                                     <th scope="col">Name</th>
-                                    <th scope="col">Price</th>
+                                    <th scope="col" style="width: 16%">Price (VND)</th>
                                     <th scope="col" style="width: 10%">status </th>
                                     <th scope="col">Action</th>
                                 </tr>
@@ -49,7 +49,7 @@
                                         <td scope="serial"><%= product.objectId %></td>
                                         <td><img src=<%= domain + product.images[0]; %> alt="" width="100"></td>
                                         <td><%= product.name %></td>
-                                        <td><%= '$' + product.price %></td>
+                                        <td><%= product.price %></td>
                                         <td>
                                             <span class="badge badge-<%= product.status == 'ACTIVE'
                                                 ? 'complete'
@@ -76,6 +76,13 @@
                                                 <button type="button" class="btn btn-outline-success btn-sm" >
                                                     <i class="fa fa-eye"></i>
                                                     &nbsp; Detail
+                                                </button>
+                                            </a>
+
+                                            <a>
+                                                <button type="button" onclick="location.href ='./product/<%= product.objectId %>/delete'" class="btn btn-outline-danger btn-sm">
+                                                    <i class="fa fa-lightbulb-o"></i>
+                                                    &nbsp; Delete
                                                 </button>
                                             </a>
                                         </td>

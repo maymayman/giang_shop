@@ -31,7 +31,7 @@
         <div class="card-header">
           <strong class="card-title">Oder</strong>
           <% if (user && user.role == 'administrator'){ %>
-          <strong class="btn btn-outline-success btn-sm float-right"><%= '$' + order.amount; %></strong>
+          <strong class="btn btn-outline-success btn-sm float-right"><%= order.amount; %> &nbsp; VND</strong>
           <% } %>
         </div>
         <div class="card-body">
@@ -74,7 +74,7 @@
               </td>
               <td><%= order.items[product.objectId].size %></td>
               <td><%= order.items[product.objectId].color %></td>
-              <td><%= '$' + product.price * product.count %></td>
+              <td><%= product.price * product.count %> &nbsp; VND</td>
     
                 <% if (order.status === 'NEW' && !order.items[product.objectId].status && user.role === 'store') { %>
                   <td>
