@@ -75,6 +75,7 @@ validBase64.regex = /^\s*data:([a-z]+\/[a-z]+(;[a-z\-]+\=[a-z\-]+)?)?(;base64)?,
     $('#send').on('click', function () {
       const $this = $(this);
       $this.attr("disabled", "disabled");
+      $this.addClass( "bg-info progress-bar-striped progress-bar-animated");
       const images = $('.images .img');
       const form = document.getElementById("myForm");
       const formDataToUpload = new FormData(form);
@@ -166,6 +167,7 @@ validBase64.regex = /^\s*data:([a-z]+\/[a-z]+(;[a-z\-]+\=[a-z\-]+)?)?(;base64)?,
     $('#sendUpdate').on('click', function () {
       const $this = $(this);
       $this.attr("disabled", "disabled");
+      $this.addClass( "bg-info progress-bar-striped progress-bar-animated");
       const images = $('.images .img');
       const form = document.getElementById("updateFrom");
       const formDataToUpload = new FormData(form);
@@ -186,16 +188,11 @@ validBase64.regex = /^\s*data:([a-z]+\/[a-z]+(;[a-z\-]+\=[a-z\-]+)?)?(;base64)?,
 
           // Create a FormData and append the file with "image" as parameter name
           formDataToUpload.append(`image${i}`, blob);
-          console.log(ImageURL)
         } else {
           const oldPath = getPathName(ImageURL);
           formDataToUpload.append('oldImages', oldPath);
-          // console.log(ImageURL, oldPath);
-          // oldImages.push(oldPath);
         }        
       }
-      
-      // formDataToUpload.append('oldImages', oldImages);
       
       $.ajax({
         url: '/admin/product/update',
