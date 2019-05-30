@@ -216,6 +216,7 @@ module.exports = {
       product.set('shortDescription', payload.shortDescription);
       product.set('linkFacebook', payload.linkFacebook);
       product.set('linkInstagram', payload.linkInstagram);
+      product.set('relativeCategoryIds', payload.relativeCategoryIds);
       if (payload.fontSize && payload.fontSize.length > 0) {
         product.set('size', payload.fontSize);
       }else {

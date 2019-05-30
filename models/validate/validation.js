@@ -186,16 +186,19 @@ module.exports = {
   
   validationMenuCategoyBeforeSave: async function (options) {
     try {
-      let menuIds = [];
-      let categoryIds = [];
+      const menuIds = [];
+      const categoryIds = [];
+      const relativeCategoryIds = [];
       options.forEach(function (option) {
+        
         if (!menuIds.includes(option.split(':')[0])) {
           menuIds.push(option.split(':')[0]);
         }
-        categoryIds.push(option.split(':')[1]) ;
+        relativeCategoryIds.push(option.split(':')[1]) ;
+        relativeCategoryIds.push(option.split(':')[2]) ;
         categoryIds.push(option.split(':')[2]) ;
       });
-      return { menuIds: menuIds, categoryIds: categoryIds };
+      return { menuIds, categoryIds, relativeCategoryIds };
     } catch (err) {
       throw err
     }

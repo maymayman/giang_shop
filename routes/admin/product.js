@@ -236,6 +236,7 @@ router.post('/update/', helper.uploadFile, async function (req, res, next) {
       colors: colors,
       categoryIds: newMenuCategory.categoryIds,
       menuIds: newMenuCategory.menuIds,
+      relativeCategoryIds: newMenuCategory.relativeCategoryIds,
       description: description,
       userManual: userManual,
       shortDescription: shortDescription,
