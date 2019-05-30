@@ -245,7 +245,7 @@ router.post('/update/', helper.uploadFile, async function (req, res, next) {
       shortDescription: shortDescription,
       linkInstagram: linkInstagram,
       linkFacebook: linkFacebook,
-      oldImages: oldImages,
+      oldImages: oldImages: oldImages ? oldImages : [],
     };
     const productSave = await ProductModel.update(product, sessionToken);
     return res.json({success: true, error: null, data: productSave});
