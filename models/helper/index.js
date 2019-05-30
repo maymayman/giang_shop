@@ -33,7 +33,7 @@ module.exports = {
           const type = file.type.split('/')[1];
           const newPath = file.path + "." + type;
           fs.renameSync(file.path, newPath);
-          const link = newPath.slice(numberSlice);
+          const link = newPath.slice(numberSlice).replace("\\", "/");
           files.push(link);
         }
       })
