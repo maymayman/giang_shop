@@ -22,6 +22,19 @@ function b64toBlob(b64Data, contentType, sliceSize) {
   return blob;
 }
 
+function getPathName(href) {
+  const reg = /.+?\:\/\/.+?(\/.+?)(?:#|\?|$)/;
+  const pathname = reg.exec(href)[1];
+
+  return pathname.replace("'", "");
+};
+
+function validBase64(s) {
+  return !!s.match(validBase64.regex);
+}
+validBase64.regex = /^\s*data:([a-z]+\/[a-z]+(;[a-z\-]+\=[a-z\-]+)?)?(;base64)?,[a-z0-9\!\$\&\'\,\(\)\*\+\,\;\=\-\.\_\~\:\@\/\?\%\s]*\s*$/i;
+
+
 (function ($) {
   $(document).ready(function () {    
     $('.images .pic').on('click', function () {
@@ -115,13 +128,18 @@ function b64toBlob(b64Data, contentType, sliceSize) {
       $('#cropImage').modal('show');
     })
 
-    $('.image-editor').cropit({});
+    $('.image-editor').cropit({
+      width: 300,
+      height: 400,
+    });
     $('.select-image-btn').click(function() {
       $('.cropit-image-input').click();
     });
  
     $('.export').click(function() {
-      const imageData = $('.image-editor').cropit('export');
+      const imageData = $('.image-editor').cropit('export', {
+        originalSize: true
+      });
       const images = $('.images');
       images.append('<div class="img" style="background-image: url(\'' + imageData + '\');" rel="'+ imageData  +'"><span>remove</span></div>');
       $('#cropImage').modal('hide');
@@ -143,6 +161,71 @@ function b64toBlob(b64Data, contentType, sliceSize) {
 
     $('#summernote1').summernote({
       height: 350,
+    });
+
+    $('#sendUpdate').on('click', function () {
+      const $this = $(this);
+      $this.attr("disabled", "disabled");
+      const images = $('.images .img');
+      const form = document.getElementById("updateFrom");
+      const formDataToUpload = new FormData(form);
+      const oldImages = [];
+
+      for(let i = 0; i < images.length; i++) {
+        const ImageURL = $(images[i]).attr('rel');
+
+        if (validBase64(ImageURL)) {
+          const block = ImageURL.split(";");
+          // Get the content type of the image
+          const contentType = block[0].split(":")[1];// In this case "image/gif"
+          // get the real base64 content of the file
+          const realData = block[1].split(",")[1];// In this case "R0lGODlhPQBEAPeoAJosM...."
+
+          // Convert it to a blob to upload
+          const blob = b64toBlob(realData, contentType);
+
+          // Create a FormData and append the file with "image" as parameter name
+          formDataToUpload.append(`image${i}`, blob);
+          console.log(ImageURL)
+        } else {
+          const oldPath = getPathName(ImageURL);
+          formDataToUpload.append('oldImages', oldPath);
+          // console.log(ImageURL, oldPath);
+          // oldImages.push(oldPath);
+        }        
+      }
+      
+      // formDataToUpload.append('oldImages', oldImages);
+      
+      $.ajax({
+        url: '/admin/product/update',
+        data: formDataToUpload,// the formData function is available in almost all new browsers.
+        type:"POST",
+        contentType:false,
+        processData:false,
+        cache:false,
+        dataType:"json", // Change this according to your response from the server.
+        beforeSend: function() {
+          console.log('before');
+        },
+        error:function(err){
+          $this.removeAttr("disabled", "disabled");
+          alert(err);
+        },
+        success:function(data){
+          console.log(data);
+        },
+        complete:function(response) {
+          const { status, responseJSON } = response;
+          if (status != 200 || !responseJSON || !responseJSON.success ) {
+            $this.removeAttr("disabled", "disabled");
+            alert(responseJSON.error);
+          } else {
+            console.log("Request finished.", response);
+            window.location.replace('/admin/product?status=PENDING');
+          }          
+        }
+      });
     });
   })
 })(jQuery);

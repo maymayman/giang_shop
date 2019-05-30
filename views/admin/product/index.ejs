@@ -63,13 +63,24 @@
                                             </span>
                                         </td>
                                         <td>
-                                            <% if (product.status == 'PENDING' && user && user.role === 'administrator') { %>
-                                                <a>
-                                                    <button type="button" onclick="location.href ='./product/<%= product.objectId %>/approve'" class="btn btn-outline-success btn-sm">
-                                                        <i class="fa fa-magic"></i>
-                                                        &nbsp; Approve
-                                                    </button>
-                                                </a>
+                                            <% if (product.status == 'PENDING' && user) { %>
+                                                <% if (user.role === 'administrator') { %>
+                                                    <a>
+                                                        <button type="button" onclick="location.href ='./product/<%= product.objectId %>/approve'" class="btn btn-outline-success btn-sm">
+                                                            <i class="fa fa-map-marker"></i>
+                                                            &nbsp; Approve
+                                                        </button>
+                                                    </a>
+                                                <% } %>
+
+                                                <% if (user.role === 'store') { %>
+                                                    <a>
+                                                        <button type="button" onclick="location.href ='./product/update/<%= product.objectId %>'" class="btn btn-outline-warning btn-sm">
+                                                            <i class="fa fa-magic"></i>
+                                                            &nbsp; Edit
+                                                        </button>
+                                                    </a>
+                                                <% } %>
                                             <% } %>
             
                                             <a target="_blank" href="../product/<%= product.objectId %>">

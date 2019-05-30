@@ -182,5 +182,51 @@ module.exports = {
     } catch (err) {
       throw err;
     }
+  },
+
+  update: async function(payload, sessionToken) {
+    try {
+      const pointerToStore = new Parse.User();
+      pointerToStore.id = payload.userId;
+
+      const Product = Parse.Object.extend('Product');
+      const query = new Parse.Query(Product);
+      query.equalTo('objectId', payload.objectId);
+      query.equalTo('store', pointerToStore);
+
+      const product = await query.first();
+
+      if (!product) {
+        throw 'product not found';
+      }
+
+      const { oldImages, images } = payload;
+      const newImages = oldImages.concat(images);
+
+      product.set('information', (payload.information ? payload.information : ''));
+      product.set('name', payload.name);
+      product.set('price', payload.price);
+      product.set('quantity', payload.quantity);
+      product.set('images', newImages);
+      product.set('categoryIds', payload.categoryIds);
+      product.set('menuIds', payload.menuIds);
+      product.set('colors', payload.colors);
+      product.set('description', payload.description);
+      product.set('userManual', payload.userManual);
+      product.set('shortDescription', payload.shortDescription);
+      product.set('linkFacebook', payload.linkFacebook);
+      product.set('linkInstagram', payload.linkInstagram);
+      if (payload.fontSize && payload.fontSize.length > 0) {
+        product.set('size', payload.fontSize);
+      }else {
+        product.set('size', payload.sizeNumber);
+      }
+      
+      const newProduct = await product.save(null, {sessionToken});
+  
+      return helper.toJSON(newProduct);
+    } catch (err) {
+      throw err;
+    }
   }
 };
