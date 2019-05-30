@@ -31,7 +31,7 @@ module.exports = {
       }
 
       if (options.categoryId) {
-        query.equalTo('categoryIds', options.categoryId);
+        query.equalTo('categoryIds', options.relativeCategoryIds);
       }
 
       if (options.keyword) {
@@ -74,7 +74,7 @@ module.exports = {
       }
 
       if (options.categoryId) {
-        query.equalTo('categoryIds', options.categoryId);
+        query.equalTo('categoryIds', options.relativeCategoryIds);
       }
 
       if (options.keyword) {
