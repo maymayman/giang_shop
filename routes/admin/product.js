@@ -218,6 +218,9 @@ router.post('/update/', helper.uploadFile, async function (req, res, next) {
     if (category && !Array.isArray(category)){
       category = [category]
     }
+    if (oldImages && !Array.isArray(oldImages)){
+      oldImages = [oldImages]
+    }
 
     if (error) {
       return res.json({success: false, error: error, data: null});
