@@ -65,6 +65,8 @@ module.exports = {
   
       banner.set('userId', item.userId);
       banner.set('title', item.title);
+      banner.set('slogan', item.slogan);
+      banner.set('color', item.color);
       banner.set('position', item.position);
       banner.set('link', item.link);
       banner.set('description', item.description);

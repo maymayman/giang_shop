@@ -1,103 +1,148 @@
 <!doctype html>
-<!--[if lt IE 7]>      <html class="no-js lt-ie9 lt-ie8 lt-ie7" lang=""> <![endif]-->
-<!--[if IE 7]>         <html class="no-js lt-ie9 lt-ie8" lang=""> <![endif]-->
-<!--[if IE 8]>         <html class="no-js lt-ie9" lang=""> <![endif]-->
-<!--[if gt IE 8]><!--> <html class="no-js" lang=""> <!--<![endif]-->
+<!--[if lt IE 7]>
+<html class="no-js lt-ie9 lt-ie8 lt-ie7" lang=""> <![endif]-->
+<!--[if IE 7]>
+<html class="no-js lt-ie9 lt-ie8" lang=""> <![endif]-->
+<!--[if IE 8]>
+<html class="no-js lt-ie9" lang=""> <![endif]-->
+<!--[if gt IE 8]><!-->
+<html class="no-js" lang=""> <!--<![endif]-->
 <%- include('../common/head', {}); %>
 
 <body>
-    <!-- Left Panel -->
-    
-    <aside id="left-panel" class="left-panel">
-        <%- include('../common/navbar', {}); %>
-    </aside>
+<!-- Left Panel -->
 
-    <!-- /#left-panel -->
-    <!-- Right Panel -->
-    <div id="right-panel" class="right-panel">
-        <!-- Header-->
-        <%- include('../common/header', {}); %>
-        <!-- /#header -->
-        <!-- Content -->
+<aside id="left-panel" class="left-panel">
+    <%- include('../common/navbar', {}); %>
+</aside>
 
-        <div class="breadcrumbs">
-            <div class="breadcrumbs-inner">
-                <div class="row m-0">
-                    <div class="col-sm-4">
-                        <div class="page-header float-left">
-                            <div class="page-title">
-                                <h1>Dashboard</h1>
-                            </div>
+<!-- /#left-panel -->
+<!-- Right Panel -->
+<div id="right-panel" class="right-panel">
+    <!-- Header-->
+    <%- include('../common/header', {}); %>
+    <!-- /#header -->
+    <!-- Content -->
+
+    <div class="breadcrumbs">
+        <div class="breadcrumbs-inner">
+            <div class="row m-0">
+                <div class="col-sm-4">
+                    <div class="page-header float-left">
+                        <div class="page-title">
+                            <h1>Dashboard</h1>
                         </div>
                     </div>
-                    <div class="col-sm-8">
-                        <div class="page-header float-right">
-                            <div class="page-title">
-                                <ol class="breadcrumb text-right">
-                                    <button type="button" onclick="location.href = './create'" class="btn btn-primary btn-sm">Add New Banner</button>
-                                </ol>
-                            </div>
+                </div>
+                <div class="col-sm-8">
+                    <div class="page-header float-right">
+                        <div class="page-title">
+                            <ol class="breadcrumb text-right">
+                                <button type="button" onclick="location.href = './create'"
+                                        class="btn btn-primary btn-sm">Add New Banner
+                                </button>
+                            </ol>
                         </div>
                     </div>
                 </div>
             </div>
         </div>
-        <div class="content">
-            <%if(errorMessage){%>
-            <div class="col-lg-12 alert alert-danger text-center">
-                <span class="error-message"><%= errorMessage%></span>
-            </div>
-            <%}%>
-            <!-- Animated -->
-            <div class="animated fadeIn">
-                <!-- Widgets  -->
-                <div class="row">
-                    <%if (listBanner && listBanner.length > 0){ %>
-                        <%listBanner.forEach(function (banner) { %>
-                    <div class="col-md-4">
-                        <div class="card">
-                            <img id="image" class="card-img-top" src="<%= domain + banner.image %>" alt="Card image cap">
-                            <div class="card-body">
-                                <h4 class="card-title mb-3"><%= banner.title %></h4>
-                                <p class="card-text"><%= banner.status %></p>
-                                <p class="card-text"><%= banner.link %></p>
-                                <p class="card-text"><%= banner.position %></p>
-                                <p class="card-text"><%- banner.description %></p>
-                                <button type="button" onclick="location.href = './list/<%= banner.objectId %>'" class="btn btn-outline-success btn-sm">Apply</button>
-                                <!--<button type="button" onclick="location.href = './banner/<%= banner.objectId %>'" class="btn btn-outline-success btn-sm float-right">Delete</button>-->
-                            </div>
-                        </div>
-                    </div>
-                        <%})%>
-                    <%}%>
-
-                </div>
-                <!-- /Widgets -->
-            <!-- /#add-category -->
-            </div>
-            <!-- .animated -->
-        </div>
-        <!-- /.content -->
-        <div class="clearfix"></div>
-        <!-- Footer -->
-        <%- include('../common/footer', {}); %>
-        <!-- /.site-footer -->
     </div>
-    <!-- /#right-panel -->
-<!--<script>-->
-  <!--var folder = "";-->
+    <div class="content">
+        <% if(errorMessage){ %>
+            <div class="col-lg-12 alert alert-danger text-center">
+                <span class="error-message"><%= errorMessage %></span>
+            </div>
+        <% } %>
+        <!-- Animated -->
+        <div class="animated fadeIn">
+            <!-- Widgets  -->
+            <div class="col-md-12 no-padding">
+                <% if (listBanner && listBanner.length > 0){ %>
+                    <% listBanner.forEach(function (banner) { %>
+                        <div class="col-md-4" style="float: left;">
+                            <div class="card no-padding" style="width: 400px; height: 500px">
+                                <div class="card-body" style="height: 250px">
+                                    <img style=" max-width: 100%; max-height: 100%;" id="image" class="card-img-top"
+                                         src="<%= domain + banner.image %>"
+                                         alt="Card image cap">
+                                </div>
 
-  <!--$.ajax({-->
-    <!--url : folder,-->
-    <!--success: function (data) {-->
-      <!--$(data).find("a").attr("href", function (i, val) {-->
-        <!--if( val.match(/\.(jpe?g|png|gif)$/) ) {-->
-          <!--console.log('aaaaaaaaaaaaaaaaaahiiiiiiiiiii')-->
-          <!--$("#image").append( "<img src='"+ 'http://localhost:1337/' + val +"'>" );-->
-        <!--}-->
-      <!--});-->
-    <!--}-->
-  <!--});-->
+                                <div class="card-body pt-0" style="height: 250px;">
+                                    <table>
+                                        <tr>
+                                            <th>Title</th>
+                                            <td><%= banner.title %></td>
+                                        </tr>
+                                        <tr>
+                                            <th>Slogan</th>
+                                            <td><%= banner.slogan %></td>
+                                        </tr>
+                                        <tr>
+                                            <th>Status</th>
+                                            <td><%= banner.status %></td>
+                                        </tr>
+                                        <tr>
+                                            <th>Link</th>
+                                            <td><a href="<%= banner.link %>"></a><%= banner.link %></td>
+                                        </tr>
+                                        <tr>
+                                            <th>Font Color</th>
+                                            <td><%= banner.color %></td>
+                                        </tr>
+                                        <tr>
+                                            <th>Position</th>
+                                            <td><%= banner.position %></td>
+                                        </tr>
+                                        <tr>
+                                            <th style="vertical-align: top">Description</th>
+                                            <td style="word-break: break-word; display: inline-block"><%- banner.description %></td>
+                                        </tr>
+
+                                    </table>
+                                    <% if (banner.status == 'ACTIVE'){%>
+                                        <button type="button" onclick="location.href = './list/<%= banner.objectId %>'"
+                                                class="btn btn-outline-success btn-sm float-right"
+                                                style="position: absolute; right: 10px; bottom: 5px;">Inactive
+                                        </button>
+                                    <%}%>
+                                        <button type="button" onclick="location.href = './list/<%= banner.objectId %>'"
+                                                class="btn btn-outline-success btn-sm"
+                                                style="position: absolute; bottom: 5px;">Apply
+                                        </button>
+                                </div>
+                            </div>
+                        </div>
+                    <% }) %>
+                <% } %>
+
+            </div>
+            <!-- /Widgets -->
+            <!-- /#add-category -->
+        </div>
+        <!-- .animated -->
+    </div>
+    <!-- /.content -->
+    <div class="clearfix"></div>
+    <!-- Footer -->
+    <%- include('../common/footer', {}); %>
+    <!-- /.site-footer -->
+</div>
+<!-- /#right-panel -->
+<!--<script>-->
+<!--var folder = "";-->
+
+<!--$.ajax({-->
+<!--url : folder,-->
+<!--success: function (data) {-->
+<!--$(data).find("a").attr("href", function (i, val) {-->
+<!--if( val.match(/\.(jpe?g|png|gif)$/) ) {-->
+<!--console.log('aaaaaaaaaaaaaaaaaahiiiiiiiiiii')-->
+<!--$("#image").append( "<img src='"+ 'http://localhost:1337/' + val +"'>" );-->
+<!--}-->
+<!--});-->
+<!--}-->
+<!--});-->
 <!--</script>-->
 
 </body>

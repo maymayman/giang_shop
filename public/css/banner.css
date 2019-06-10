@@ -1,0 +1,99 @@
+.btn-file {
+    position: relative;
+    overflow: hidden;
+}
+
+.btn-file input[type=file] {
+    position: absolute;
+    top: 0;
+    right: 0;
+    min-width: 100%;
+    min-height: 100%;
+    font-size: 100px;
+    text-align: right;
+    filter: alpha(opacity=0);
+    opacity: 0;
+    outline: none;
+    background: white;
+    cursor: inherit;
+    display: block;
+}
+
+.content-submit {
+    padding: 10px 10px 10px 0;
+    border-top: 1px solid #e1e1e1;
+    text-align: right;
+    background-color: #f0f3f5;
+}
+
+.multi-select {
+    border-radius: 1px;
+}
+
+.yellow {
+    color: yellow;
+}
+
+.gray {
+    color: gray;
+}
+
+.green {
+    color: green;
+}
+
+.blue {
+    color: blue;
+}
+
+.maroon {
+    color: maroon;
+}
+
+.red {
+    color: red;
+}
+
+.white {
+    color: white;
+}
+
+.purple {
+    color: purple;
+}
+.animated-yellow {
+    color: yellow !important;
+}
+
+.animated-gray {
+    color: gray !important;
+}
+
+.animated-green {
+    color: green !important;
+}
+
+.animated-blue {
+    color: blue !important;
+}
+
+.animated-maroon {
+    color: maroon !important;
+}
+
+.animated-red {
+    color: red !important;
+}
+
+.animated-white {
+    color: white !important;
+}
+
+.animated-purple {
+    color: purple !important;
+}
+
+.columns .chosen-container, .column .chosen-container {
+    width: 100% !important;
+    margin-bottom: 1rem;
+}
