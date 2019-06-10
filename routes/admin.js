@@ -271,6 +271,8 @@ router.post('/banner/create', helper.uploadFile, async function (req, res, next)
     const user = req.user;
     const userId = _.get(user, 'objectId', undefined);
     const title = req.body.title ? req.body.title : undefined;
+    const slogan = req.body.slogan ? req.body.slogan : undefined;
+    const color = req.body.color ? req.body.color : undefined;
     const link = req.body.link ? req.body.link : undefined;
     const position = req.body.position ? req.body.position : undefined;
     const description = req.body.description ? req.body.description : undefined;
@@ -288,6 +290,8 @@ router.post('/banner/create', helper.uploadFile, async function (req, res, next)
       const banner = {
         userId: userId,
         title: title,
+        slogan: slogan,
+        color: color,
         position: position,
         link: link,
         status: status,

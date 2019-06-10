@@ -12,70 +12,10 @@
 csslinks: [
 `http://netdna.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap.css`,
 `http://cdnjs.cloudflare.com/ajax/libs/summernote/0.8.11/summernote.css`,
-`${domain}assets/css/lib/chosen/chosen.min.css`
+`${domain}assets/css/lib/chosen/chosen.min.css`,
+`${domain}/css/banner.css`
 ]
 }); %>
-
-<style>
-  .btn-file {
-    position: relative;
-    overflow: hidden;
-  }
-
-  .btn-file input[type=file] {
-    position: absolute;
-    top: 0;
-    right: 0;
-    min-width: 100%;
-    min-height: 100%;
-    font-size: 100px;
-    text-align: right;
-    filter: alpha(opacity=0);
-    opacity: 0;
-    outline: none;
-    background: white;
-    cursor: inherit;
-    display: block;
-  }
-
-  .content-submit {
-    padding: 10px 10px 10px 0;
-    border-top: 1px solid #e1e1e1;
-    text-align: right;
-    background-color: #f0f3f5;
-  }
-
-  .multi-select {
-    border-radius: 1px;
-  }
-
-  .yellow {
-    color: yellow;
-  }
-
-  .gray {
-    color: gray;
-  }
-
-  .green {
-    color: green;
-  }
-
-  .blue {
-    color: blue;
-  }
-
-  .maroon {
-    color: maroon;
-  }
-
-  .columns .chosen-container, .column .chosen-container {
-    width: 100% !important;
-    margin-bottom: 1rem;
-  }
-
-</style>
-
 <body>
 <!-- Left Panel -->
 
@@ -145,6 +85,25 @@ csslinks: [
                         <input type="text" id="title" name="title" class="form-control">
                       </div>
                       <div class="col col-md-12">
+                        <label for="title">Slogan</label>
+                      </div>
+                      <div class="col-12 col-md-12 mb-2">
+                        <input type="text" id="slogan" name="slogan" class="form-control">
+                      </div>
+                      <div class="col col-md-12">
+                        <label for="title">Font Color</label>
+                      </div>
+                      <div class="col-12 col-md-12 mb-2">
+                        <select id="color" name="color" class="standardSelect">
+                          <option value="white" class="white">White</option>
+                          <option value="purple" class="purple">Purple</option>
+                          <option value="red" class="red">Red</option>
+                          <option value="yellow" class="yellow">Yellow</option>
+                          <option value="gray" class="gray">Gray</option>
+                          <option value="blue" class="blue">Blue</option>
+                        </select>
+                      </div>
+                      <div class="col col-md-12">
                         <label for="position">Position</label>
                       </div>
                       <div class="col-12 col-md-12 mb-2">
@@ -170,8 +129,7 @@ csslinks: [
                       </div>
                       <div class="col-12 col-md-12">
                         <!--<input type="text" id="description" name="description" class="form-control">-->
-                        <textarea id="summernote1" name="description" width="100px"></textarea>
-
+                        <textarea id="description" name="description" rows="5" cols="84"></textarea>
                       </div>
                     </div>
                   </div>
@@ -199,58 +157,8 @@ csslinks: [
 <%- include('../common/footer', {}); %>
 <!-- /.site-footer -->
 </div>
-<!-- /#right-panel -->
-<!--<script>-->
-<!--function submit() {-->
-<!--document.getElementById("myForm").submit();-->
-<!--}-->
-<!--</script>-->
 <script>
-  jQuery(document).ready(function ($) {
-    const fileSize = 5 * 1024 * 1024;
 
-    var reader = new FileReader();
-
-
-    reader.onload = function (e) {
-      $('#blah').attr('src', e.target.result);
-    }
-
-    function readURL(input) {
-      if (input.files && input.files[0] && input.files[0].size <= fileSize) {
-        reader.readAsDataURL(input.files[0]);
-      } else {
-        alert("Image Invalid Size: " + input.files[0].size)
-      }
-    }
-
-
-    $("#image").change(function () {
-      const _URL = window.URL;
-      let file, img;
-      const _this = this;
-
-      if ((file = _this.files[0])) {
-        img = new Image();
-        img.onload = function () {
-          if ((1200 < this.width)) {
-            readURL(_this);
-          } else {
-            alert('Image invalid' + "--Width: " + this.width + "   Height: " + this.height);
-            $("#image").val(null);
-          }
-        };
-        img.src = _URL.createObjectURL(file);
-      }
-    });
-    $('#summernote1').summernote({
-      height: 290,
-    });
-  });
-
-  function submit() {
-    document.getElementById("formBanner").submit();
-  }
 </script>
 
 </body>

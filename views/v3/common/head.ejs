@@ -20,9 +20,15 @@
     <link rel="stylesheet" href=<%= domain + "css/style.css"; %>>
     <!-- Product Style CSS -->
     <link rel="stylesheet" href=<%= domain + "css/product.css"; %>>
+    <!-- Product Style CSS -->
+    <link rel="stylesheet" href=<%= domain + "css/banner.css"; %>>
     <!-- Modernizer JS -->
     <script src=<%= domain + "js/vendor/modernizr-2.8.3.min.js"; %>></script>
     <!-- ModalLoading CSS -->
     <link rel="stylesheet" href=<%= domain + "css/jquery.loadingModal.min.css"; %>>
-
+    <% if (typeof csslinks !== 'undefined') { %>
+        <% csslinks.forEach(function(csslink){ %>
+            <link rel="stylesheet" href=<%= csslink; %> rel="stylesheet">
+        <% }); %>
+    <% } %>
 </head>
