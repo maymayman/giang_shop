@@ -70,6 +70,27 @@ csslinks: [
     color: maroon;
   }
 
+
+  .black {
+    color: black;
+  }
+
+  .pink {
+    color: pink;
+  }
+
+  .white {
+    color: white;
+  }
+
+  .orange {
+    color: orange;
+  }
+
+  .red {
+    color: red;
+  }
+
   .columns .chosen-container, .column .chosen-container {
     width: 100% !important;
     margin-bottom: 1rem;
@@ -119,7 +140,7 @@ csslinks: [
 .image-editor {
   text-align: center;
 }
-  
+
 </style>
 
 <body class="">
@@ -156,7 +177,7 @@ csslinks: [
               </div> -->
               <%if (product && product.images){%>
                 <%product.images.forEach(function (image) { %>
-                  <div class="img" 
+                  <div class="img"
                     style="background-image: url('<%= domain + image%>');" rel="'<%= domain + image%>'"><span>remove</span></div>'
                 <%})%>
               <%}%>
@@ -283,7 +304,7 @@ csslinks: [
                         <select id="fontSize" name="fontSize" data-placeholder="Choose size..." multiple
                                 class="standardSelect">
                           <option value="" label="default"></option>
-                          <% product.size.forEach(function(s){%>
+                          <% product.size && product.size.forEach(function(s){%>
                           <option value="S" <%= s == 'S' ? 'selected' : ''%>>Size S</option>
                           <option value="M" <%= s == 'M' ? 'selected' : ''%>>Size M</option>
                           <option value="L" <%= s == 'L' ? 'selected' : ''%>>Size L</option>
@@ -298,7 +319,7 @@ csslinks: [
                         <label for="sizeNumber" class=" form-control-label">Size Number</label>
                         <select id="sizeNumber" name="sizeNumber" data-placeholder="Choose size..." multiple
                                 class="standardSelect">
-                          <% product.size.forEach(function(sn){%>
+                          <% product.size && product.size.forEach(function(sn){%>
                           <option value="" label="default"></option>
                           <option value="35" <%= sn == '35' ? 'selected' : ''%>>Size 35</option>
                           <option value="36" <%= sn == '36' ? 'selected' : ''%>>Size 36</option>
@@ -316,13 +337,18 @@ csslinks: [
                         <label for="color" class=" form-control-label">Color</label>
                         <select id="color" name="color" data-placeholder="Choose size..." multiple
                                 class="standardSelect">
-                          <% product.colors.forEach(function(cl){%>
+                          <% product.colors && product.colors.forEach(function(cl){%>
                           <option value="" label="default"></option>
                           <option value="blue" class="blue" <%= cl == 'blue' ? 'selected' : ''%>>Blue</option>
                           <option value="maroon" class="maroon" <%= cl == 'maroon' ? 'selected' : ''%>>Maroon</option>
                           <option value="gray" class="gray" <%= cl == 'gray' ? 'selected' : ''%>>Gray</option>
                           <option value="green" class="green" <%= cl == 'green' ? 'selected' : ''%>>Green</option>
                           <option value="yellow" class="yellow" <%= cl == 'yellow' ? 'selected' : ''%>>Yellow</option>
+                          <option value="black" class="black" <%= cl == 'black' ? 'selected' : ''%>>Black</option>
+                          <option value="pink" class="pink" <%= cl == 'pink' ? 'selected' : ''%>>Pink</option>
+                          <option value="white" class="white" <%= cl == 'white' ? 'selected' : ''%>>White</option>
+                          <option value="orange" class="orange" <%= cl == 'orange' ? 'selected' : ''%>>Orange</option>
+                          <option value="red" class="red" <%= cl == 'red' ? 'selected' : ''%>>Red</option>
                           <%})%>
                         </select>
                       </div>
@@ -346,6 +372,28 @@ csslinks: [
                           </optgroup>
                           <%})%>
                           <% } %>
+                        </select>
+                      </div>
+
+                      <div class="col-12 col-md-12 mt-3">
+                        <label for="timeDeliveryFastest" class=" form-control-label">Time delivery fastest</label>
+                        <select  id="timeDeliveryFastest" name="timeDeliveryFastest" class="standardSelect">
+                          <option value="5" <%= product.timeDeliveryFastest == '5' ? 'selected' : '' %>>5 ngày</option>
+                          <option value="10" <%= product.timeDeliveryFastest == '10' ? 'selected' : '' %>>10 ngày</option>
+                          <option value="15" <%= product.timeDeliveryFastest == '15' ? 'selected' : '' %>>15 ngày</option>
+                          <option value="20" <%= product.timeDeliveryFastest == '20' ? 'selected' : '' %>>20 ngày</option>
+                          <option value="25" <%= product.timeDeliveryFastest == '25' ? 'selected' : '' %>>25 ngày</option>
+                        </select>
+                      </div>
+
+                      <div class="col-12 col-md-12 mt-3">
+                        <label for="timeDeliveryLongest" class=" form-control-label">Time delivery longest</label>
+                        <select  id="timeDeliveryLongest" name="timeDeliveryLongest" class="standardSelect">
+                          <option value="5" <%= product.timeDeliveryLongest == '5' ? 'selected' : '' %>>5 ngày</option>
+                          <option value="10" <%= product.timeDeliveryLongest == '10' ? 'selected' : '' %>>10 ngày</option>
+                          <option value="15" <%= product.timeDeliveryLongest == '15' ? 'selected' : '' %>>15 ngày</option>
+                          <option value="20" <%= product.timeDeliveryLongest == '20' ? 'selected' : '' %>>20 ngày</option>
+                          <option value="25" <%= product.timeDeliveryLongest == '25' ? 'selected' : '' %>>25 ngày</option>
                         </select>
                       </div>
 
@@ -390,8 +438,8 @@ csslinks: [
               <span class="icon icon-image"></span>Select new image
             </div>
           </div>
-      
-  
+
+
         </div>
         <div class="modal-footer">
           <button type="button" class="btn btn-secondary"  data-dismiss="modal">Close</button>

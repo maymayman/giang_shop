@@ -34,7 +34,7 @@
                     </div>
                     <div class="dec-img-wrap">
                         <a class="img-popup" href="img/product-details/product-detalis-bl2.jpg"><img src=<%= domain + "img/product-details/product-detalis-l2.jpg"; %> alt=""/></a>
-                        <span>-29%</span> 
+                        <span>-29%</span>
                     </div>
                     <div class="dec-img-wrap">
                         <a class="img-popup" href="img/product-details/product-detalis-bl5.jpg"><img src=<%= domain + "img/product-details/product-detalis-l5.jpg"; %> alt=""/></a>
@@ -51,7 +51,7 @@
           <h2><%= product.name; %></h2>
           <div class="product-details-price">
             <span><%= product.price + ' VND'; %></span>
-            
+
             <!-- <span class="old">$20.00 </span> -->
           </div>
           <!-- <div class="pro-details-rating-wrap">
@@ -64,7 +64,10 @@
               </div>
               <span><a href="#">3 Reviews</a></span>
           </div> -->
-          <p><%= product.shortDescription; %></p>
+          <p> <%= product.shortDescription %></p>
+          <p style="color: deepskyblue"> Thời gian giao hàng dự kiến từ
+            <%= product.timeDeliveryFastest ? product.timeDeliveryFastest : 5  %> đến
+            <%= product.timeDeliveryLongest ? product.timeDeliveryLongest : 10%> ngày</p>
           <!-- <div class="pro-details-list">
               <ul>
                   <li>- 0.5 mm Dail</li>

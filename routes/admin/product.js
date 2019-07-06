@@ -45,7 +45,7 @@ router.get('/:id/approve', async function (req, res, next) {
   try {
     const user = req.user;
     const productId = req.params.id ? req.params.id : null;
-    
+
     if (productId && user){
       const product = await ProductModel.findByObjectIdToUpdate(productId, 'ACTIVE', user.sessionToken);
       res.redirect('/admin/product?status=ACTIVE');
@@ -61,7 +61,7 @@ router.get('/:id/delete', async function (req, res, next) {
   try {
     const user = req.user;
     const productId = req.params.id ? req.params.id : null;
-    
+
     if (productId && user){
       const product = await ProductModel.findByObjectIdToUpdate(productId, 'DELETED', user.sessionToken);
       res.redirect('/admin/product?status=PENDING');
@@ -91,6 +91,8 @@ router.post('/create', helper.uploadFile, async function (req, res, next) {
     let colors = req.body.color ? req.body.color : null;
     let fontSize = req.body.fontSize ? req.body.fontSize : null;
     let sizeNumber = req.body.sizeNumber ? req.body.sizeNumber : null;
+    let timeDeliveryFastest = req.body.timeDeliveryFastest ? req.body.timeDeliveryFastest : null;
+    let timeDeliveryLongest = req.body.timeDeliveryLongest ? req.body.timeDeliveryLongest : null;
     let error;
     if(user && user.role != 'store'){
       error = 'permission denied';
@@ -123,7 +125,7 @@ router.post('/create', helper.uploadFile, async function (req, res, next) {
       return res.json({success: false, error: error, data: null});
     }
     const newMenuCategory = await validate.validationMenuCategoyBeforeSave(category);
-  
+
     const product = {
       userId: user.objectId,
       information: information,
@@ -141,6 +143,8 @@ router.post('/create', helper.uploadFile, async function (req, res, next) {
       shortDescription: shortDescription,
       linkInstagram: linkInstagram,
       linkFacebook: linkFacebook,
+      timeDeliveryFastest: timeDeliveryFastest,
+      timeDeliveryLongest: timeDeliveryLongest,
     };
     const productSave = await ProductModel.create(product, sessionToken);
     return res.json({success: true, error: null, data: productSave});
@@ -153,11 +157,11 @@ router.get('/update/:id', async function (req, res, next) {
   try {
     const user = req.user;
     const productId = req.params.id ? req.params.id : null;
-    
+
     if (productId && user) {
       const product = await ProductModel.findByObjectId(productId, user);
       const listCategory = await MenuModel.find(true);
-      
+
       res.render('../admin/product/update', {product, user, listCategory});
     } else {
       res.json('Some thing was wrong');
@@ -168,7 +172,7 @@ router.get('/update/:id', async function (req, res, next) {
 });
 
 router.post('/update/', helper.uploadFile, async function (req, res, next) {
-  try {   
+  try {
     const user = req.user;
     const sessionToken = req.user.sessionToken;
     const objectId = req.body.productId ? req.body.productId : undefined;
@@ -187,6 +191,8 @@ router.post('/update/', helper.uploadFile, async function (req, res, next) {
     let fontSize = req.body.fontSize ? req.body.fontSize : undefined;
     let sizeNumber = req.body.sizeNumber ? req.body.sizeNumber : undefined;
     let oldImages = req.body.oldImages ? req.body.oldImages : undefined;
+    let timeDeliveryFastest = req.body.timeDeliveryFastest ? req.body.timeDeliveryFastest : null;
+    let timeDeliveryLongest = req.body.timeDeliveryLongest ? req.body.timeDeliveryLongest : null;
     let error;
     if (user && user.role != 'store') {
       error = 'permission denied';
@@ -246,6 +252,8 @@ router.post('/update/', helper.uploadFile, async function (req, res, next) {
       linkInstagram: linkInstagram,
       linkFacebook: linkFacebook,
       oldImages: oldImages ? oldImages : [],
+      timeDeliveryFastest: timeDeliveryFastest,
+      timeDeliveryLongest: timeDeliveryLongest,
     };
     const productSave = await ProductModel.update(product, sessionToken);
     return res.json({success: true, error: null, data: productSave});

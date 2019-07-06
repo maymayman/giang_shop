@@ -25,7 +25,7 @@ module.exports = {
           query.equalTo('store', pointerToStore);
         }
       }
-      
+
       if (options.menuId) {
         query.equalTo('menuIds', options.menuId);
       }
@@ -68,7 +68,7 @@ module.exports = {
           query.equalTo('store', pointerToStore);
         }
       }
-      
+
       if (options.menuId) {
         query.equalTo('menuIds', options.menuId);
       }
@@ -95,7 +95,7 @@ module.exports = {
       const query = new Parse.Query(Product);
       if (!user || user.role == 'customer') {
         query.equalTo('status', "ACTIVE");
-  
+
       }
       query.equalTo('objectId', objectId);
 
@@ -106,7 +106,7 @@ module.exports = {
       throw err;
     }
   },
-  
+
   findByObjectIdToUpdate: async function(objectId, status, sessionToken) {
     try {
       const Product = Parse.Object.extend('Product');
@@ -115,7 +115,7 @@ module.exports = {
 
       const result = await query.first();
       result.set('status', status);
-      
+
       const product = await result.save(null, {sessionToken});
 
       return helper.toJSON(product);
@@ -123,19 +123,19 @@ module.exports = {
       throw err;
     }
   },
-  
+
   create: async function(item, sessionToken) {
     try {
       const Product = Parse.Object.extend('Product');
       const product = new Product();
-  
+
       // const Category = Parse.Object.extend('Category');
       // const pointerToCategory = new Category();
       // pointerToCategory.id = item.category;
-  
+
       const pointerToStore = new Parse.User();
       pointerToStore.id = item.userId;
-      
+
       product.set('store', pointerToStore);
       product.set('information', (item.information ? item.information : ''));
       product.set('name', item.name);
@@ -150,19 +150,21 @@ module.exports = {
       product.set('shortDescription', item.shortDescription);
       product.set('linkFacebook', item.linkFacebook);
       product.set('linkInstagram', item.linkInstagram);
+      product.set('timeDeliveryFastest', item.timeDeliveryFastest);
+      product.set('timeDeliveryLongest', item.timeDeliveryLongest);
       if (item.fontSize && item.fontSize.length > 0) {
         product.set('size', item.fontSize);
       }else {
         product.set('size', item.sizeNumber);
       }
       const newProduct = await product.save(null, {sessionToken});
-  
+
       return helper.toJSON(newProduct);
     }  catch (err) {
       throw err;
     }
   },
-  
+
   findByIds: async function(objectIds, user) {
     try {
       const Product = Parse.Object.extend('Product');
@@ -170,7 +172,7 @@ module.exports = {
       query.equalTo('status', "ACTIVE");
       query.containedIn('objectId', objectIds);
       query.include('store');
-      
+
       if (user && user.role == 'store'){
         const pointerToUser = new Parse.User();
         pointerToUser.id = user.objectId;
@@ -217,14 +219,16 @@ module.exports = {
       product.set('linkFacebook', payload.linkFacebook);
       product.set('linkInstagram', payload.linkInstagram);
       product.set('relativeCategoryIds', payload.relativeCategoryIds);
+      product.set('timeDeliveryFastest', payload.timeDeliveryFastest);
+      product.set('timeDeliveryLongest', payload.timeDeliveryLongest);
       if (payload.fontSize && payload.fontSize.length > 0) {
         product.set('size', payload.fontSize);
       }else {
         product.set('size', payload.sizeNumber);
       }
-      
+
       const newProduct = await product.save(null, {sessionToken});
-  
+
       return helper.toJSON(newProduct);
     } catch (err) {
       throw err;

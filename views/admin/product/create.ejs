@@ -70,6 +70,26 @@ csslinks: [
     color: maroon;
   }
 
+  .black {
+    color: black;
+  }
+
+  .pink {
+    color: pink;
+  }
+
+  .white {
+    color: white;
+  }
+
+  .orange {
+    color: orange;
+  }
+
+  .red {
+    color: red;
+  }
+
   .columns .chosen-container, .column .chosen-container {
     width: 100% !important;
     margin-bottom: 1rem;
@@ -119,7 +139,7 @@ csslinks: [
 .image-editor {
   text-align: center;
 }
-  
+
 </style>
 
 <body class="">
@@ -286,6 +306,11 @@ csslinks: [
                           <option value="gray" class="gray">Gray</option>
                           <option value="green" class="green">Green</option>
                           <option value="yellow" class="yellow">Yellow</option>
+                          <option value="black" class="black">Black</option>
+                          <option value="pink" class="pink">Pink</option>
+                          <option value="white" class="white">White</option>
+                          <option value="orange" class="orange">Orange</option>
+                          <option value="red" class="red">Red</option>
                         </select>
                       </div>
 
@@ -306,6 +331,28 @@ csslinks: [
                             <% }); %>
                           </optgroup>
                           <% } %>
+                        </select>
+                      </div>
+
+                      <div class="col-12 col-md-12 mt-3">
+                        <label for="timeDeliveryFastest" class=" form-control-label">Time delivery fastest</label>
+                        <select  id="timeDeliveryFastest" name="timeDeliveryFastest" class="standardSelect">
+                          <option value="5">5 ngày</option>
+                          <option value="10">10 ngày</option>
+                          <option value="15">15 ngày</option>
+                          <option value="20">20 ngày</option>
+                          <option value="25">25 ngày</option>
+                        </select>
+                      </div>
+
+                      <div class="col-12 col-md-12 mt-3">
+                        <label for="timeDeliveryLongest" class=" form-control-label">Time delivery longest</label>
+                        <select  id="timeDeliveryLongest" name="timeDeliveryLongest" class="standardSelect">
+                          <option value="5">5 ngày</option>
+                          <option value="10">10 ngày</option>
+                          <option value="15">15 ngày</option>
+                          <option value="20">20 ngày</option>
+                          <option value="25">25 ngày</option>
                         </select>
                       </div>
 
@@ -350,8 +397,8 @@ csslinks: [
               <span class="icon icon-image"></span>Select new image
             </div>
           </div>
-      
-  
+
+
         </div>
         <div class="modal-footer">
           <button type="button" class="btn btn-secondary"  data-dismiss="modal">Close</button>
