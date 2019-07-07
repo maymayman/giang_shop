@@ -38,7 +38,10 @@
                 <h3><a href=<%= domain + 'product/' + product.objectId; %>><%= product.name; %></a></h3>
                 <div class="price-2">
                   <span><%= product.price; %>  &nbsp; VND</span>
-                  <!-- <span class="old">$ 60.00</span> -->
+                  <br>
+                  <% if (product.salePrice) { %>
+                  <span class="old"><%= product.salePrice; %>  &nbsp; VND</span>
+                  <% } %>
                 </div>
               </div>
               <!-- <div class="pro-wishlist-2">

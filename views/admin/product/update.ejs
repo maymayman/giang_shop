@@ -246,6 +246,13 @@ csslinks: [
                                class="form-control">
                       </div>
                     </div>
+
+                    <div class="row form-group">
+                      <div class="col col-md-12">
+                        <label for="price" class=" form-control-label">Sale Price</label>
+                        <input type="number" id="price" name="salePrice" class="form-control" value="<%= product.salePrice ? product.salePrice : 0 %>">
+                      </div>
+                    </div>
                     <div class="row form-group">
                       <div class="col col-md-12">
                         <label for="quantity" class=" form-control-label">Quantity</label>
@@ -323,8 +330,19 @@ csslinks: [
                           <option value="gray" class="gray" <%= cl == 'gray' ? 'selected' : ''%>>Gray</option>
                           <option value="green" class="green" <%= cl == 'green' ? 'selected' : ''%>>Green</option>
                           <option value="yellow" class="yellow" <%= cl == 'yellow' ? 'selected' : ''%>>Yellow</option>
+                          <option value="black" class="black" <%= cl == 'black' ? 'selected' : ''%>>Black</option>
+                          <option value="pink" class="pink" <%= cl == 'pink' ? 'selected' : ''%>>Pink</option>
+                          <option value="white" class="white" <%= cl == 'white' ? 'selected' : ''%>>White</option>
+                          <option value="orange" class="orange" <%= cl == 'orange' ? 'selected' : ''%>>Orange</option>
+                          <option value="red" class="red" <%= cl == 'red' ? 'selected' : ''%>>Red</option>
                           <%})%>
                         </select>
+                      </div>
+
+                      <div class="col-12 col-md-12 mt-3">
+                        <label for="time-delivery" class=" form-control-label">Time Delivery</label>
+                        <input style="margin: 15px 0px 15px 0px;" type="number" id="delivery-from" name="deliveryFrom" placeholder="Delivery from" class="form-control" value="<%= product.deliveryFrom ? product.deliveryFrom : 0 %>">
+                        <input style="margin: 15px 0px 15px 0px;" type="number" id="delivery-to" name="deliveryTo" placeholder="Delivery to" class="form-control" value="<%= product.deliveryTo ? product.deliveryTo : 0 %>">
                       </div>
 
                       <div class="col-12 col-md-12 mt-3">
@@ -352,7 +370,11 @@ csslinks: [
                       <div class="col-12 col-md-12 mt-5" >
                         <!-- <button type="submit" id="send" class="btn btn-sm btn-primary float-right"> -->
 
-                        <button type="button" id="sendUpdate" class="col-12 col-md-12 mt-5 btn btn-outline-link">Update</button>
+                        <button type="button" id="sendUpdate" class="col-12 col-md-12 mt-5 btn btn-outline-link" style="
+                          background-color: #22A4E6;
+                          padding: 10px 20px;
+                          color: #fff;
+                          border-radius: 3px;">Update</button>
                           <!-- <i class="fa fa-dot-circle-o"></i> Submit -->
                         <!-- </button> -->
                       </div>

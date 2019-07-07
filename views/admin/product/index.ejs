@@ -39,6 +39,7 @@
                                     <th scope="col" style="width: 12%">Image</th>
                                     <th scope="col">Name</th>
                                     <th scope="col" style="width: 16%">Price (VND)</th>
+                                    <th scope="col" style="width: 16%">Sale Price (VND)</th>
                                     <th scope="col" style="width: 10%">status </th>
                                     <th scope="col">Action</th>
                                 </tr>
@@ -50,6 +51,7 @@
                                         <td><img src=<%= domain + product.images[0]; %> alt="" width="100"></td>
                                         <td><%= product.name %></td>
                                         <td><%= product.price %></td>
+                                        <td><%= product.salePrice ? product.salePrice : ''; %></td>
                                         <td>
                                             <span class="badge badge-<%= product.status == 'ACTIVE'
                                                 ? 'complete'

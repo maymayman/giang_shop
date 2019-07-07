@@ -70,6 +70,22 @@ csslinks: [
     color: maroon;
   }
 
+  .black {
+    color: black;
+  }
+   .pink {
+    color: pink;
+  }
+   .white {
+    color: white;
+  }
+   .orange {
+    color: orange;
+  }
+   .red {
+    color: red;
+  }
+
   .columns .chosen-container, .column .chosen-container {
     width: 100% !important;
     margin-bottom: 1rem;
@@ -222,8 +238,13 @@ csslinks: [
 
                     <div class="row form-group">
                       <div class="col col-md-12">
-                        <label for="price" class=" form-control-label">Price</label>
+                        <label for="price" class=" form-control-label">Sale Price</label>
                         <input type="number" id="price" name="price" class="form-control">
+                      </div>
+
+                      <div class="col col-md-12">
+                        <label for="sale-price" class=" form-control-label">Price</label>
+                        <input type="number" id="sale-price" name="salePrice" class="form-control">
                       </div>
                     </div>
                     <div class="row form-group">
@@ -286,7 +307,17 @@ csslinks: [
                           <option value="gray" class="gray">Gray</option>
                           <option value="green" class="green">Green</option>
                           <option value="yellow" class="yellow">Yellow</option>
+                          <option value="black" class="black">Black</option>
+                          <option value="pink" class="pink">Pink</option>
+                          <option value="white" class="white">White</option>
+                          <option value="orange" class="orange">Orange</option>
+                          <option value="red" class="red">Red</option>
                         </select>
+                      </div>
+                      <div class="col-12 col-md-12 mt-3">
+                        <label for="time-delivery" class=" form-control-label">Time Delivery</label>
+                        <input style="margin: 15px 0px 15px 0px;" type="number" id="delivery-from" name="deliveryFrom" placeholder="Delivery from" class="form-control">
+                        <input style="margin: 15px 0px 15px 0px;" type="number" id="delivery-to" name="deliveryTo" placeholder="Delivery to" class="form-control">
                       </div>
 
                       <div class="col-12 col-md-12 mt-3">
