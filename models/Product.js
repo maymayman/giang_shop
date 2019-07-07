@@ -129,10 +129,6 @@ module.exports = {
       const Product = Parse.Object.extend('Product');
       const product = new Product();
   
-      // const Category = Parse.Object.extend('Category');
-      // const pointerToCategory = new Category();
-      // pointerToCategory.id = item.category;
-  
       const pointerToStore = new Parse.User();
       pointerToStore.id = item.userId;
       
@@ -150,6 +146,10 @@ module.exports = {
       product.set('shortDescription', item.shortDescription);
       product.set('linkFacebook', item.linkFacebook);
       product.set('linkInstagram', item.linkInstagram);
+      product.set('salePrice', item.salePrice);
+      product.set('deliveryFrom', item.deliveryFrom);
+      product.set('deliveryTo', item.deliveryTo);
+      product.set('relativeCategoryIds', item.relativeCategoryIds);
       if (item.fontSize && item.fontSize.length > 0) {
         product.set('size', item.fontSize);
       }else {
@@ -217,6 +217,9 @@ module.exports = {
       product.set('linkFacebook', payload.linkFacebook);
       product.set('linkInstagram', payload.linkInstagram);
       product.set('relativeCategoryIds', payload.relativeCategoryIds);
+      product.set('salePrice', payload.salePrice);
+      product.set('deliveryFrom', payload.deliveryFrom);
+      product.set('deliveryTo', payload.deliveryTo);
       if (payload.fontSize && payload.fontSize.length > 0) {
         product.set('size', payload.fontSize);
       }else {

@@ -80,6 +80,9 @@ router.post('/create', helper.uploadFile, async function (req, res, next) {
     const information = req.body.information ? req.body.information : null;
     const name = req.body.name ? req.body.name : null;
     const price = req.body.price ? req.body.price : null;
+    const salePrice = req.body.salePrice ? parseInt(req.body.salePrice) : null;
+    const deliveryFrom = req.body.deliveryFrom ? parseInt(req.body.deliveryFrom) : null;
+    const deliveryTo = req.body.deliveryTo ? parseInt(req.body.deliveryTo) : null;
     const quantity = req.body.quantity ? req.body.quantity : 0;
     const images = req.files ? req.files :  null;
     let category = req.body.category ? req.body.category : null;
@@ -106,6 +109,15 @@ router.post('/create', helper.uploadFile, async function (req, res, next) {
     }
     if (!category) {
       error = 'category is require.';
+    }
+    if (typeof salePrice !== 'number' && salePrice < 0) {
+      error = 'salePrice incorrect values.';
+    }
+    if (typeof deliveryFrom !== 'number' && deliveryFrom < 0) {
+      error = 'deliveryFrom incorrect values.';
+    }
+    if (typeof deliveryTo !== 'number' && deliveryTo < 0) {
+      error = 'deliveryTo incorrect values.';
     }
     if (category && !Array.isArray(category)) {
       category = [category];
@@ -136,11 +148,15 @@ router.post('/create', helper.uploadFile, async function (req, res, next) {
       colors: colors,
       categoryIds: newMenuCategory.categoryIds,
       menuIds: newMenuCategory.menuIds,
+      relativeCategoryIds: newMenuCategory.relativeCategoryIds,
       description: description,
       userManual: userManual,
       shortDescription: shortDescription,
       linkInstagram: linkInstagram,
       linkFacebook: linkFacebook,
+      salePrice,
+      deliveryFrom,
+      deliveryTo,
     };
     const productSave = await ProductModel.create(product, sessionToken);
     return res.json({success: true, error: null, data: productSave});
@@ -175,6 +191,9 @@ router.post('/update/', helper.uploadFile, async function (req, res, next) {
     const information = req.body.information ? req.body.information : undefined;
     const name = req.body.name ? req.body.name : undefined;
     const price = req.body.price ? req.body.price : undefined;
+    const salePrice = req.body.salePrice ? parseInt(req.body.salePrice) : null;
+    const deliveryFrom = req.body.deliveryFrom ? parseInt(req.body.deliveryFrom) : null;
+    const deliveryTo = req.body.deliveryTo ? parseInt(req.body.deliveryTo) : null;
     const quantity = req.body.quantity ? req.body.quantity : 0;
     const images = req.files ? req.files : undefined;
     let category = req.body.category ? req.body.category : undefined;
@@ -188,6 +207,7 @@ router.post('/update/', helper.uploadFile, async function (req, res, next) {
     let sizeNumber = req.body.sizeNumber ? req.body.sizeNumber : undefined;
     let oldImages = req.body.oldImages ? req.body.oldImages : undefined;
     let error;
+   
     if (user && user.role != 'store') {
       error = 'permission denied';
     }
@@ -205,6 +225,15 @@ router.post('/update/', helper.uploadFile, async function (req, res, next) {
     }
     if (!objectId) {
       error = 'product Not found';
+    }
+    if (typeof salePrice !== 'number' || salePrice < 0) {
+      error = 'salePrice incorrect values.';
+    }
+    if (typeof deliveryFrom !== 'number' || deliveryFrom < 0) {
+      error = 'deliveryFrom incorrect values.';
+    }
+    if (typeof deliveryTo !== 'number' || deliveryTo < 0) {
+      error = 'deliveryTo incorrect values.';
     }
     if (fontSize && !Array.isArray(fontSize)) {
       fontSize = [fontSize];
@@ -225,6 +254,7 @@ router.post('/update/', helper.uploadFile, async function (req, res, next) {
     if (error) {
       return res.json({success: false, error: error, data: null});
     }
+
     const newMenuCategory = await validate.validationMenuCategoyBeforeSave(category);
     const product = {
       userId: user.objectId,
@@ -246,6 +276,9 @@ router.post('/update/', helper.uploadFile, async function (req, res, next) {
       linkInstagram: linkInstagram,
       linkFacebook: linkFacebook,
       oldImages: oldImages ? oldImages : [],
+      salePrice,
+      deliveryFrom,
+      deliveryTo,
     };
     const productSave = await ProductModel.update(product, sessionToken);
     return res.json({success: true, error: null, data: productSave});
