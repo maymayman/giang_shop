@@ -146,7 +146,7 @@ module.exports = {
       product.set('shortDescription', item.shortDescription);
       product.set('linkFacebook', item.linkFacebook);
       product.set('linkInstagram', item.linkInstagram);
-      product.set('salePrice', item.salePrice);
+      product.set('oldPrice', item.oldPrice);
       product.set('deliveryFrom', item.deliveryFrom);
       product.set('deliveryTo', item.deliveryTo);
       product.set('relativeCategoryIds', item.relativeCategoryIds);
@@ -217,7 +217,7 @@ module.exports = {
       product.set('linkFacebook', payload.linkFacebook);
       product.set('linkInstagram', payload.linkInstagram);
       product.set('relativeCategoryIds', payload.relativeCategoryIds);
-      product.set('salePrice', payload.salePrice);
+      product.set('oldPrice', payload.oldPrice);
       product.set('deliveryFrom', payload.deliveryFrom);
       product.set('deliveryTo', payload.deliveryTo);
       if (payload.fontSize && payload.fontSize.length > 0) {
