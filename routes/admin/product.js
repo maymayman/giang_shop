@@ -34,7 +34,7 @@ router.get('/', async function (req, res, next) {
 router.get('/create', async function (req, res, next) {
   try {
     const user = req.user;
-    const listCategory = await MenuModel.find(true);
+    const listCategory = await MenuModel.findAllCategories(true);
     res.render('../admin/product/create', {listCategory, user});
   } catch (error) {
     next(error);
@@ -80,7 +80,7 @@ router.post('/create', helper.uploadFile, async function (req, res, next) {
     const information = req.body.information ? req.body.information : null;
     const name = req.body.name ? req.body.name : null;
     const price = req.body.price ? req.body.price : null;
-    const salePrice = req.body.salePrice ? parseInt(req.body.salePrice) : null;
+    const oldPrice = req.body.oldPrice ? parseInt(req.body.oldPrice) : null;
     const deliveryFrom = req.body.deliveryFrom ? parseInt(req.body.deliveryFrom) : null;
     const deliveryTo = req.body.deliveryTo ? parseInt(req.body.deliveryTo) : null;
     const quantity = req.body.quantity ? req.body.quantity : 0;
@@ -110,8 +110,8 @@ router.post('/create', helper.uploadFile, async function (req, res, next) {
     if (!category) {
       error = 'category is require.';
     }
-    if (typeof salePrice !== 'number' && salePrice < 0) {
-      error = 'salePrice incorrect values.';
+    if (typeof oldPrice !== 'number' && oldPrice < 0) {
+      error = 'oldPrice incorrect values.';
     }
     if (typeof deliveryFrom !== 'number' && deliveryFrom < 0) {
       error = 'deliveryFrom incorrect values.';
@@ -154,7 +154,7 @@ router.post('/create', helper.uploadFile, async function (req, res, next) {
       shortDescription: shortDescription,
       linkInstagram: linkInstagram,
       linkFacebook: linkFacebook,
-      salePrice,
+      oldPrice,
       deliveryFrom,
       deliveryTo,
     };
@@ -172,7 +172,7 @@ router.get('/update/:id', async function (req, res, next) {
     
     if (productId && user) {
       const product = await ProductModel.findByObjectId(productId, user);
-      const listCategory = await MenuModel.find(true);
+      const listCategory = await MenuModel.findAllCategories();
       
       res.render('../admin/product/update', {product, user, listCategory});
     } else {
@@ -191,7 +191,7 @@ router.post('/update/', helper.uploadFile, async function (req, res, next) {
     const information = req.body.information ? req.body.information : undefined;
     const name = req.body.name ? req.body.name : undefined;
     const price = req.body.price ? req.body.price : undefined;
-    const salePrice = req.body.salePrice ? parseInt(req.body.salePrice) : null;
+    const oldPrice = req.body.oldPrice ? parseInt(req.body.oldPrice) : null;
     const deliveryFrom = req.body.deliveryFrom ? parseInt(req.body.deliveryFrom) : null;
     const deliveryTo = req.body.deliveryTo ? parseInt(req.body.deliveryTo) : null;
     const quantity = req.body.quantity ? req.body.quantity : 0;
@@ -226,8 +226,8 @@ router.post('/update/', helper.uploadFile, async function (req, res, next) {
     if (!objectId) {
       error = 'product Not found';
     }
-    if (typeof salePrice !== 'number' || salePrice < 0) {
-      error = 'salePrice incorrect values.';
+    if (typeof oldPrice !== 'number' || oldPrice < 0) {
+      error = 'oldPrice incorrect values.';
     }
     if (typeof deliveryFrom !== 'number' || deliveryFrom < 0) {
       error = 'deliveryFrom incorrect values.';
@@ -276,7 +276,7 @@ router.post('/update/', helper.uploadFile, async function (req, res, next) {
       linkInstagram: linkInstagram,
       linkFacebook: linkFacebook,
       oldImages: oldImages ? oldImages : [],
-      salePrice,
+      oldPrice,
       deliveryFrom,
       deliveryTo,
     };

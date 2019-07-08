@@ -4,18 +4,20 @@ const Category = Parse.Object.extend('Category');
 const Menu = Parse.Object.extend('Menu');
 
 const Help = {
-  findCategoriesByMenu: async function (menu) {
+  findCategoriesByMenu: async function (menu, limitRecord) {
     try {
+      const limit = limitRecord ? limitRecord : 100;
       const query = new Parse.Query(Category);
       query.equalTo('menu', menu);
       query.equalTo('status', "ACTIVE");
+      query.limit(limit)
       
       let categories = await query.find();
       
       if (categories.length) {
         let promises = [];
         categories.forEach(category => {
-          promises.push(Help.findSubCategoriesByCategory(category));
+          promises.push(Help.findSubCategoriesByCategory(category, limit));
         });
         
         categories = await Promise.all(promises);
@@ -28,14 +30,15 @@ const Help = {
     }
   },
   
-  findSubCategoriesByCategory: async function (category) {
+  findSubCategoriesByCategory: async function (category, limitRecord) {
     try {
+      const limit = limitRecord ? limitRecord : 15;
       const Category = Parse.Object.extend('Category');
       const query = new Parse.Query(Category);
       query.equalTo('parent', category);
       query.equalTo('status', "ACTIVE");
       query.ascending('position');
-      query.limit(15);
+      query.limit(limit);
       
       const subCategories = await query.find();
       
@@ -370,5 +373,28 @@ module.exports = {
     }catch (err) {
       throw (err)
     }
-  }
+  },
+
+  findAllCategories: async function () {
+    try {
+      const query = new Parse.Query(Menu);
+      query.equalTo('status', "ACTIVE");
+      query.limit(1000);
+      
+      const menus = await query.find();
+      
+      const promises = [];
+      
+      menus.forEach(menu => {
+        promises.push(Help.findCategoriesByMenu(menu, 1000));
+      });
+      
+      const parseMenus = await Promise.all(promises);
+      const results = helper.toJSON(parseMenus);
+      
+      return results;
+    } catch (err) {
+      throw err;
+    }
+  },
 };
