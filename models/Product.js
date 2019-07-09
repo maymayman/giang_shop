@@ -31,7 +31,7 @@ module.exports = {
       }
 
       if (options.categoryId) {
-        query.equalTo('categoryIds', options.relativeCategoryIds);
+        query.equalTo('relativeCategoryIds', options.categoryId);
       }
 
       if (options.keyword) {

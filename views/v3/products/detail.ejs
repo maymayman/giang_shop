@@ -1,3 +1,12 @@
+<% 
+Number.prototype.formatPrice = function(n, x, s, c) {
+  var re = '\\d(?=(\\d{' + (x || 3) + '})+' + (n > 0 ? '\\D' : '$') + ')',
+      num = this.toFixed(Math.max(0, ~~n));
+
+  return (c ? num.replace('.', c) : num).replace(new RegExp(re, 'g'), '$&' + (s || ','));
+};
+%>
+
 <!doctype html>
 <html class="no-js" lang="zxx">
 
@@ -50,9 +59,9 @@
         <div class="product-details-content pro-details-slider-content mt-50 text-center">
           <h2><%= product.name; %></h2>
           <div class="product-details-price">
-            <span><%= product.price + ' VND'; %></span>
+            <span><%= product.price.formatPrice(0, 3, '.', ',') + ' VND'; %></span>
             
-            <span class="old"><%= product.oldPrice + ' VND'; %></span>
+            <span class="old"><%= product.oldPrice.formatPrice(0, 3, '.', ',') + ' VND'; %></span>
           </div>
           <!-- <div class="pro-details-rating-wrap">
               <div class="pro-details-rating">

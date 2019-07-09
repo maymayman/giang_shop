@@ -5,6 +5,14 @@
 <!--[if gt IE 8]><!--> <html class="no-js" lang=""> <!--<![endif]-->
 
 <%- include('../common/head', {}); %>
+<% 
+Number.prototype.formatPrice = function(n, x, s, c) {
+  var re = '\\d(?=(\\d{' + (x || 3) + '})+' + (n > 0 ? '\\D' : '$') + ')',
+      num = this.toFixed(Math.max(0, ~~n));
+
+  return (c ? num.replace('.', c) : num).replace(new RegExp(re, 'g'), '$&' + (s || ','));
+};
+%>
 <body>
     <!-- Left Panel -->
     
@@ -50,8 +58,8 @@
                                         <td scope="serial"><%= product.objectId %></td>
                                         <td><img src=<%= domain + product.images[0]; %> alt="" width="100"></td>
                                         <td><%= product.name %></td>
-                                        <td><%= product.price %></td>
-                                        <td><%= product.oldPrice ? product.oldPrice : ''; %></td>
+                                        <td><%= product.price.formatPrice(0, 3, '.', ',') %></td>
+                                        <td><%= product.oldPrice ? product.oldPrice.formatPrice(0, 3, '.', ',') : ''; %></td>
                                         <td>
                                             <span class="badge badge-<%= product.status == 'ACTIVE'
                                                 ? 'complete'
