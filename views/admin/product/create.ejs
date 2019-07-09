@@ -285,15 +285,11 @@ csslinks: [
                         <label for="sizeNumber" class=" form-control-label">Size Number</label>
                         <select id="sizeNumber" name="sizeNumber" data-placeholder="Choose size..." multiple
                                 class="standardSelect">
+                          <% const shoeSizes = ['35', '35.5', '36', '36.5', '37', '37.5', '38', '38.5', '39', '39.5', '40', '40.5', '41', '41.5', '42', '42.5', '43', '43.5', '44'] %>
                           <option value="" label="default"></option>
-                          <option value="35">Size 35</option>
-                          <option value="36">Size 36</option>
-                          <option value="37">Size 37</option>
-                          <option value="38">Size 38</option>
-                          <option value="39">Size 39</option>
-                          <option value="40">Size 40</option>
-                          <option value="41">Size 41</option>
-                          <option value="42">Size 42</option>
+                          <% shoeSizes.forEach(function(item) { %>
+                            <option value=<%= item; %>>Size <%= item; %></option>
+                          <% }) %>
                         </select>
                       </div>
 

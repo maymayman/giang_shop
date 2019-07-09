@@ -305,17 +305,16 @@ csslinks: [
                         <label for="sizeNumber" class=" form-control-label">Size Number</label>
                         <select id="sizeNumber" name="sizeNumber" data-placeholder="Choose size..." multiple
                                 class="standardSelect">
-                          <% product.size.forEach(function(sn){%>
+                          <% const shoeSizes = ['35', '35.5', '36', '36.5', '37', '37.5', '38', '38.5', '39', '39.5', '40', '40.5', '41', '41.5', '42', '42.5', '43', '43.5', '44'] %>
                           <option value="" label="default"></option>
-                          <option value="35" <%= sn == '35' ? 'selected' : ''%>>Size 35</option>
-                          <option value="36" <%= sn == '36' ? 'selected' : ''%>>Size 36</option>
-                          <option value="37" <%= sn == '37' ? 'selected' : ''%>>Size 37</option>
-                          <option value="38" <%= sn == '38' ? 'selected' : ''%>>Size 38</option>
-                          <option value="39" <%= sn == '39' ? 'selected' : ''%>>Size 39</option>
-                          <option value="40" <%= sn == '40' ? 'selected' : ''%>>Size 40</option>
-                          <option value="41" <%= sn == '41' ? 'selected' : ''%>>Size 41</option>
-                          <option value="42" <%= sn == '42' ? 'selected' : ''%>>Size 42</option>
-                          <%})%>
+                          <% shoeSizes.forEach(function(item) { %>
+                            <% if (product.size.indexOf(item) !== -1) {%>
+                              <option value=<%= item; %> selected>Size <%= item; %></option>
+                            <%} else { %>
+                              <option value=<%= item; %> >Size <%= item; %></option>
+                            <% } %>
+                          <% }) %>
+
                         </select>
                       </div>
 
