@@ -356,7 +356,7 @@ csslinks: [
                             <% categories.categories.forEach(function(category){ %>
                             <optgroup label="&nbsp;&nbsp;&nbsp;&nbsp;<%= category.name %>">
                               <% category.items.forEach(function(item){ %>
-                              <option value="<%= `${categories.objectId}:${category.objectId}:${item.objectId}` %>" <%= id == item.objectId  ? 'selected' : ''%>>&nbsp;&nbsp;&nbsp;&nbsp; <%= item.name %></option>
+                              <option value="<%= `${categories.objectId}:${category.objectId}:${item.objectId}` %>" <%= id == item.objectId  ? 'selected' : ''%>>&nbsp;&nbsp;&nbsp;&nbsp; <%= `${item.name} - ${category.name} - ${categories.name}` %></option>
                               <% }); %>
                             </optgroup>
                             <% }); %>
