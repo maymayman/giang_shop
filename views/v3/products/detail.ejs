@@ -60,8 +60,9 @@ Number.prototype.formatPrice = function(n, x, s, c) {
           <h2><%= product.name; %></h2>
           <div class="product-details-price">
             <span><%= product.price.formatPrice(0, 3, '.', ',') + ' VND'; %></span>
-            
+            <% if (product.oldPrice) { %>
             <span class="old"><%= product.oldPrice.formatPrice(0, 3, '.', ',') + ' VND'; %></span>
+            <% } %>
           </div>
           <!-- <div class="pro-details-rating-wrap">
               <div class="pro-details-rating">
