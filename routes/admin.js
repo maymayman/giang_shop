@@ -4,6 +4,7 @@ const router = express.Router();
 const OrderModel = require('../models/Order');
 const ContactModel = require('../models/Contact');
 const BannerModel = require('../models/Banner');
+const ProductModel = require('../models/Product');
 const validate = require('../models/validate/validation');
 const helper = require('../models/helper/index');
 const _ = require('lodash');
