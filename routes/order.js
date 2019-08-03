@@ -19,7 +19,7 @@ router.get('/history', async function(req, res, next) {
       user, page, limit, status
     });
     
-    const count = await OrderModel.count({user, status});
+    const count = await OrderModel.countMyOrder({user, status});
     res.render('order/history_order', {
       menus,
       orders,

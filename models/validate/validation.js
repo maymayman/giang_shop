@@ -184,23 +184,19 @@ module.exports = {
     }
   },
   
-  validationMenuCategoyBeforeSave: async function (options) {
-    try {
-      const menuIds = [];
-      const categoryIds = [];
-      const relativeCategoryIds = [];
-      options.forEach(function (option) {
-        
-        if (!menuIds.includes(option.split(':')[0])) {
-          menuIds.push(option.split(':')[0]);
-        }
-        relativeCategoryIds.push(option.split(':')[1]) ;
-        relativeCategoryIds.push(option.split(':')[2]) ;
-        categoryIds.push(option.split(':')[2]) ;
-      });
-      return { menuIds, categoryIds, relativeCategoryIds };
-    } catch (err) {
-      throw err
-    }
+  validationMenuCategoyBeforeSave: function (options) {
+    const menuIds = [];
+    const categoryIds = [];
+    const relativeCategoryIds = [];
+    options.forEach(function (option) {
+      
+      if (!menuIds.includes(option.split(':')[0])) {
+        menuIds.push(option.split(':')[0]);
+      }
+      relativeCategoryIds.push(option.split(':')[1]) ;
+      relativeCategoryIds.push(option.split(':')[2]) ;
+      categoryIds.push(option.split(':')[2]) ;
+    });
+    return { menuIds, categoryIds, relativeCategoryIds };
   }
 };

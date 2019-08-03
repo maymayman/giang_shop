@@ -41,7 +41,7 @@
                                             <span><img style="width: 82px;" src=<%= domain + Object.values(order.items)[0].images; %> alt=""></span>
                                         </td>
                                         <td class="product-price-cart"><span class="amount"><%= order.status; %></span></td>
-                                        <td class="product-price-cart"></td>
+                                        <td class="product-price-cart">
                                             <span class="amount"><%= order.amount; %></span>&nbsp; VND
                                         </td>
                                         <td class="product-detail ">
@@ -65,7 +65,7 @@
                     <% if (prePage > 0) { %>
                     <li><a class="prev" href=
                                 <%= domain
-                                + 'user/order/history?page=' + prePage
+                                + 'order/history?page=' + prePage
                                 + '&limit=' + limit
                                 + '&keyword=' + keyword %>>
                             <i class="fa fa-angle-double-left"></i></a>
@@ -74,7 +74,7 @@
                     <li><a class="" href="#">...</a></li>
                     <% } %>
                     <li><a href= <%= domain
-                        + 'user/order/history?page=' + prePage
+                        + 'order/history?page=' + prePage
                         + '&limit=' + limit
                         + '&keyword=' + keyword %>><%= prePage; %></a>
                     </li>
@@ -86,7 +86,7 @@
 
                     <% if (nextPage <= totalPage) { %>
                     <li><a href=<%= domain
-                        + 'user/order/history?page=' + nextPage
+                        + 'order/history?page=' + nextPage
                         + '&limit=' + limit
                         + '&keyword=' + keyword %>><%= nextPage; %></a>
                     </li>
@@ -94,7 +94,7 @@
                     <li><a class="" href="#">...</a></li>
                     <% } %>
                     <li><a class="next" href=<%= domain
-                        + 'user/order/history?page=' + nextPage
+                        + 'order/history?page=' + nextPage
                         + '&limit=' + limit
                         + '&keyword=' + keyword %>>
                             <i class="fa fa-angle-double-right"></i></a>

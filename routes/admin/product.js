@@ -1,10 +1,87 @@
 const express = require('express');
 const router = express.Router();
 
+const Joi = require('joi');
+
 const helper = require('../../models/helper/index');
 const ProductModel = require('../../models/Product');
 const MenuModel = require('../../models/Menu');
 const validate = require('../../models/validate/validation');
+
+const validateSaveProd = function(body) {
+  let sizes = [];
+  if (body.size === 'numberSize') {
+    sizes = [
+      '35', '35.5', '36', '36.5', '37', '37.5', '38', '38.5', '39', '39.5', 
+      '40', '40.5', '41', '41.5', '42', '42.5', '43', '43.5', '44'
+    ];
+  } else if (body.size === 'fontSize') {
+    sizes = ['S', 'M', 'L', 'XL', 'XXL', 'XXXL']
+  }
+
+  const sizeSchema = {};
+  sizes.forEach(function(size) {
+    sizeSchema[size] = Joi.number().min(0).required();
+  })
+  
+  const schema = Joi.object().keys({
+    type: Joi.string().required(),
+    images: Joi.array().items(Joi.string()),
+    information: Joi.string().required(),
+    code: Joi.string().required(),
+    name: Joi.string().required(),
+    price: Joi.number().min(1000).required(),
+    oldPrice: Joi.number().min(1000).required(),
+    deliveryFrom: Joi.number().min(1).required(),
+    deliveryTo: Joi.number().min(1).required(),
+    category: Joi.alternatives().try(
+      Joi.string(), 
+      Joi.array().items(Joi.string())
+    ).required(),
+    description: Joi.string().required(),
+    shortDescription: Joi.string().required(),
+    userManual: Joi.string().required(),
+    linkFacebook: Joi.string().optional().allow(''),
+    linkInstagram: Joi.string().optional().allow(''),
+    colors: Joi.alternatives().try(
+      Joi.string(), 
+      Joi.array().items(Joi.string())
+    ).required(),
+    size: Joi.string().required().valid('numberSize', 'fontSize'),
+    ...sizeSchema,
+  })
+  
+  const { error } = schema.validate(body);
+
+  if (error) throw error.details[0].message;
+
+  if (!Array.isArray(body.category)) {
+    body.category = [body.category];
+  }
+
+  if (!Array.isArray(body.colors)) {
+    body.colors = [body.colors];
+  }
+  body.price = parseInt(body.price, 10)
+  body.oldPrice = parseInt(body.oldPrice, 10)
+  body.deliveryFrom = parseInt(body.deliveryFrom, 10)
+  body.deliveryTo = parseInt(body.deliveryTo, 10)
+  body.code = body.code.trim()
+
+  const quantitySize = {};
+  let quantity = 0;
+
+  sizes.forEach(function(size) {
+    quantitySize[size] = parseInt(body[size]);
+    quantity += parseInt(body[size], 10)
+    delete body[size];
+  })
+
+  body.quantitySize = quantitySize;
+  body.quantity = quantity;
+  
+  return (body)
+}
 
 router.get('/', async function (req, res, next) {
   try {
@@ -75,93 +152,16 @@ router.get('/:id/delete', async function (req, res, next) {
 
 router.post('/create', helper.uploadFile, async function (req, res, next) {
   try {
-    const user = req.user;
-    const sessionToken = req.user.sessionToken;
-    const information = req.body.information ? req.body.information : null;
-    const name = req.body.name ? req.body.name : null;
-    const price = req.body.price ? req.body.price : null;
-    const oldPrice = req.body.oldPrice ? parseInt(req.body.oldPrice) : null;
-    const deliveryFrom = req.body.deliveryFrom ? parseInt(req.body.deliveryFrom) : null;
-    const deliveryTo = req.body.deliveryTo ? parseInt(req.body.deliveryTo) : null;
-    const quantity = req.body.quantity ? req.body.quantity : 0;
-    const images = req.files ? req.files :  null;
-    let category = req.body.category ? req.body.category : null;
-    const description = req.body.description ? req.body.description : null;
-    const shortDescription = req.body.shortDescription ? req.body.shortDescription : null;
-    const userManual = req.body.userManual ? req.body.userManual : null;
-    const linkFacebook = req.body.linkFacebook ? req.body.linkFacebook : null;
-    const linkInstagram = req.body.linkInstagram ? req.body.linkInstagram : null;
-    let colors = req.body.color ? req.body.color : null;
-    let fontSize = req.body.fontSize ? req.body.fontSize : null;
-    let sizeNumber = req.body.sizeNumber ? req.body.sizeNumber : null;
-    let error;
-    if(user && user.role != 'store'){
-      error = 'permission denied';
-    }
-    if (!name) {
-      error = 'name is require.';
-    }
-    if (!price) {
-      error = 'price is require.';
-    }
-    if (!images) {
-      error = 'images is require.';
-    }
-    if (!category) {
-      error = 'category is require.';
-    }
-    if (typeof oldPrice !== 'number' && oldPrice < 0) {
-      error = 'oldPrice incorrect values.';
-    }
-    if (typeof deliveryFrom !== 'number' && deliveryFrom < 0) {
-      error = 'deliveryFrom incorrect values.';
-    }
-    if (typeof deliveryTo !== 'number' && deliveryTo < 0) {
-      error = 'deliveryTo incorrect values.';
-    }
-    if (category && !Array.isArray(category)) {
-      category = [category];
-    }
-    if (fontSize && !Array.isArray(fontSize)) {
-      fontSize = [fontSize];
-    }
-    if (sizeNumber && !Array.isArray(sizeNumber)) {
-      sizeNumber = [sizeNumber];
-    }
-    if (!Array.isArray(colors)) {
-      colors = [colors];
-    }
-    if (error) {
-      return res.json({success: false, error: error, data: null});
-    }
-    const newMenuCategory = await validate.validationMenuCategoyBeforeSave(category);
-  
-    const product = {
-      userId: user.objectId,
-      information: information,
-      name: name,
-      price: parseInt(price),
-      quantity: parseInt(quantity),
-      images: images,
-      fontSize: fontSize,
-      sizeNumber: sizeNumber,
-      colors: colors,
-      categoryIds: newMenuCategory.categoryIds,
-      menuIds: newMenuCategory.menuIds,
-      relativeCategoryIds: newMenuCategory.relativeCategoryIds,
-      description: description,
-      userManual: userManual,
-      shortDescription: shortDescription,
-      linkInstagram: linkInstagram,
-      linkFacebook: linkFacebook,
-      oldPrice,
-      deliveryFrom,
-      deliveryTo,
-    };
-    const productSave = await ProductModel.create(product, sessionToken);
+    req.body.images = req.files ? req.files :  null;
+    const data = validateSaveProd(req.body);
+    const newMenuCategory = validate.validationMenuCategoyBeforeSave(data.category);
+    data.relativeCategoryIds = newMenuCategory.relativeCategoryIds;
+    data.categoryIds = newMenuCategory.categoryIds;
+    delete data.category;
+    const productSave = await ProductModel.create(data, req.user);
     return res.json({success: true, error: null, data: productSave});
   } catch (error) {
-    next(error);
+    return res.json({success: false, error: error.message, data: null});
   }
 });
 
@@ -183,107 +183,27 @@ router.get('/update/:id', async function (req, res, next) {
   }
 });
 
-router.post('/update/', helper.uploadFile, async function (req, res, next) {
-  try {   
-    const user = req.user;
-    const sessionToken = req.user.sessionToken;
-    const objectId = req.body.productId ? req.body.productId : undefined;
-    const information = req.body.information ? req.body.information : undefined;
-    const name = req.body.name ? req.body.name : undefined;
-    const price = req.body.price ? req.body.price : undefined;
-    const oldPrice = req.body.oldPrice ? parseInt(req.body.oldPrice) : null;
-    const deliveryFrom = req.body.deliveryFrom ? parseInt(req.body.deliveryFrom) : null;
-    const deliveryTo = req.body.deliveryTo ? parseInt(req.body.deliveryTo) : null;
-    const quantity = req.body.quantity ? req.body.quantity : 0;
-    const images = req.files ? req.files : undefined;
-    let category = req.body.category ? req.body.category : undefined;
-    const description = req.body.description ? req.body.description : undefined;
-    const shortDescription = req.body.shortDescription ? req.body.shortDescription : undefined;
-    const userManual = req.body.userManual ? req.body.userManual : undefined;
-    const linkFacebook = req.body.linkFacebook ? req.body.linkFacebook : undefined;
-    const linkInstagram = req.body.linkInstagram ? req.body.linkInstagram : undefined;
-    let colors = req.body.color ? req.body.color : undefined;
-    let fontSize = req.body.fontSize ? req.body.fontSize : undefined;
-    let sizeNumber = req.body.sizeNumber ? req.body.sizeNumber : undefined;
-    let oldImages = req.body.oldImages ? req.body.oldImages : undefined;
-    let error;
-   
-    if (user && user.role != 'store') {
-      error = 'permission denied';
-    }
-    if (!name) {
-      error = 'name is require.';
-    }
-    if (!price) {
-      error = 'price is require.';
-    }
-    if (!images && !oldImages) {
-      error = 'images is require.';
-    }
-    if (!category) {
-      error = 'category is require.';
-    }
-    if (!objectId) {
-      error = 'product Not found';
-    }
-    if (typeof oldPrice !== 'number' || oldPrice < 0) {
-      error = 'oldPrice incorrect values.';
-    }
-    if (typeof deliveryFrom !== 'number' || deliveryFrom < 0) {
-      error = 'deliveryFrom incorrect values.';
-    }
-    if (typeof deliveryTo !== 'number' || deliveryTo < 0) {
-      error = 'deliveryTo incorrect values.';
-    }
-    if (fontSize && !Array.isArray(fontSize)) {
-      fontSize = [fontSize];
-    }
-    if (sizeNumber && !Array.isArray(sizeNumber)) {
-      sizeNumber = [sizeNumber];
-    }
-    if (!Array.isArray(colors)) {
-      colors = [colors];
-    }
-    if (category && !Array.isArray(category)){
-      category = [category]
-    }
-    if (oldImages && !Array.isArray(oldImages)){
-      oldImages = [oldImages]
-    }
+router.post('/update/:id', helper.uploadFile, async function (req, res, next) {
+  try {
+    const objectId = req.params.id;
+    let oldImages = req.body.oldImages 
+      ? Array.isArray(req.body.oldImages) ? req.body.oldImages : [req.body.oldImages]
+      : [];
+    let images = req.files ? req.files :  [];
 
-    if (error) {
-      return res.json({success: false, error: error, data: null});
-    }
-
-    const newMenuCategory = await validate.validationMenuCategoyBeforeSave(category);
-    const product = {
-      userId: user.objectId,
-      objectId: objectId,
-      information: information,
-      name: name,
-      price: parseInt(price),
-      quantity: parseInt(quantity),
-      images: images,
-      fontSize: fontSize,
-      sizeNumber: sizeNumber,
-      colors: colors,
-      categoryIds: newMenuCategory.categoryIds,
-      menuIds: newMenuCategory.menuIds,
-      relativeCategoryIds: newMenuCategory.relativeCategoryIds,
-      description: description,
-      userManual: userManual,
-      shortDescription: shortDescription,
-      linkInstagram: linkInstagram,
-      linkFacebook: linkFacebook,
-      oldImages: oldImages ? oldImages : [],
-      oldPrice,
-      deliveryFrom,
-      deliveryTo,
-    };
-    const productSave = await ProductModel.update(product, sessionToken);
+    images = oldImages.concat(images);
+    req.body.images = images;
+    delete req.body.oldImages;
+    const data = validateSaveProd(req.body);
+    const newMenuCategory = validate.validationMenuCategoyBeforeSave(data.category);
+    data.relativeCategoryIds = newMenuCategory.relativeCategoryIds;
+    data.categoryIds = newMenuCategory.categoryIds;
+    delete data.category;
+    
+    const productSave = await ProductModel.update(objectId, data, req.user);
     return res.json({success: true, error: null, data: productSave});
   } catch (error) {
-    next(error);
+    return res.json({success: false, error: error.message, data: null});
   }
 });
 

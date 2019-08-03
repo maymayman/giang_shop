@@ -108,6 +108,7 @@ validBase64.regex = /^\s*data:([a-z]+\/[a-z]+(;[a-z\-]+\=[a-z\-]+)?)?(;base64)?,
         },
         error:function(err){
           $this.removeAttr("disabled", "disabled");
+          $this.removeClass( "bg-info progress-bar-striped progress-bar-animated");
           alert(err);
         },
         success:function(data){
@@ -115,8 +116,10 @@ validBase64.regex = /^\s*data:([a-z]+\/[a-z]+(;[a-z\-]+\=[a-z\-]+)?)?(;base64)?,
         },
         complete:function(response) {
           const { status, responseJSON } = response;
+          console.log(status, responseJSON)
+          $this.removeAttr("disabled", "disabled");
+          $this.removeClass( "bg-info progress-bar-striped progress-bar-animated");
           if (status != 200 || !responseJSON || !responseJSON.success ) {
-            $this.removeAttr("disabled", "disabled");
             alert(responseJSON.error);
           } else {
             console.log("Request finished.", response);
@@ -166,6 +169,8 @@ validBase64.regex = /^\s*data:([a-z]+\/[a-z]+(;[a-z\-]+\=[a-z\-]+)?)?(;base64)?,
 
     $('#sendUpdate').on('click', function () {
       const $this = $(this);
+      const objectId = $('.object-id').data('object-id');
+      console.log(objectId)
       $this.attr("disabled", "disabled");
       $this.addClass( "bg-info progress-bar-striped progress-bar-animated");
       const images = $('.images .img');
@@ -195,7 +200,7 @@ validBase64.regex = /^\s*data:([a-z]+\/[a-z]+(;[a-z\-]+\=[a-z\-]+)?)?(;base64)?,
       }
       
       $.ajax({
-        url: '/admin/product/update',
+        url: '/admin/product/update/' + objectId,
         data: formDataToUpload,// the formData function is available in almost all new browsers.
         type:"POST",
         contentType:false,
@@ -207,6 +212,7 @@ validBase64.regex = /^\s*data:([a-z]+\/[a-z]+(;[a-z\-]+\=[a-z\-]+)?)?(;base64)?,
         },
         error:function(err){
           $this.removeAttr("disabled", "disabled");
+          $this.removeClass( "bg-info progress-bar-striped progress-bar-animated");
           alert(err);
         },
         success:function(data){
@@ -214,15 +220,41 @@ validBase64.regex = /^\s*data:([a-z]+\/[a-z]+(;[a-z\-]+\=[a-z\-]+)?)?(;base64)?,
         },
         complete:function(response) {
           const { status, responseJSON } = response;
+          console.log(status, responseJSON)
+          $this.removeAttr("disabled", "disabled");
+          $this.removeClass( "bg-info progress-bar-striped progress-bar-animated");
           if (status != 200 || !responseJSON || !responseJSON.success ) {
-            $this.removeAttr("disabled", "disabled");
             alert(responseJSON.error);
           } else {
             console.log("Request finished.", response);
-            window.location.replace('/admin/product?status=PENDING');
+            window.location.replace('/admin/product?status=PENDING')
           }          
         }
       });
+    });
+
+    $('#size').change(function(){
+      const value = this.value;
+      let sizes = []
+      let html = ''
+      if (value === 'numberSize') {
+        sizes = [
+          '35', '35.5', '36', '36.5', '37', '37.5', '38', '38.5', '39', '39.5', 
+          '40', '40.5', '41', '41.5', '42', '42.5', '43', '43.5', '44'
+        ];
+      } else if (value === 'fontSize') {
+        sizes = ['S', 'M', 'L', 'XL', 'XXL', 'XXXL']
+      }
+
+      sizes.forEach(function(size) {
+        html = html + `
+          <label for="quantity-size-${size}" class=" form-control-label">Size - ${size} - Quantity</label>
+          <input type="number" id="${size}" name="${size}" class="form-control" value=0>
+        `
+      })
+
+      $( ".size-quantity" ).empty();
+      $( ".size-quantity" ).append(html);
     });
   })
 })(jQuery);
