@@ -1,7 +1,7 @@
 const helper = require('./helper');
 
 module.exports = {
-  create: async function(items, amount, sessionToken, deliveryInfo, storeIds) {
+  create: async function({items, amount, sessionToken, deliveryInfo, storeIds}) {
     try {
       const Order = Parse.Object.extend('Order');
       const order = new Order();
@@ -31,10 +31,28 @@ module.exports = {
       query.limit(limit);
       query.skip(skip);
       query.equalTo('status', options.status);
+      query.descending(['createdAt']);
 
       const orders = await query.find();
 
       return helper.toJSON(orders);
+    } catch (err) {
+      throw err;
+    }
+  },
+  countMyOrder: async function(options) {
+    try {
+      const pointerToUser = new Parse.User();
+      pointerToUser.id = options.user.objectId;
+      
+      const Order = Parse.Object.extend('Order');
+      const query = new Parse.Query(Order);
+      query.equalTo('user', pointerToUser);
+      query.equalTo('status', options.status);
+
+      const count = await query.count();
+
+      return count;
     } catch (err) {
       throw err;
     }

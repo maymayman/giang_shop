@@ -101,12 +101,14 @@ Number.prototype.formatPrice = function(n, x, s, c) {
               <span>Size</span>
               <div class="billing-info-wrap">
                 <div class="billing-select">
-                  <% if(product && product.size){ %>
+                  <% if(product.quantitySize) { %>
+                  <% const quantitySize = product.quantitySize; %>
                   <select id="size">
-                    <% product.size.forEach(function(size){ %>
-                    <option value="<%=size%>" class="<%=size%>"><%=size%></option>
-
-                    <% }); %>
+                    <% for (let size in quantitySize) { %>
+                      <% if (quantitySize[size]) { %>
+                        <option value="<%=size%>" class="<%=size%>"><%=size%></option>
+                      <% } %>
+                    <% } %>
                   </select>
 
                   <% }%>
@@ -124,7 +126,8 @@ Number.prototype.formatPrice = function(n, x, s, c) {
                  data-price=<%= product.price; %>
                  data-images=<%= product.images[0]; %>
                  data-name="<%= product.name; %>"
-                 data-store-id="<%= product.store.objectId; %>">
+                 data-store-id="<%= product.store.objectId; %>"
+                 data-type="<%= product.type; %>">
               <a href="#"><%= product.quantity ? 'Add To Card' : 'Out Of Stock';%></a>
             </div>
 

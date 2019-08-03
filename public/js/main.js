@@ -747,10 +747,11 @@
         const images = $(this).data('images');
         const name = $(this).data('name');
         const storeId = $(this).data('store-id');
+        const type = $(this).data('type');
         const size = $('#size').val();
         const color = $('#color').val();
         const count = parseInt($('.cart-plus-minus-box').val());
-        const product = { objectId: productId, price, images, count, name, storeId, size, color };
+        const product = { objectId: productId, price, images, count, name, storeId, size, color, type };
         let cartProducts = Cookies.get('cartProducts');
 
         if (!cartProducts) {

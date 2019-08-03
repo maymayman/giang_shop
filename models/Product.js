@@ -124,38 +124,16 @@ module.exports = {
     }
   },
   
-  create: async function(item, sessionToken) {
+  create: async function(item, user) {
     try {
       const Product = Parse.Object.extend('Product');
       const product = new Product();
   
       const pointerToStore = new Parse.User();
-      pointerToStore.id = item.userId;
+      pointerToStore.id = user.objectId;
+      item.store = pointerToStore
       
-      product.set('store', pointerToStore);
-      product.set('information', (item.information ? item.information : ''));
-      product.set('name', item.name);
-      product.set('price', item.price);
-      product.set('quantity', item.quantity);
-      product.set('images', item.images);
-      product.set('categoryIds', item.categoryIds);
-      product.set('menuIds', item.menuIds);
-      product.set('colors', item.colors);
-      product.set('description', item.description);
-      product.set('userManual', item.userManual);
-      product.set('shortDescription', item.shortDescription);
-      product.set('linkFacebook', item.linkFacebook);
-      product.set('linkInstagram', item.linkInstagram);
-      product.set('oldPrice', item.oldPrice);
-      product.set('deliveryFrom', item.deliveryFrom);
-      product.set('deliveryTo', item.deliveryTo);
-      product.set('relativeCategoryIds', item.relativeCategoryIds);
-      if (item.fontSize && item.fontSize.length > 0) {
-        product.set('size', item.fontSize);
-      }else {
-        product.set('size', item.sizeNumber);
-      }
-      const newProduct = await product.save(null, {sessionToken});
+      const newProduct = await product.save(item, { sessionToken: user.sessionToken });
   
       return helper.toJSON(newProduct);
     }  catch (err) {
@@ -184,49 +162,26 @@ module.exports = {
     }
   },
 
-  update: async function(payload, sessionToken) {
+  update: async function(objectId, payload, user) {
     try {
+      const sessionToken = user.sessionToken;
       const pointerToStore = new Parse.User();
-      pointerToStore.id = payload.userId;
+      pointerToStore.id = user.objectId;
 
       const Product = Parse.Object.extend('Product');
       const query = new Parse.Query(Product);
-      query.equalTo('objectId', payload.objectId);
+      query.equalTo('objectId', objectId);
       query.equalTo('store', pointerToStore);
+
+      console.log(objectId, pointerToStore)
 
       const product = await query.first();
 
       if (!product) {
         throw 'product not found';
       }
-
-      const { oldImages, images } = payload;
-      const newImages = oldImages.concat(images);
-
-      product.set('information', (payload.information ? payload.information : ''));
-      product.set('name', payload.name);
-      product.set('price', payload.price);
-      product.set('quantity', payload.quantity);
-      product.set('images', newImages);
-      product.set('categoryIds', payload.categoryIds);
-      product.set('menuIds', payload.menuIds);
-      product.set('colors', payload.colors);
-      product.set('description', payload.description);
-      product.set('userManual', payload.userManual);
-      product.set('shortDescription', payload.shortDescription);
-      product.set('linkFacebook', payload.linkFacebook);
-      product.set('linkInstagram', payload.linkInstagram);
-      product.set('relativeCategoryIds', payload.relativeCategoryIds);
-      product.set('oldPrice', payload.oldPrice);
-      product.set('deliveryFrom', payload.deliveryFrom);
-      product.set('deliveryTo', payload.deliveryTo);
-      if (payload.fontSize && payload.fontSize.length > 0) {
-        product.set('size', payload.fontSize);
-      }else {
-        product.set('size', payload.sizeNumber);
-      }
       
-      const newProduct = await product.save(null, {sessionToken});
+      const newProduct = await product.save(payload, {sessionToken});
   
       return helper.toJSON(newProduct);
     } catch (err) {

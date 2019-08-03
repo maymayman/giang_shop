@@ -173,7 +173,7 @@ csslinks: [
           </div>
 
         </div>
-        <div class="col-lg-8 col-md-8 col-sm-12">
+        <div class="col-lg-12 col-md-12 col-sm-12">
           <div class="animated fadeIn">
             <div class="row">
               <div class="col-lg-12">
@@ -230,125 +230,150 @@ csslinks: [
                 <div class="card">
                   <div class="card-body card-block">
                     <div class="row form-group">
-                      <div class="col col-md-12">
+
+                      <div class="col col-md-12 form-group">
                         <label for="name" class=" form-control-label">Name</label>
                         <input type="text" id="name" name="name" class="form-control">
                       </div>
-                    </div>
 
+                      <div class="col col-md-12 form-group">
+                        <label for="code" class=" form-control-label">Code</label>
+                        <input type="text" id="code" name="code" class="form-control">
+                      </div>
+
+                      <div class="col-12 col-md-12 form-group">
+                        <label for="fontSize" class=" form-control-label">Size</label>
+
+                        <select id="size" name="size" class="standardSelect">
+                          <option value="" label="default"></option>
+                          <option value="fontSize" label="Font Size">Font Size</option>
+                          <option value="numberSize" label="Number Size">Number Size</option>
+                        </select>
+                      </div>
+
+                      <div class="col-12 col-md-12 size-quantity form-group">
+
+                      </div>
+
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="col-lg-4 col-md-4 col-sm-12">
+          <div class="animated fadeIn">
+            <div class="row">
+              <div class="col-lg-12">
+                <div class="card">
+                  <div class="card-body card-block">
                     <div class="row form-group">
-                      <div class="col col-md-12">
+                      <div class="col col-md-12 form-group">
                         <label for="price" class=" form-control-label">Price</label>
                         <input type="number" id="price" name="price" class="form-control">
                       </div>
-
-                      <div class="col col-md-12">
+                    
+                      <div class="col col-md-12 form-group">
                         <label for="sale-price" class=" form-control-label">Old Price</label>
                         <input type="number" id="old-price" name="oldPrice" class="form-control">
                       </div>
-                    </div>
-                    <div class="row form-group">
-                      <div class="col col-md-12">
-                        <label for="quantity" class=" form-control-label">Quantity</label>
-                        <input type="number" id="quantity" name="quantity" class="form-control">
-                      </div>
-                    </div>
-                    <div class="row form-group">
-                      <div class="col col-md-12">
-                        <label for="linkFacebook" class=" form-control-label">Link FaceBook</label>
-                        <input type="text" id="linkFacebook" name="linkFacebook" class="form-control">
-                      </div>
-                    </div>
-                    <div class="row form-group">
-                      <div class="col col-md-12">
-                        <label for="linkInstagram" class=" form-control-label">Link Instagram</label>
-                        <input type="text" id="linkInstagram" name="linkInstagram" class="form-control">
-                      </div>
-                    </div>
-                    <div class="row">
-                      <div class="col-12 col-md-12">
-                        <label for="fontSize" class=" form-control-label">Font Size</label>
 
-                        <select id="fontSize" name="fontSize" data-placeholder="Choose size..." multiple
+                      <div class="col-12 col-md-12 form-group">
+                        <label for="colors" class=" form-control-label">Type of Product</label>
+                        <select id="type" name="type" data-placeholder="Choose size..."
                                 class="standardSelect">
-                          <option value="" label="default"></option>
-                          <option value="S">Size S</option>
-                          <option value="M">Size M</option>
-                          <option value="L">Size L</option>
-                          <option value="XL">Size XL</option>
-                          <option value="XXL">Size XXL</option>
-                          <option value="XXXL">Size XXXL</option>
+                          <option value="available" label="default">available</option>
+                          <option value="unavailable" class="blue">unavailable</option>
                         </select>
                       </div>
-
-                      <div class="col-12 col-md-12 mt-3">
-                        <label for="sizeNumber" class=" form-control-label">Size Number</label>
-                        <select id="sizeNumber" name="sizeNumber" data-placeholder="Choose size..." multiple
-                                class="standardSelect">
-                          <% const shoeSizes = ['35', '35.5', '36', '36.5', '37', '37.5', '38', '38.5', '39', '39.5', '40', '40.5', '41', '41.5', '42', '42.5', '43', '43.5', '44'] %>
-                          <option value="" label="default"></option>
-                          <% shoeSizes.forEach(function(item) { %>
-                            <option value=<%= item; %>>Size <%= item; %></option>
-                          <% }) %>
-                        </select>
+                    
+                      <div class="col-12 col-md-12 form-group">
+                        <label for="time-delivery" class=" form-control-label">Time Delivery From</label>
+                        <input type="number" id="delivery-from" name="deliveryFrom" placeholder="Delivery from" class="form-control">
                       </div>
-
-                      <div class="col-12 col-md-12 mt-3">
-                        <label for="color" class=" form-control-label">Color</label>
-                        <select id="color" name="color" data-placeholder="Choose size..." multiple
-                                class="standardSelect">
-                          <option value="" label="default"></option>
-                          <option value="blue" class="blue">Blue</option>
-                          <option value="maroon" class="maroon">Maroon</option>
-                          <option value="gray" class="gray">Gray</option>
-                          <option value="green" class="green">Green</option>
-                          <option value="yellow" class="yellow">Yellow</option>
-                          <option value="black" class="black">Black</option>
-                          <option value="pink" class="pink">Pink</option>
-                          <option value="white" class="white">White</option>
-                          <option value="orange" class="orange">Orange</option>
-                          <option value="red" class="red">Red</option>
-                        </select>
-                      </div>
-                      <div class="col-12 col-md-12 mt-3">
-                        <label for="time-delivery" class=" form-control-label">Time Delivery</label>
-                        <input style="margin: 15px 0px 15px 0px;" type="number" id="delivery-from" name="deliveryFrom" placeholder="Delivery from" class="form-control">
-                        <input style="margin: 15px 0px 15px 0px;" type="number" id="delivery-to" name="deliveryTo" placeholder="Delivery to" class="form-control">
-                      </div>
-
-                      <div class="col-12 col-md-12 mt-3">
-                        <label for="category" class=" form-control-label">Categories</label>
-                        <select multiple id="category" name="category" class="standardSelect">
-                          <% if(listCategory && listCategory.length){ %>
-                          <% listCategory.forEach(function(categories){ %>
-                          <optgroup label="<%= categories.name %>">
-                            <option style="display: none">&nbsp;</option>
-                            <% categories.categories.forEach(function(category){ %>
-                            <optgroup label="&nbsp;&nbsp;&nbsp;&nbsp;<%= category.name %>">
-                              <% category.items.forEach(function(item){ %>
-                              <option value="<%= `${categories.objectId}:${category.objectId}:${item.objectId}` %>">&nbsp;&nbsp;&nbsp;&nbsp; <%= `${item.name} - ${category.name} - ${categories.name}` %></option>
-                              <% }); %>
-                            </optgroup>
-                            <% }); %>
-                            <% }); %>
-                          </optgroup>
-                          <% } %>
-                        </select>
-                      </div>
-
-                      <div class="col-12 col-md-12 mt-5" >
-                        <!-- <button type="submit" id="send" class="btn btn-sm btn-primary float-right"> -->
-
-                        <button type="button" id="send" class="col-12 col-md-12 mt-5 btn btn-outline-link">Create</button>
-                          <!-- <i class="fa fa-dot-circle-o"></i> Submit -->
-                        <!-- </button> -->
+                    
+                      <div class="col-12 col-md-12 form-group">
+                        <label for="time-delivery" class=" form-control-label">Time Delivery To</label>
+                        <input type="number" id="delivery-to" name="deliveryTo" placeholder="Delivery to" class="form-control">
                       </div>
                     </div>
                   </div>
                 </div>
               </div>
             </div>
-          </div><!-- .animated -->
+          </div>
+        </div>
+
+        <div class="col-lg-4 col-md-4 col-sm-12">
+            <div class="animated fadeIn">
+              <div class="row">
+                <div class="col-lg-12">
+                  <div class="card">
+                    <div class="card-body card-block">
+                      <div class="row form-group">
+                        
+                          <div class="col-12 col-md-12 form-group">
+                            <label for="category" class=" form-control-label">Categories</label>
+                            <select multiple id="category" name="category" class="standardSelect">
+                              <% if(listCategory && listCategory.length){ %>
+                              <% listCategory.forEach(function(categories){ %>
+                              <optgroup label="<%= categories.name %>">
+                                <option style="display: none">&nbsp;</option>
+                                <% categories.categories.forEach(function(category){ %>
+                                <optgroup label="&nbsp;&nbsp;&nbsp;&nbsp;<%= category.name %>">
+                                  <% category.items.forEach(function(item){ %>
+                                  <option value="<%= `${categories.objectId}:${category.objectId}:${item.objectId}` %>">&nbsp;&nbsp;&nbsp;&nbsp; <%= `${item.name} - ${category.name} - ${categories.name}` %></option>
+                                  <% }); %>
+                                </optgroup>
+                                <% }); %>
+                                <% }); %>
+                              </optgroup>
+                              <% } %>
+                            </select>
+                          </div>
+
+                          <div class="col-12 col-md-12 form-group">
+                            <label for="colors" class=" form-control-label">Colors</label>
+                            <select id="colors" name="colors" data-placeholder="Choose size..."
+                                    class="standardSelect">
+                              <option value="" label="default"></option>
+                              <option value="blue" class="blue">Blue</option>
+                              <option value="maroon" class="maroon">Maroon</option>
+                              <option value="gray" class="gray">Gray</option>
+                              <option value="green" class="green">Green</option>
+                              <option value="yellow" class="yellow">Yellow</option>
+                              <option value="black" class="black">Black</option>
+                              <option value="pink" class="pink">Pink</option>
+                              <option value="white" class="white">White</option>
+                              <option value="orange" class="orange">Orange</option>
+                              <option value="red" class="red">Red</option>
+                            </select>
+                          </div>
+
+                          <div class="col col-md-12 form-group">
+                            <label for="linkFacebook" class=" form-control-label">Link FaceBook</label>
+                            <input type="text" id="linkFacebook" name="linkFacebook" class="form-control">
+                          </div>
+                        
+                          <div class="col col-md-12 form-group">
+                            <label for="linkInstagram" class=" form-control-label">Link Instagram</label>
+                            <input type="text" id="linkInstagram" name="linkInstagram" class="form-control">
+                          </div>
+                          
+                          <div class="col-12 col-md-12" >
+                            <button type="button" id="send" class="col-12 col-md-12 mt-5 btn btn-outline-link">Create</button>
+                          </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+
+
         </div>
       </div>
     </form>

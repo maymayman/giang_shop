@@ -10,8 +10,8 @@
 
 <%- include('../common/head', {
 csslinks: [
-`http://netdna.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap.css`,
-`http://cdnjs.cloudflare.com/ajax/libs/summernote/0.8.11/summernote.css`,
+`https://netdna.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap.css`,
+`https://cdnjs.cloudflare.com/ajax/libs/summernote/0.8.11/summernote.css`,
 `${domain}assets/css/lib/chosen/chosen.min.css`
 ]
 }); %>
@@ -68,6 +68,22 @@ csslinks: [
 
   .maroon {
     color: maroon;
+  }
+
+  .black {
+    color: black;
+  }
+   .pink {
+    color: pink;
+  }
+   .white {
+    color: white;
+  }
+   .orange {
+    color: orange;
+  }
+   .red {
+    color: red;
   }
 
   .columns .chosen-container, .column .chosen-container {
@@ -138,9 +154,9 @@ csslinks: [
   <!-- Content -->
   <div class="content">
     <!-- Animated -->
+    <div class="object-id" style="visibility: hidden;" data-object-id="<%= product.objectId; %>"></div>
     <form id="updateFrom" action="" method="post" enctype="multipart/form-data">
       <div class="row">
-        <input type="text" name="productId" value="<%= product.objectId; %>" style="display: none;">
         <div class="col-lg-12 col-md-12 col-sm-12">
           <div class="animated fadeIn card card-body card-block">
             <div class="col col-md-12">
@@ -164,7 +180,7 @@ csslinks: [
           </div>
 
         </div>
-        <div class="col-lg-8 col-md-8 col-sm-12">
+        <div class="col-lg-12 col-md-12 col-sm-12">
           <div class="animated fadeIn">
             <div class="row">
               <div class="col-lg-12">
@@ -175,9 +191,8 @@ csslinks: [
                       <div class="col-lg-12">
                         <label for="shortDescription" class=" form-control-label">Short Description</label>
                         <textarea type="text" id="shortDescription" name="shortDescription"
-                                  class="form-control"
-                                  style="height: 150px;"><%= product.shortDescription ? product.shortDescription : '' %>
-                        </textarea>
+                          class="form-control"
+                          style="height: 150px;"><%= product.shortDescription ? product.shortDescription : '' %></textarea>
                       </div>
                     </div>
 
@@ -186,8 +201,8 @@ csslinks: [
                         <label for="Description" class=" form-control-label">Description</label>
                         <textarea type="text" id="Description" name="description"
                           class="form-control"
-                          style="height: 150px;"><%= product.description ? product.description : '' %>
-                        </textarea>
+                          style="height: 150px;"
+                        ><%= product.description ? product.description : '' %></textarea>
                       </div>
                     </div>
 
@@ -195,10 +210,7 @@ csslinks: [
                       <div class="col-md-12 col-sm-12">
                         <label class=" form-control-label">Information</label></div>
                       <div class="col-md-12 col-sm-12">
-                        <textarea id="summernote" name="information"
-                                  width="100px">
-                          <%- product.information ? product.information : '' %>
-                        </textarea>
+                        <textarea id="summernote" name="information" width="100px"><%- product.information ? product.information : '' %></textarea>
                       </div>
                     </div>
 
@@ -207,10 +219,7 @@ csslinks: [
                       <div class="col-md-12 col-sm-12">
                         <label class=" form-control-label">User manual</label></div>
                       <div class="col-md-12 col-sm-12">
-                        <textarea id="summernote1" name="userManual"
-                                  width="100px">
-                          <%- product.userManual ? product.userManual : ''%>
-                        </textarea>
+                        <textarea id="summernote1" name="userManual" width="100px"><%- product.userManual ? product.userManual : ''%></textarea>
                       </div>
                     </div>
 
@@ -228,161 +237,163 @@ csslinks: [
                 <div class="card">
                   <div class="card-body card-block">
                     <div class="row form-group">
-                      <div class="col col-md-12">
+
+                      <div class="col col-md-12 form-group">
                         <label for="name" class=" form-control-label">Name</label>
-                        <input type="text" id="name" name="name"
-                               value="<%= product.name ? product.name : '' %>"
-                               class="form-control">
+                        <input type="text" id="name" name="name" class="form-control" value="<%= product.name ? product.name : '' %>">
                       </div>
-                    </div>
 
+                      <div class="col col-md-12 form-group">
+                        <label for="code" class=" form-control-label">Code</label>
+                        <input type="text" id="code" name="code" class="form-control" value="<%= product.code ? product.code : '' %>">
+                      </div>
+
+                      <div class="col-12 col-md-12 form-group">
+                        <label for="fontSize" class=" form-control-label">Size</label>
+
+                        <select id="size" name="size" class="standardSelect">
+                          <option value="" label="default"></option>
+                          <option value="fontSize" <%= product.size == 'fontSize' ? 'selected' : ''%> label="Font Size">Font Size</option>
+                          <option value="numberSize" <%= product.size == 'numberSize' ? 'selected' : ''%> label="Number Size">Number Size</option>
+                        </select>
+                      </div>
+
+                      <div class="col-12 col-md-12 size-quantity form-group">
+                        <% const quantitySize = product.quantitySize || {} %>
+                        <% for (let size in quantitySize) { %>
+                          <label for="quantity-size-<%= size; %>" class=" form-control-label">Size - <%= size; %> - Quantity</label>
+                          <input type="number" id="<%= size; %>" name="<%= size; %>" class="form-control" value=<%= quantitySize[size]; %>>
+                        <% } %>
+                      </div>
+
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="col-lg-4 col-md-4 col-sm-12">
+          <div class="animated fadeIn">
+            <div class="row">
+              <div class="col-lg-12">
+                <div class="card">
+                  <div class="card-body card-block">
                     <div class="row form-group">
-                      <div class="col col-md-12">
+                      <div class="col col-md-12 form-group">
                         <label for="price" class=" form-control-label">Price</label>
-                        <input type="number"
-                               id="price"
-                               name="price"
-                               value="<%= product.price ? product.price : 0 %>"
-                               class="form-control">
+                        <input type="number" id="price" name="price" class="form-control" value="<%= product.price ? product.price : 0 %>">
                       </div>
-                    </div>
-
-                    <div class="row form-group">
-                      <div class="col col-md-12">
-                        <label for="price" class=" form-control-label">Old Price</label>
+                    
+                      <div class="col col-md-12 form-group">
+                        <label for="sale-price" class=" form-control-label">Old Price</label>
                         <input type="number" id="old-price" name="oldPrice" class="form-control" value="<%= product.oldPrice ? product.oldPrice : 0 %>">
                       </div>
-                    </div>
-                    <div class="row form-group">
-                      <div class="col col-md-12">
-                        <label for="quantity" class=" form-control-label">Quantity</label>
-                        <input type="number"
-                               id="quantity"
-                               name="quantity"
-                               value="<%= product.quantity ? product.quantity : 0 %>"
-                               class="form-control">
-                      </div>
-                    </div>
-                    <div class="row form-group">
-                      <div class="col col-md-12">
-                        <label for="linkFacebook" class=" form-control-label">Link FaceBook</label>
-                        <input type="text"
-                               id="linkFacebook"
-                               name="linkFacebook"
-                               value="<%= product.linkFacebook ? product.linkFacebook : '' %>"
-                               class="form-control">
-                      </div>
-                    </div>
-                    <div class="row form-group">
-                      <div class="col col-md-12">
-                        <label for="linkInstagram" class=" form-control-label">Link Instagram</label>
-                        <input type="text"
-                               id="linkInstagram"
-                               name="linkInstagram"
-                               value="<%= product.linkInstagram ? product.linkInstagram : '' %>"
-                               class="form-control">
-                      </div>
-                    </div>
-                    <div class="row">
-                      <div class="col-12 col-md-12">
-                        <label for="fontSize" class=" form-control-label">Font Size</label>
 
-                        <select id="fontSize" name="fontSize" data-placeholder="Choose size..." multiple
+                      <div class="col-12 col-md-12 form-group">
+                        <label for="colors" class=" form-control-label">Type of Product</label>
+                        <select id="type" name="type" data-placeholder="Choose size..."
                                 class="standardSelect">
-                          <option value="" label="default"></option>
-                          <% product.size.forEach(function(s){%>
-                          <option value="S" <%= s == 'S' ? 'selected' : ''%>>Size S</option>
-                          <option value="M" <%= s == 'M' ? 'selected' : ''%>>Size M</option>
-                          <option value="L" <%= s == 'L' ? 'selected' : ''%>>Size L</option>
-                          <option value="XL" <%= s == 'XL' ? 'selected' : ''%>>Size XL</option>
-                          <option value="XXL" <%= s == 'XXL' ? 'selected' : ''%>>Size XXL</option>
-                          <option value="XXXL" <%= s == 'XXL' ? 'selected' : ''%>>Size XXXL</option>
-                          <%})%>
+                          <option value="available" label="default">available</option>
+                          <option value="unavailable" class="blue">unavailable</option>
                         </select>
                       </div>
-
-                      <div class="col-12 col-md-12 mt-3">
-                        <label for="sizeNumber" class=" form-control-label">Size Number</label>
-                        <select id="sizeNumber" name="sizeNumber" data-placeholder="Choose size..." multiple
-                                class="standardSelect">
-                          <% const shoeSizes = ['35', '35.5', '36', '36.5', '37', '37.5', '38', '38.5', '39', '39.5', '40', '40.5', '41', '41.5', '42', '42.5', '43', '43.5', '44'] %>
-                          <option value="" label="default"></option>
-                          <% shoeSizes.forEach(function(item) { %>
-                            <% if (product.size.indexOf(item) !== -1) {%>
-                              <option value=<%= item; %> selected>Size <%= item; %></option>
-                            <%} else { %>
-                              <option value=<%= item; %> >Size <%= item; %></option>
-                            <% } %>
-                          <% }) %>
-
-                        </select>
+                    
+                      <div class="col-12 col-md-12 form-group">
+                        <label for="time-delivery" class=" form-control-label">Time Delivery From</label>
+                        <input type="number" id="delivery-from" name="deliveryFrom" placeholder="Delivery from" class="form-control" value="<%= product.deliveryFrom ? product.deliveryFrom : 0 %>">
                       </div>
-
-                      <div class="col-12 col-md-12 mt-3">
-                        <label for="color" class=" form-control-label">Color</label>
-                        <select id="color" name="color" data-placeholder="Choose size..." multiple
-                                class="standardSelect">
-                          <% product.colors.forEach(function(cl){%>
-                          <option value="" label="default"></option>
-                          <option value="blue" class="blue" <%= cl == 'blue' ? 'selected' : ''%>>Blue</option>
-                          <option value="maroon" class="maroon" <%= cl == 'maroon' ? 'selected' : ''%>>Maroon</option>
-                          <option value="gray" class="gray" <%= cl == 'gray' ? 'selected' : ''%>>Gray</option>
-                          <option value="green" class="green" <%= cl == 'green' ? 'selected' : ''%>>Green</option>
-                          <option value="yellow" class="yellow" <%= cl == 'yellow' ? 'selected' : ''%>>Yellow</option>
-                          <option value="black" class="black" <%= cl == 'black' ? 'selected' : ''%>>Black</option>
-                          <option value="pink" class="pink" <%= cl == 'pink' ? 'selected' : ''%>>Pink</option>
-                          <option value="white" class="white" <%= cl == 'white' ? 'selected' : ''%>>White</option>
-                          <option value="orange" class="orange" <%= cl == 'orange' ? 'selected' : ''%>>Orange</option>
-                          <option value="red" class="red" <%= cl == 'red' ? 'selected' : ''%>>Red</option>
-                          <%})%>
-                        </select>
-                      </div>
-
-                      <div class="col-12 col-md-12 mt-3">
-                        <label for="time-delivery" class=" form-control-label">Time Delivery</label>
-                        <input style="margin: 15px 0px 15px 0px;" type="number" id="delivery-from" name="deliveryFrom" placeholder="Delivery from" class="form-control" value="<%= product.deliveryFrom ? product.deliveryFrom : 0 %>">
-                        <input style="margin: 15px 0px 15px 0px;" type="number" id="delivery-to" name="deliveryTo" placeholder="Delivery to" class="form-control" value="<%= product.deliveryTo ? product.deliveryTo : 0 %>">
-                      </div>
-
-                      <div class="col-12 col-md-12 mt-3">
-                        <label for="category" class=" form-control-label">Categories</label>
-                        <select multiple id="category" name="category" class="standardSelect">
-                          <% if(listCategory && listCategory.length){ %>
-                          <% product && product.categoryIds.forEach(function (id) {%>
-                          <% listCategory.forEach(function(categories){ %>
-                          <optgroup label="<%= categories.name %>">
-                            <option style="display: none">&nbsp;</option>
-                            <% categories.categories.forEach(function(category){ %>
-                            <optgroup label="&nbsp;&nbsp;&nbsp;&nbsp;<%= category.name %>">
-                              <% category.items.forEach(function(item){ %>
-                              <option value="<%= `${categories.objectId}:${category.objectId}:${item.objectId}` %>" <%= id == item.objectId  ? 'selected' : ''%>>&nbsp;&nbsp;&nbsp;&nbsp; <%= `${item.name} - ${category.name} - ${categories.name}` %></option>
-                              <% }); %>
-                            </optgroup>
-                            <% }); %>
-                            <% }); %>
-                          </optgroup>
-                          <%})%>
-                          <% } %>
-                        </select>
-                      </div>
-
-                      <div class="col-12 col-md-12 mt-5" >
-                        <!-- <button type="submit" id="send" class="btn btn-sm btn-primary float-right"> -->
-
-                        <button type="button" id="sendUpdate" class="col-12 col-md-12 mt-5 btn btn-outline-link" style="
-                          background-color: #22A4E6;
-                          padding: 10px 20px;
-                          color: #fff;
-                          border-radius: 3px;">Update</button>
-                          <!-- <i class="fa fa-dot-circle-o"></i> Submit -->
-                        <!-- </button> -->
+                    
+                      <div class="col-12 col-md-12 form-group">
+                        <label for="time-delivery" class=" form-control-label">Time Delivery To</label>
+                        <input type="number" id="delivery-to" name="deliveryTo" placeholder="Delivery to" class="form-control" value="<%= product.deliveryTo ? product.deliveryTo : 0 %>">
                       </div>
                     </div>
                   </div>
                 </div>
               </div>
             </div>
-          </div><!-- .animated -->
+          </div>
+        </div>
+
+        <div class="col-lg-4 col-md-4 col-sm-12">
+            <div class="animated fadeIn">
+              <div class="row">
+                <div class="col-lg-12">
+                  <div class="card">
+                    <div class="card-body card-block">
+                      <div class="row form-group">
+                        
+                          <div class="col-12 col-md-12 form-group">
+                            <label for="category" class=" form-control-label">Categories</label>
+                            <select multiple id="category" name="category" class="standardSelect">
+                              <% if(listCategory && listCategory.length){ %>
+                              <% product && product.categoryIds.forEach(function (id) {%>
+                              <% listCategory.forEach(function(categories){ %>
+                              <optgroup label="<%= categories.name %>">
+                                <option style="display: none">&nbsp;</option>
+                                <% categories.categories.forEach(function(category){ %>
+                                <optgroup label="&nbsp;&nbsp;&nbsp;&nbsp;<%= category.name %>">
+                                  <% category.items.forEach(function(item){ %>
+                                  <option value="<%= `${categories.objectId}:${category.objectId}:${item.objectId}` %>" <%= id == item.objectId  ? 'selected' : ''%>>&nbsp;&nbsp;&nbsp;&nbsp; <%= `${item.name} - ${category.name} - ${categories.name}` %></option>
+                                  <% }); %>
+                                </optgroup>
+                                <% }); %>
+                                <% }); %>
+                              </optgroup>
+                              <%})%>
+                              <% } %>
+                            </select>
+                          </div>
+
+                          <div class="col-12 col-md-12 form-group">
+                            <label for="colors" class=" form-control-label">Colors</label>
+                            <select id="colors" name="colors" data-placeholder="Choose size..."
+                                    class="standardSelect">
+                              <% product.colors.forEach(function(cl){%>
+                                <option value="" label="default"></option>
+                                <option value="blue" class="blue" <%= cl == 'blue' ? 'selected' : ''%>>Blue</option>
+                                <option value="maroon" class="maroon" <%= cl == 'maroon' ? 'selected' : ''%>>Maroon</option>
+                                <option value="gray" class="gray" <%= cl == 'gray' ? 'selected' : ''%>>Gray</option>
+                                <option value="green" class="green" <%= cl == 'green' ? 'selected' : ''%>>Green</option>
+                                <option value="yellow" class="yellow" <%= cl == 'yellow' ? 'selected' : ''%>>Yellow</option>
+                                <option value="black" class="black" <%= cl == 'black' ? 'selected' : ''%>>Black</option>
+                                <option value="pink" class="pink" <%= cl == 'pink' ? 'selected' : ''%>>Pink</option>
+                                <option value="white" class="white" <%= cl == 'white' ? 'selected' : ''%>>White</option>
+                                <option value="orange" class="orange" <%= cl == 'orange' ? 'selected' : ''%>>Orange</option>
+                                <option value="red" class="red" <%= cl == 'red' ? 'selected' : ''%>>Red</option>
+                              <%})%>
+                            </select>
+                          </div>
+
+                          <div class="col col-md-12 form-group">
+                            <label for="linkFacebook" class=" form-control-label">Link FaceBook</label>
+                            <input type="text" id="linkFacebook" name="linkFacebook" class="form-control" value="<%= product.linkFacebook ? product.linkFacebook : '' %>">
+                          </div>
+                        
+                          <div class="col col-md-12 form-group">
+                            <label for="linkInstagram" class=" form-control-label">Link Instagram</label>
+                            <input type="text" id="linkInstagram" name="linkInstagram" class="form-control" value="<%= product.linkInstagram ? product.linkInstagram : '' %>">
+                          </div>
+                          
+                          <div class="col-12 col-md-12" >
+                            <button type="button" id="sendUpdate" class="col-12 col-md-12 mt-5 btn btn-outline-link" style="
+                              background-color: #22A4E6;
+                              padding: 10px 20px;
+                              color: #fff;
+                              border-radius: 3px;">Update
+                            </button>
+                          </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+
+
         </div>
       </div>
     </form>
@@ -428,16 +439,6 @@ csslinks: [
   <%- include('../common/footer', {}); %>
   <!-- /.site-footer -->
 </div>
-
-
-
-<!--end Crop image -->
-<!-- /#right-panel -->
-<!--<script>-->
-<!--function submit() {-->
-<!--document.getElementById("myForm").submit();-->
-<!--}-->
-<!--</script>-->
 
 </body>
 </html>
