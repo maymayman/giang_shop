@@ -282,10 +282,12 @@
         const $button = $(this);
         const $input = $button.parent().find("input");
         const oldValue = $input .val();
+        let plus = 1;
         if ($button.text() === "+") {
             var newVal = parseFloat(oldValue) + 1;
         } else {
             // Don't allow decrementing below zero
+            plus = -1
             if (oldValue > 0) {
                 var newVal = parseFloat(oldValue) - 1;
             } else {
@@ -307,7 +309,7 @@
         $(subtotal).text(total);
 
         const total_amount = parseFloat($(".total-amount").text());
-        $(".total-amount").text(total_amount + amount);
+        $(".total-amount").text(total_amount + amount * plus);
         $input.val(newVal);
     });
 
@@ -842,7 +844,7 @@
         }).catch(err => {
             console.error(err);
             $('body').loadingModal('destroy');
-            return alert(`error: ${err.message}`);
+            return alert(`error: ${err.message ? err.message : err}`);
         });
     });
 

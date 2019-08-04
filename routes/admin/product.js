@@ -157,6 +157,7 @@ router.post('/create', helper.uploadFile, async function (req, res) {
     const newMenuCategory = validate.validationMenuCategoyBeforeSave(data.category);
     data.relativeCategoryIds = newMenuCategory.relativeCategoryIds;
     data.categoryIds = newMenuCategory.categoryIds;
+    data.menuIds = newMenuCategory.menuIds;
     delete data.category;
     const productSave = await ProductModel.create(data, req.user);
     return res.json({success: true, error: null, data: productSave});
@@ -198,6 +199,7 @@ router.post('/update/:id', helper.uploadFile, async function (req, res) {
     const newMenuCategory = validate.validationMenuCategoyBeforeSave(data.category);
     data.relativeCategoryIds = newMenuCategory.relativeCategoryIds;
     data.categoryIds = newMenuCategory.categoryIds;
+    data.menuIds = newMenuCategory.menuIds;
     delete data.category;
     
     const productSave = await ProductModel.update(objectId, data, req.user);

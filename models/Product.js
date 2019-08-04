@@ -169,8 +169,6 @@ module.exports = {
       query.equalTo('objectId', objectId);
       query.equalTo('store', pointerToStore);
 
-      console.log(objectId, pointerToStore);
-
       const product = await query.first();
 
       if (!product) {
@@ -180,6 +178,19 @@ module.exports = {
       const newProduct = await product.save(payload, {sessionToken});
   
       return helper.toJSON(newProduct);
+    } catch (err) {
+      throwError(err);
+    }
+  },
+
+  available: async function(objectId, size, number) {
+    try {
+      const Product = Parse.Object.extend('Product');
+      const query = new Parse.Query(Product);
+      query.equalTo('objectId', objectId);
+      query.greaterThanOrEqualTo(`quantitySize.${size}`, number);
+
+      return query.count();
     } catch (err) {
       throwError(err);
     }
