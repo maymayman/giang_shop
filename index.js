@@ -14,6 +14,8 @@ const orderRouter = require('./routes/order');
 const menuRouter = require('./routes/menu');
 
 global.domain = process.env.DOMAIN || 'http://localhost:1337/';
+global.HOTLINE = process.env.HOT_LINE || '01230344905';
+global.domain = process.env.DOMAIN || 'http://localhost:1337/';
 global.throwError = (err) => {
 	console.error(err.stack ? err.stack : err);
 	throw err;
@@ -100,7 +102,7 @@ const sessionMiddleware = async function(req, res, next) {
 			Parse.Cache.Session[token] = responseUser.data;
 		}
 	}
-  
+
 	req.user = Parse.Cache.Session[token];
 	next();
 };

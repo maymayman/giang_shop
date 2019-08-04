@@ -1,0 +1,497 @@
+<!--<!doctype html>-->
+<html lang="en">
+<head>
+  <style>
+
+    * {
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", "Roboto", "Oxygen", "Ubuntu", "Cantarell", "Fira Sans", "Droid Sans", "Helvetica Neue", sans-serif;
+    }
+
+    p{
+      margin: 0px;
+    }
+    .content{
+      margin: 0px 30px;
+      position: relative;
+      float: left;
+    }
+    .col-100{
+      width: 100%;
+      float: left;
+      position: relative;
+      min-height: 1px;
+    }
+
+    .col-98{
+      width: 98%;
+      float: left;
+      position: relative;
+      min-height: 1px;
+    }
+
+    .col-96{
+      width: 96%;
+      float: left;
+      position: relative;
+      min-height: 1px;
+    }
+    .col-80{
+      width: 80%;
+      float: left;
+      position: relative;
+      min-height: 1px;
+    }
+    .col-90{
+      width: 90%;
+      float: left;
+      position: relative;
+      min-height: 1px;
+    }
+    .col-30{
+      width: 30%;
+      float: left;
+      position: relative;
+      min-height: 1px;
+    }
+
+    .col-70{
+      width: 70%;
+      float: left;
+      position: relative;
+      min-height: 1px;
+    }
+    .col-34{
+      width: 34%;
+      float: left;
+      position: relative;
+      min-height: 1px;
+    }
+
+    .col-left{
+      float: left;
+      position: relative;
+      min-height: 1px;
+    }
+    .col-10{
+      width: 10%;
+      float: left;
+      position: relative;
+      min-height: 1px;
+    }
+
+    .col-20{
+      width: 20%;
+      float: left;
+      position: relative;
+      min-height: 1px;
+    }
+
+    .col-40{
+      width: 40%;
+      float: left;
+      position: relative;
+      min-height: 1px;
+    }
+
+    .col-35{
+      width: 35%;
+      float: left;
+      position: relative;
+      min-height: 1px;
+    }
+
+    .col-50{
+      width: 50%;
+      float: left;
+      position: relative;
+      min-height: 1px;
+    }
+
+    .col-right{
+      width: 34%;
+      float: left;
+      position: relative;
+      min-height: 1px;
+    }
+
+    .col-5{
+      width: 5%;
+      float: left;
+      position: relative;
+      min-height: 1px;
+    }
+
+    .col-center{
+      width: 60%;
+      float: left;
+      position: relative;
+      min-height: 1px;
+    }
+
+    .col-center-toltal{
+      width: 60%;
+      float: left;
+      position: relative;
+      min-height: 1px;
+    }
+
+    .col-right-toltal{
+      width: 40%;
+      float: left;
+      position: relative;
+      min-height: 1px;
+    }
+
+    .col-left-toltal{
+      width: 50%;
+      float: left;
+      position: relative;
+      min-height: 1px;
+    }
+
+    .border-top{
+      border-top: 1px solid #e5e5e5;
+    }
+    .border-bottom{
+      border-bottom: 1px solid #e5e5e5;
+    }
+    .border-all{
+      border: 1px solid #e5e5e5;
+    }
+    .back-ground{
+      background: #fbfcff;
+    }
+
+    .margin-top-10{
+      margin-top: 10px;
+    }
+
+    .p-m{
+      padding: 5px 15px;
+    }
+
+    .margin-left-10-percent {
+      margin-left: 10%
+    }
+
+    .margin-left-2-percent {
+      margin-left: 2%
+    }
+
+    .margin-left-3-percent {
+      margin-left: 3%;
+    }
+
+    .margin-left-5-percent {
+      margin-left: 5%;
+    }
+
+    .margin-left-8-percent {
+      margin-left: 8%;
+    }
+
+
+    .margin-left-10-percent {
+      margin-left: 10%;
+    }
+
+    .margin-left-15-percent{
+      margin-left: 15%;
+    }
+
+    .margin-left-25-percent {
+      margin-left: 25%;
+    }
+
+    .button-style {
+      padding: 10px 20px;
+      border: 2px;
+      display:inline-block;
+      text-decoration: none;
+      color:#ffffff;
+      background-color:#007dc1;
+      border-radius:4px;
+      text-align: center;
+    }
+
+    .text-decoration-none {
+      text-decoration:none;
+    }
+
+    .button-content {
+      width: 100%;
+      margin-left: 50px;
+      margin-bottom: 10px;
+    }
+    .margin-bottom-10{
+      margin-bottom: 10px;
+    }
+
+    .font-size-18{
+      font-size: 18px;
+    }
+
+    .text-align-right{
+      text-align: right;
+    }
+
+    .margin-left-10{
+      margin-left: 10px;
+    }
+
+    .margin-left-15{
+      margin-left: 15px;
+    }
+
+    .font-header{
+      font-weight: normal;
+      font-size: 20px;
+      margin-bottom: 10px;
+    }
+    .font-title {
+      color: #777;
+    }
+
+    .box-style{
+      display: inline-flex;
+      padding-top: 4px;
+    }
+
+    .box-total-style p{
+      padding: 5px 0;
+    }
+
+    .box-total-style-color p{
+      padding: 5px 0;
+      color: #777;
+      font-size: 17px;
+    }
+
+    .box-style-money{
+      font-weight: 600;
+    }
+
+    .box-total-style{
+      margin-top: 10px;
+      font-size: 17px;
+    }
+
+    .box-total-style-money{
+      font-weight: 600;
+    }
+
+    .content-all{
+      margin: 0px 80px;
+      position: relative;
+      float: left;
+      background-color: #f4f8fa;
+    }
+
+    .header{
+      width: 100%;
+      float: left;
+      position: relative;
+      min-height: 1px;
+    }
+    .header-sub{
+      width: 100%;
+      float: left;
+      position: relative;
+      min-height: 1px;
+      border-top: 3px solid black;
+    }
+    .col-75{
+      width: 75%;
+      float: left;
+      position: relative;
+      min-height: 1px;
+    }
+    .col-25{
+      width: 25%;
+      float: left;
+      position: relative;
+      min-height: 1px;
+    }
+    .p-padding p {
+      padding: 5px 0px;
+    }
+    .font-p-left-footer{
+      font-weight: 600;
+      font-size: 17px;
+    }
+
+    .font-p-right-footer{
+      font-weight: 600;
+      font-size: 17px;
+      color: #777;
+    }
+
+    .font-title-footer {
+      font-size: 18px;
+      color: #319ada;
+      font-weight: 600;
+    }
+
+  </style>
+</head>
+<body>
+<div class="content-all">
+  <div class="header" style="background-color: white;padding-bottom: 10px;">
+    <div class="col-70">
+      <img style="width: 100%; height: 34%" src='<%= domain + "img/slider/slider_women.jpg"; %>'>
+      <span style="color: #000000"><strong>Consignistasg</strong></span></p>
+    </div>
+    <div class="col-30" style="text-align: right;">
+      <p style="color: #f34352;font-weight: 600;font-size: 18px;margin-top: 95px;">Hotline: <%= HOTLINE %></p>
+    </div>
+
+  </div>
+  <div class="header-sub">
+
+    <div class="col-75" style="margin: 60px 0px;">
+      <p style="font-size: 32px;margin-left: 35px;">XÁC NHẬN ĐƠN HÀNG</p>
+    </div>
+
+    <div class="col-25" style="margin: 45px 0px;text-align: center;">
+      <div class="col-100">
+        <p style="font-size: 20px;font-weight: 600;">Mã đơn hàng</p>
+        <p style="text-align: center;font-size: 20px;color: #ff0000;font-weight: 600;margin-top: 5px;"><%= order.objectId %></p>
+      </div>
+    </div>
+
+  </div>
+
+  <div class="content" style="margin-top: 15px">
+    <div class="col-100">
+
+      <p style="font-size: 17px">Kính chào quý khách <strong><%= user.username %></strong></p>
+      <p style="font-size: 17px">Chúng tôi hy vọng quý khách hài lòng với trải nghiệm mua sắm và các sản phẩm đã chọn</p>
+      <p style="margin-bottom: 15px;font-size: 17px"><%= orderStatus %></p>
+    </div>
+    <div class="col-100 bor der-top" style="background-color: white;border-bottom: 1px solid #e5e5e5;">
+      <p class="font-header margin-left-15">Thông tin đơn hàng <% order.objectId %></p>
+      <div class="col-100">
+        <div class="col-90 border-bottom margin-left-5-percent box-style">
+<!--          <div class="col-left">-->
+<!--            <p>Image</p>-->
+<!--          </div>-->
+          <div class="col-center margin-left-10">
+            <p>Name</p>
+          </div>
+          <div class="col-right margin-left-10">
+            <p>Quantity</p>
+          </div>
+          <div class="col-right text-align-right box-style-money">
+            <p>Price</p>
+          </div>
+        </div>
+
+        <% products.forEach(function (product){ %>
+        <div class="col-90 border-bottom margin-left-5-percent box-style">
+<!--          <div class="col-left">-->
+<!--            <img style="width: 55px; height: 55px" src='<%= domain + product.images[0]%>' alt="">-->
+<!--          </div>-->
+          <div class="col-center margin-left-10">
+            <div style="width: 100%">
+              <p style="font-weight: 600;"> <%= product.name %></p>
+            </div>
+          </div>
+          <div class="col-center margin-left-10">
+            <div style="width: 100%">
+              <p style="font-weight: 600; text-align: center"> <%= product.count %></p>
+            </div>
+          </div>
+          <div class="col-right text-align-right box-style-money">
+            <p><%= product.price.toString().replace(/(\d)(?=(\d{3})+(?!\d))/g, '$1,') %>₫</p>
+          </div>
+        </div>
+        <% })%>
+
+        <div class="col-90  margin-left-5-percent" style="margin-bottom: 15px;">
+          <div class="col-left-toltal"></div>
+          <div class="col-50" style="word-break: break-all;">
+            <% if (order && order.discount) { %>
+            <div class="col-100">
+              <div class="col-center-toltal">
+                <div class="box-total-style">
+                  <p style="color: #777;">Khuyễn mãi</p>
+                </div>
+              </div>
+              <div class="col-right-toltal">
+                <div class="box-total-style box-total-style-money" style="text-align: right">
+                  <p><%= order.discount %>>₫</p>
+                </div>
+              </div>
+            </div>
+            <%}%>
+              <%if (order.feeDelivery){ %>
+            <div class="col-100">
+              <div class="col-center-toltal">
+                <div class="box-total-style">
+                  <p style="color: #777;">Phí vận chuyển</p>
+                </div>
+              </div>
+              <div class="col-right-toltal">
+                <div class="box-total-style box-total-style-money" style="text-align: right">
+                  <p><%= order.feeDelivery %>>₫</p>
+                </div>
+              </div>
+            </div>
+              <%}%>
+            <div class="col-100">
+              <div class="col-center-toltal">
+                <div class="box-total-style">
+                  <p style="font-weight: 600;color: #777;">Tổng tiền</p>
+                </div>
+              </div>
+              <div class="col-right-toltal">
+                <div class="box-total-style box-total-style-money" style="text-align: right">
+                  <p><%= order.amount.toString().replace(/(\d)(?=(\d{3})+(?!\d))/g, '$1,') %>₫</p>
+                </div>
+              </div>
+            </div>
+          </div>
+
+        </div>
+      </div>
+    </div>
+    <div class="col-100 margin-top-10 p-padding" style="background-color: white; margin-bottom: 30px">
+
+      <div class="col-96 margin-left-2-percent" style="margin-top: 5px">
+        <div class="col-100 font-title-footer">
+          <p>Địa chỉ giao hàng</p>
+        </div>
+
+        <div class="col-100">
+          <div class="col-50 font-p-left-footer">
+            <p>Tên người nhận:</p>
+
+          </div>
+          <div class="col-50 font-p-right-footer">
+            <p><%= order.deliveryInfo.name %></p>
+          </div>
+        </div>
+        <div class="col-100">
+          <div class="col-50 font-p-left-footer">
+            <p>Địa chỉ người nhận:</p>
+          </div>
+          <div class="col-50 font-p-right-footer">
+            <p><%= order.deliveryInfo.address %></p>
+          </div>
+        </div>
+        <div class="col-100">
+          <div class="col-50 font-p-left-footer">
+            <p>Số điện thoại liên hệ:</p>
+          </div>
+          <div class="col-50 font-p-right-footer">
+            <p><%= order.deliveryInfo.phone %></p>
+          </div>
+        </div>
+      </div>
+    </div>
+
+  </div>
+</div>
+
+</body>
+</html>
