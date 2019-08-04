@@ -86,7 +86,7 @@ router.post('/', helper.uploadFile, async function (req, res, next) {
     if(user && user.role == 'administrator'){
       const isValidate = await validate.validationSubCategory(options, 'EDIT');
       if(isValidate){
-        const subCategory = await MenuModel.findByIdToUpdateCategory(options, sessionToken);
+        await MenuModel.findByIdToUpdateCategory(options, sessionToken);
       }else {
         const errorMessage = 'name or position is exist already';
         return res.redirect(`/admin/categories-children?errorMessage=${errorMessage}`);
@@ -121,7 +121,7 @@ router.post('/create', helper.uploadFile, async function (req, res, next) {
     if(user && user.role == 'administrator'){
       const isValidate = await validate.validationSubCategory(options, 'CREATE');
       if(isValidate){
-        const category = await MenuModel.createSubCategory(options, sessionToken);
+        await MenuModel.createSubCategory(options, sessionToken);
       }else {
         const errorMessage = 'name or position is exist already';
         return res.redirect(`/admin/categories-children?errorMessage=${errorMessage}`);

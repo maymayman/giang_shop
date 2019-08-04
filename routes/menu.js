@@ -37,7 +37,7 @@ router.get('/categories', async function(req, res, next) {
           result[group] = [];
         }
         result[group].push(item);
-        return result
+        return result;
       }, {});
 
       res.render('designer/result', {categories});

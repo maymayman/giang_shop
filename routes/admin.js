@@ -87,7 +87,7 @@ router.get('/order/:objectId', async function(req, res, next) {
 
     if (products.length) {
       products.forEach(product => {
-        product.count = order.items[product.objectId].count
+        product.count = order.items[product.objectId].count;
       });
     }
 
@@ -115,7 +115,7 @@ router.get('/order/completed/:orderId', async function(req, res, next) {
 
     await OrderModel.update(orderId, {status: 'COMPLETED'}, user);
     
-    res.redirect(`/admin/order?status=COMPLETED`);
+    res.redirect('/admin/order?status=COMPLETED');
   } catch (error) {
     next(error);
   }
@@ -195,7 +195,7 @@ router.get('/contact/:id', async function (req, res, next) {
     const user = req.user;
     const objectId = req.params.id;
     
-    const contact = await ContactModel.findByIdAndUpdate(objectId, user.sessionToken);
+    await ContactModel.findByIdAndUpdate(objectId, user.sessionToken);
   
     res.redirect('/admin/contact');
   } catch (error) {
@@ -243,7 +243,7 @@ router.get('/banner/list/:bannerId', helper.uploadFile, async function (req, res
       objectId: bannerId
     };
     
-    const bannerSaved = await BannerModel.findByIdAndUpdate(options, sessionToken);
+    await BannerModel.findByIdAndUpdate(options, sessionToken);
     
     res.redirect('/');
   } catch (error) {
@@ -300,7 +300,7 @@ router.post('/banner/create', helper.uploadFile, async function (req, res, next)
         let errorMessage = 'name or position is exist already';
         return res.redirect(`/admin/banner/list?errorMessage=${errorMessage}`);
       }
-      const bannerSave = await BannerModel.create(banner);
+      await BannerModel.create(banner);
       
       res.redirect('/admin/banner/list');
     }

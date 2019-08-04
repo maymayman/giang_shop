@@ -2,19 +2,16 @@ const helper = require('./helper');
 
 
 module.exports = {
-  
-  count: async function(options) {
+  count: async function() {
     try {
       const Banner = Parse.Object.extend('Banner');
       const query = new Parse.Query(Banner);
-  
-      // query.equalTo('status', options.status);
       
       const count = await query.count();
       
       return count;
     } catch (err) {
-      throw err;
+      throwError(err);
     }
   },
   
@@ -36,17 +33,16 @@ module.exports = {
   
       return helper.toJSON(results);
     }catch (err) {
-      throw err;
+      throwError(err);
     }
     
   },
   
-  findBannerIndex: async function(options){
+  findBannerIndex: async function(){
     try {
       const Banner = Parse.Object.extend('Banner');
       const query = new Parse.Query(Banner);
   
-      // query.equalTo('userId', options.userId);
       query.equalTo('status', 'ACTIVE');
       query.ascending('position');
   
@@ -54,7 +50,7 @@ module.exports = {
   
       return helper.toJSON(results);
     }catch (err) {
-      throw err;
+      throwError(err);
     }
   },
   
@@ -74,7 +70,7 @@ module.exports = {
       
       return helper.toJSON(newBanner);
     }catch (err) {
-      throw err;
+      throwError(err);
     }
   },
   
@@ -91,7 +87,7 @@ module.exports = {
     
       return helper.toJSON(banner);
     } catch (err) {
-      throw err;
+      throwError(err);
     }
   }
   

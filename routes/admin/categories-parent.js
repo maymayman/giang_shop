@@ -77,7 +77,7 @@ router.post('/', helper.uploadFile, async function (req, res, next) {
     if(user && user.role == 'administrator'){
       const isValidate = await validate.validationCategory(options, 'EDIT');
       if(isValidate){
-        const category = await MenuModel.findByIdToUpdateCategory(options, sessionToken);
+        await MenuModel.findByIdToUpdateCategory(options, sessionToken);
       }else {
         const errorMessage = 'name or position is exist already';
         return res.redirect(`/admin/categories-parent?errorMessage=${errorMessage}`);
@@ -110,7 +110,7 @@ router.post('/create', helper.uploadFile, async function (req, res, next) {
     if(user && user.role == 'administrator'){
       const isValidate = await validate.validationCategory(options, 'CREATE');
       if(isValidate){
-        const category = await MenuModel.createCategory(options, sessionToken);
+        await MenuModel.createCategory(options, sessionToken);
       }else {
         const errorMessage = 'name or position is exist already';
         return res.redirect(`/admin/categories-parent?errorMessage=${errorMessage}`);
@@ -128,7 +128,6 @@ router.post('/create', helper.uploadFile, async function (req, res, next) {
 
 router.get('/list', async function (req, res, next) {
   try {
-    const user = req.user;
     let menuId = req.query.menu ? req.query.menu : '';
     const options = {
       menuId: menuId

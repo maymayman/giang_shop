@@ -9,7 +9,7 @@ module.exports = {
 
       return helper.toJSON(result);
     }  catch (err) {
-      throw err;
+      throwError(err);
     }
   },
 
@@ -19,7 +19,7 @@ module.exports = {
 
       return helper.toJSON(user);
     }  catch (err) {
-      throw err;
+      throwError(err);
     }
   },
   

@@ -1,3 +1,4 @@
+/* eslint-disable require-atomic-updates */
 const helper = require('./helper');
 
 const Category = Parse.Object.extend('Category');
@@ -9,8 +10,8 @@ const Help = {
       const limit = limitRecord ? limitRecord : 100;
       const query = new Parse.Query(Category);
       query.equalTo('menu', menu);
-      query.equalTo('status', "ACTIVE");
-      query.limit(limit)
+      query.equalTo('status', 'ACTIVE');
+      query.limit(limit);
       
       let categories = await query.find();
       
@@ -26,7 +27,7 @@ const Help = {
       menu.set('categories', helper.toJSON(categories));
       return menu;
     } catch (err) {
-      throw err;
+      throwError(err);
     }
   },
   
@@ -36,7 +37,7 @@ const Help = {
       const Category = Parse.Object.extend('Category');
       const query = new Parse.Query(Category);
       query.equalTo('parent', category);
-      query.equalTo('status', "ACTIVE");
+      query.equalTo('status', 'ACTIVE');
       query.ascending('position');
       query.limit(limit);
       
@@ -46,7 +47,7 @@ const Help = {
       
       return category;
     } catch (err) {
-      throw err;
+      throwError(err);
     }
   }
 };
@@ -57,14 +58,14 @@ module.exports = {
       const query = new Parse.Query(Menu);
       
       if (!options && !options.user && !options.user.role == 'administrator') {
-        query.equalTo('status', "ACTIVE");
+        query.equalTo('status', 'ACTIVE');
       }
       
       const count = await query.count();
       
       return count;
     } catch (err) {
-      throw err;
+      throwError(err);
     }
   },
   
@@ -82,14 +83,14 @@ module.exports = {
       query.exists('menu');
       
       if (!options && !options.user && !options.user.role == 'administrator') {
-        query.equalTo('status', "ACTIVE");
+        query.equalTo('status', 'ACTIVE');
       }
       
       const count = await query.count();
       
       return count;
     } catch (err) {
-      throw err;
+      throwError(err);
     }
   },
   
@@ -111,14 +112,14 @@ module.exports = {
       query.doesNotExist('menu');
       
       if (!options && !options.user && !options.user.role == 'administrator') {
-        query.equalTo('status', "ACTIVE");
+        query.equalTo('status', 'ACTIVE');
       }
       
       const count = await query.count();
       
       return count;
     } catch (err) {
-      throw err;
+      throwError(err);
     }
   },
   
@@ -133,7 +134,7 @@ module.exports = {
         query.limit(limit);
       }
       if (options && options.menu) {
-        query.equalTo('objectId', options.menu)
+        query.equalTo('objectId', options.menu);
       }
       query.ascending('position');
       
@@ -141,7 +142,7 @@ module.exports = {
       
       return helper.toJSON(menus);
     } catch (err) {
-      throw err;
+      throwError(err);
     }
   },
   
@@ -151,7 +152,7 @@ module.exports = {
         return Parse.Cache.Menus;
       }
       const query = new Parse.Query(Menu);
-      query.equalTo('status', "ACTIVE");
+      query.equalTo('status', 'ACTIVE');
       
       const menus = await query.find();
       
@@ -172,7 +173,7 @@ module.exports = {
       
       return results;
     } catch (err) {
-      throw err;
+      throwError(err);
     }
   },
   
@@ -191,7 +192,7 @@ module.exports = {
       
       return helper.toJSON(menu);
     } catch (err) {
-      throw err;
+      throwError(err);
     }
   },
   
@@ -210,7 +211,7 @@ module.exports = {
       
       return helper.toJSON(category);
     } catch (err) {
-      throw err;
+      throwError(err);
     }
   },
   
@@ -226,7 +227,7 @@ module.exports = {
     
       return helper.toJSON(menuSaved);
     } catch (err) {
-      throw err;
+      throwError(err);
     }
   },
   
@@ -245,7 +246,7 @@ module.exports = {
     
       return helper.toJSON(categorySaved);
     } catch (err) {
-      throw err;
+      throwError(err);
     }
   },
   
@@ -274,14 +275,14 @@ module.exports = {
   
       return helper.toJSON(categories);
     } catch (err) {
-      throw err;
+      throwError(err);
     }
   },
 
   findCategories: async function(options) {
     try {
       const query = new Parse.Query(Category);
-      query.equalTo('status', "ACTIVE");
+      query.equalTo('status', 'ACTIVE');
       query.select(['name']);
 
       if (options.parentId) {
@@ -298,7 +299,7 @@ module.exports = {
 
       return helper.toJSON(results);
     } catch (err) {
-      throw (err);
+      throwError(err);
     }
   },
   
@@ -308,7 +309,7 @@ module.exports = {
       pointerMenu.id = options.menuId;
 
       const query = new Parse.Query(Category);
-      query.equalTo('status', "ACTIVE");
+      query.equalTo('status', 'ACTIVE');
       query.equalTo('menu', pointerMenu);
       query.select(['name']);
 
@@ -316,7 +317,7 @@ module.exports = {
 
       return helper.toJSON(results);
     } catch (err) {
-      throw (err);
+      throwError(err);
     }
   },
   
@@ -349,7 +350,7 @@ module.exports = {
   
       return helper.toJSON(subCategories);
     }catch (err) {
-      throw (err)
+      throwError(err);
     }
   },
   
@@ -358,10 +359,6 @@ module.exports = {
       const subCategory = new Category();
       const pointerToParent = new Category();
       pointerToParent.id = options.parentId;
-      // const pointerToMenu = new Menu();
-      // pointerToMenu.id = options.menuId;
-  
-      // subCategory.set('menu', pointerToMenu);
       subCategory.set('parent', pointerToParent);
       subCategory.set('name', options.name);
       subCategory.set('status', options.status);
@@ -371,14 +368,14 @@ module.exports = {
   
       return helper.toJSON(subCategorySaved);
     }catch (err) {
-      throw (err)
+      throwError(err);
     }
   },
 
   findAllCategories: async function () {
     try {
       const query = new Parse.Query(Menu);
-      query.equalTo('status', "ACTIVE");
+      query.equalTo('status', 'ACTIVE');
       query.limit(1000);
       
       const menus = await query.find();
@@ -394,7 +391,7 @@ module.exports = {
       
       return results;
     } catch (err) {
-      throw err;
+      throwError(err);
     }
   },
 };

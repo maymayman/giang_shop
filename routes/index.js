@@ -54,12 +54,12 @@ router.post('/contact', async function (req, res, next) {
       };
       const contactSave = await ContactModel.create(dataContact);
       if (contactSave && contactSave.objectId) {
-        messageToUser = 'Your contact send success'
+        messageToUser = 'Your contact send success';
       } else {
-        messageToUser = 'Some thing was wrong!'
+        messageToUser = 'Some thing was wrong!';
       }
     } else {
-      messageToUser = 'Please add full contact'
+      messageToUser = 'Please add full contact';
     }
     
     res.redirect(`/contact?messageToUser=${messageToUser}`);

@@ -16,13 +16,13 @@ const validateSaveProd = function(body) {
       '40', '40.5', '41', '41.5', '42', '42.5', '43', '43.5', '44'
     ];
   } else if (body.size === 'fontSize') {
-    sizes = ['S', 'M', 'L', 'XL', 'XXL', 'XXXL']
+    sizes = ['S', 'M', 'L', 'XL', 'XXL', 'XXXL'];
   }
 
   const sizeSchema = {};
   sizes.forEach(function(size) {
     sizeSchema[size] = Joi.number().min(0).required();
-  })
+  });
   
   const schema = Joi.object().keys({
     type: Joi.string().required(),
@@ -49,7 +49,7 @@ const validateSaveProd = function(body) {
     ).required(),
     size: Joi.string().required().valid('numberSize', 'fontSize'),
     ...sizeSchema,
-  })
+  });
   
   const { error } = schema.validate(body);
 
@@ -62,26 +62,26 @@ const validateSaveProd = function(body) {
   if (!Array.isArray(body.colors)) {
     body.colors = [body.colors];
   }
-  body.price = parseInt(body.price, 10)
-  body.oldPrice = parseInt(body.oldPrice, 10)
-  body.deliveryFrom = parseInt(body.deliveryFrom, 10)
-  body.deliveryTo = parseInt(body.deliveryTo, 10)
-  body.code = body.code.trim()
+  body.price = parseInt(body.price, 10);
+  body.oldPrice = parseInt(body.oldPrice, 10);
+  body.deliveryFrom = parseInt(body.deliveryFrom, 10);
+  body.deliveryTo = parseInt(body.deliveryTo, 10);
+  body.code = body.code.trim();
 
   const quantitySize = {};
   let quantity = 0;
 
   sizes.forEach(function(size) {
     quantitySize[size] = parseInt(body[size]);
-    quantity += parseInt(body[size], 10)
+    quantity += parseInt(body[size], 10);
     delete body[size];
-  })
+  });
 
   body.quantitySize = quantitySize;
   body.quantity = quantity;
   
-  return (body)
-}
+  return body;
+};
 
 router.get('/', async function (req, res, next) {
   try {
@@ -124,7 +124,7 @@ router.get('/:id/approve', async function (req, res, next) {
     const productId = req.params.id ? req.params.id : null;
     
     if (productId && user){
-      const product = await ProductModel.findByObjectIdToUpdate(productId, 'ACTIVE', user.sessionToken);
+      await ProductModel.findByObjectIdToUpdate(productId, 'ACTIVE', user.sessionToken);
       res.redirect('/admin/product?status=ACTIVE');
     }else {
       res.json('Some thing was wrong');
@@ -140,7 +140,7 @@ router.get('/:id/delete', async function (req, res, next) {
     const productId = req.params.id ? req.params.id : null;
     
     if (productId && user){
-      const product = await ProductModel.findByObjectIdToUpdate(productId, 'DELETED', user.sessionToken);
+      await ProductModel.findByObjectIdToUpdate(productId, 'DELETED', user.sessionToken);
       res.redirect('/admin/product?status=PENDING');
     }else {
       res.json('Some thing was wrong');
@@ -150,7 +150,7 @@ router.get('/:id/delete', async function (req, res, next) {
   }
 });
 
-router.post('/create', helper.uploadFile, async function (req, res, next) {
+router.post('/create', helper.uploadFile, async function (req, res) {
   try {
     req.body.images = req.files ? req.files :  null;
     const data = validateSaveProd(req.body);
@@ -183,7 +183,7 @@ router.get('/update/:id', async function (req, res, next) {
   }
 });
 
-router.post('/update/:id', helper.uploadFile, async function (req, res, next) {
+router.post('/update/:id', helper.uploadFile, async function (req, res) {
   try {
     const objectId = req.params.id;
     let oldImages = req.body.oldImages 

@@ -1,9 +1,5 @@
 const helper = require('./helper');
 
-const Help = {
-
-};
-
 module.exports = {
   find: async function(options) {
     try {
@@ -12,7 +8,7 @@ module.exports = {
       const query = new Parse.Query(Product);
 
       if (!options.user || options.user.role === 'customer') {
-        query.equalTo('status', "ACTIVE");
+        query.equalTo('status', 'ACTIVE');
       } else {
         if (options.status) {
           query.equalTo('status', options.status);
@@ -46,7 +42,7 @@ module.exports = {
 
       return helper.toJSON(results);
     } catch (err) {
-      throw err;
+      throwError(err);
     }
   },
 
@@ -56,7 +52,7 @@ module.exports = {
       const query = new Parse.Query(Product);
 
       if (!options.user || options.user.role === 'customer') {
-        query.equalTo('status', "ACTIVE");
+        query.equalTo('status', 'ACTIVE');
       } else {
         if (options.status) {
           query.equalTo('status', options.status);
@@ -85,7 +81,7 @@ module.exports = {
 
       return count;
     } catch (err) {
-      throw err;
+      throwError(err);
     }
   },
 
@@ -94,7 +90,7 @@ module.exports = {
       const Product = Parse.Object.extend('Product');
       const query = new Parse.Query(Product);
       if (!user || user.role == 'customer') {
-        query.equalTo('status', "ACTIVE");
+        query.equalTo('status', 'ACTIVE');
   
       }
       query.equalTo('objectId', objectId);
@@ -103,7 +99,7 @@ module.exports = {
 
       return helper.toJSON(result);
     } catch (err) {
-      throw err;
+      throwError(err);
     }
   },
   
@@ -120,7 +116,7 @@ module.exports = {
 
       return helper.toJSON(product);
     } catch (err) {
-      throw err;
+      throwError(err);
     }
   },
   
@@ -131,13 +127,13 @@ module.exports = {
   
       const pointerToStore = new Parse.User();
       pointerToStore.id = user.objectId;
-      item.store = pointerToStore
+      item.store = pointerToStore;
       
       const newProduct = await product.save(item, { sessionToken: user.sessionToken });
   
       return helper.toJSON(newProduct);
     }  catch (err) {
-      throw err;
+      throwError(err);
     }
   },
   
@@ -145,7 +141,7 @@ module.exports = {
     try {
       const Product = Parse.Object.extend('Product');
       const query = new Parse.Query(Product);
-      query.equalTo('status', "ACTIVE");
+      query.equalTo('status', 'ACTIVE');
       query.containedIn('objectId', objectIds);
       query.include('store');
       
@@ -158,7 +154,7 @@ module.exports = {
 
       return helper.toJSON(result);
     } catch (err) {
-      throw err;
+      throwError(err);
     }
   },
 
@@ -173,7 +169,7 @@ module.exports = {
       query.equalTo('objectId', objectId);
       query.equalTo('store', pointerToStore);
 
-      console.log(objectId, pointerToStore)
+      console.log(objectId, pointerToStore);
 
       const product = await query.first();
 
@@ -185,7 +181,7 @@ module.exports = {
   
       return helper.toJSON(newProduct);
     } catch (err) {
-      throw err;
+      throwError(err);
     }
   }
 };

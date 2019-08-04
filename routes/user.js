@@ -30,16 +30,16 @@ const common = {
         html: options.html // html body
       });
 
-      console.log("Message sent: %s", info.messageId);
+      console.log('Message sent: %s', info.messageId);
       // Message sent: <b658f8ca-6296-ccf4-8306-87d57a0b4321@example.com>
 
       // Preview only available when sending through an Ethereal account
-      console.log("Preview URL: %s", nodemailer.getTestMessageUrl(info));
+      console.log('Preview URL: %s', nodemailer.getTestMessageUrl(info));
     } catch (error) {
-      console.error(error, "++++++++++++++++++");
+      console.error(error, '++++++++++++++++++');
     }    
   }
-}
+};
 
 router.get('/login', async function(req, res, next) {
   try {
@@ -53,7 +53,7 @@ router.get('/login', async function(req, res, next) {
   }
 });
 
-router.get('/logout', async function(req, res, next) {
+router.get('/logout', async function(req, res) {
   res.setHeader('Set-Cookie', cookie.serialize('X-Session-Token', '', {
     httpOnly: true,
     path: '/'
@@ -65,15 +65,15 @@ router.get('/logout', async function(req, res, next) {
 router.post('/register', async function(req, res, next) {
   try {
     const { username, password, email, store, address, phone } = req.body;
-    let errorMessage = ``;
+    let errorMessage = '';
 
     if (!username || !password || !email) {
-      errorMessage = `Missing or Invalid username , password or email`
+      errorMessage = 'Missing or Invalid username , password or email';
       return res.redirect(`/user/login?errorMessage=${errorMessage}`);
     }
 
     if (parseInt(store) && (!address || !phone)) {
-      errorMessage = `Missing Addreess`
+      errorMessage = 'Missing Addreess';
       return res.redirect(`/user/login?errorMessage=${errorMessage}`);
     }
 
@@ -83,7 +83,7 @@ router.post('/register', async function(req, res, next) {
       email, 
       address,
       phone
-    }
+    };
     const result = await UserModel.signUp(data);
     errorMessage = `Welcome ${result.username}, 
     Please verify account by your email before login`;
@@ -108,12 +108,12 @@ router.post('/register', async function(req, res, next) {
   }
 });
 
-router.post('/login', async function(req, res, next) {
+router.post('/login', async function(req, res) {
   try {
-    let errorMessage = ``;
+    let errorMessage = '';
     const { username, password } = req.body;
     if (!username || !password) {
-      errorMessage = `Missing or Invalid username or password`
+      errorMessage = 'Missing or Invalid username or password';
       return res.redirect(`/user/login?errorMessage=${errorMessage}`);
     }
 
@@ -132,9 +132,9 @@ router.post('/login', async function(req, res, next) {
     }));
 
     if (user.role == 'customer') {
-      return res.redirect(`/`);
+      return res.redirect('/');
     } else {
-      return res.redirect(`/admin`);
+      return res.redirect('/admin');
     }
   } catch (error) {
     return res.redirect(`/user/login?errorMessage=${error.message}`);
@@ -234,7 +234,7 @@ router.get('/order/:id', async function(req, res, next) {
     
     if (products.length) {
       products.forEach(product => {
-        product.count = order.items[product.objectId].count
+        product.count = order.items[product.objectId].count;
       });
     }
     

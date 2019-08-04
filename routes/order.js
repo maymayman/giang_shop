@@ -55,7 +55,7 @@ router.get('/:id', async function(req, res, next) {
     
     if (products.length) {
       products.forEach(product => {
-        product.count = order.items[product.objectId].count
+        product.count = order.items[product.objectId].count;
       });
     }
     

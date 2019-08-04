@@ -1,50 +1,48 @@
 module.exports = {
-  
   validationMenu: async function (options, action) {
     try {
       if (action) {
         const Menu = Parse.Object.extend('Menu');
         const query1 = new Parse.Query(Menu);
         const query2 = new Parse.Query(Menu);
+        let compoundQuery, compoundQueryCreate, result, resultCreate;
         
         switch (action) {
-          case 'EDIT':
+        case 'EDIT':
             
-            query1.notEqualTo('objectId', options.objectId);
-            query2.notEqualTo('objectId', options.objectId);
+          query1.notEqualTo('objectId', options.objectId);
+          query2.notEqualTo('objectId', options.objectId);
             
-            query1.equalTo('name', options.name);
-            query2.equalTo('position', options.position);
+          query1.equalTo('name', options.name);
+          query2.equalTo('position', options.position);
             
-            const compoundQuery = Parse.Query.or(query1, query2);
+          compoundQuery = Parse.Query.or(query1, query2);
             
-            const result = await  compoundQuery.first();
-            if (result) {
-              return false;
-            } else {
-              return true;
-            }
-            break;
-          case 'CREATE':
+          result = await  compoundQuery.first();
+          if (result) {
+            return false;
+          } else {
+            return true;
+          }
+        case 'CREATE':
             
-            query1.equalTo('name', options.name);
-            query2.equalTo('position', options.position);
+          query1.equalTo('name', options.name);
+          query2.equalTo('position', options.position);
             
-            const compoundQueryCreate = Parse.Query.or(query1, query2);
+          compoundQueryCreate = Parse.Query.or(query1, query2);
             
-            const resultCreate = await  compoundQueryCreate.first();
-            if (resultCreate) {
-              return false;
-            } else {
-              return true;
-            }
-            break;
+          resultCreate = await  compoundQueryCreate.first();
+          if (resultCreate) {
+            return false;
+          } else {
+            return true;
+          }
         }
       } else {
-        return false
+        return false;
       }
     } catch (err) {
-      throw err;
+      throwError(err);
     }
   },
   
@@ -57,49 +55,48 @@ module.exports = {
         pointerToMenu.id = options.menuId;
         const query = new Parse.Query(Category);
         const query1 = new Parse.Query(Category);
+        let compoundQuery, compoundQueryCreate, result, resultCreate;
   
         switch (action) {
-          case 'EDIT':
-            query.notEqualTo('objectId', options.objectId);
-            query1.notEqualTo('objectId', options.objectId);
+        case 'EDIT':
+          query.notEqualTo('objectId', options.objectId);
+          query1.notEqualTo('objectId', options.objectId);
   
-            query.equalTo('position', options.position);
-            query1.equalTo('name', options.name);
+          query.equalTo('position', options.position);
+          query1.equalTo('name', options.name);
             
-            query.equalTo('menu', pointerToMenu);
-            query1.equalTo('menu', pointerToMenu);
+          query.equalTo('menu', pointerToMenu);
+          query1.equalTo('menu', pointerToMenu);
             
-            const compoundQuery = Parse.Query.or(query, query1);
+          compoundQuery = Parse.Query.or(query, query1);
   
-            const result = await compoundQuery.first();
-            if (result){
-              return false;
-            }else {
-              return true;
-            }
-            break;
-          case 'CREATE':
-            query.equalTo('position', options.position);
-            query1.equalTo('name', options.name);
+          result = await compoundQuery.first();
+          if (result){
+            return false;
+          }else {
+            return true;
+          }
+        case 'CREATE':
+          query.equalTo('position', options.position);
+          query1.equalTo('name', options.name);
   
-            query.equalTo('menu', pointerToMenu);
-            query1.equalTo('menu', pointerToMenu);
+          query.equalTo('menu', pointerToMenu);
+          query1.equalTo('menu', pointerToMenu);
   
-            const compoundQueryCreate = Parse.Query.or(query, query1);
+          compoundQueryCreate = Parse.Query.or(query, query1);
   
-            const resultCreate = await compoundQueryCreate.first();
-            if (resultCreate){
-              return false;
-            }else {
-              return true;
-            }
-            break;
+          resultCreate = await compoundQueryCreate.first();
+          if (resultCreate){
+            return false;
+          }else {
+            return true;
+          }
         }
       }else {
-        return false
+        return false;
       }
     } catch (err) {
-      throw err
+      throwError(err);
     }
   },
   
@@ -117,51 +114,51 @@ module.exports = {
       const query = new Parse.Query(Category);
       const query1 = new Parse.Query(Category);
       
+      let compoundQuery, compoundQueryCreate, result, resultCreate;
+      
       switch (action) {
-        case 'EDIT':
-          query.notEqualTo('objectId', options.objectId);
-          query1.notEqualTo('objectId', options.objectId);
+      case 'EDIT':
+        query.notEqualTo('objectId', options.objectId);
+        query1.notEqualTo('objectId', options.objectId);
       
-          query.equalTo('position', options.position);
-          query1.equalTo('name', options.name);
+        query.equalTo('position', options.position);
+        query1.equalTo('name', options.name);
       
-          query.equalTo('menu', pointerToMenu);
-          query1.equalTo('menu', pointerToMenu);
+        query.equalTo('menu', pointerToMenu);
+        query1.equalTo('menu', pointerToMenu);
           
-          query.equalTo('parent', pointerToParent);
-          query1.equalTo('parent', pointerToParent);
+        query.equalTo('parent', pointerToParent);
+        query1.equalTo('parent', pointerToParent);
       
-          const compoundQuery = Parse.Query.or(query, query1);
+        compoundQuery = Parse.Query.or(query, query1);
       
-          const result = await compoundQuery.first();
-          if (result){
-            return false;
-          }else {
-            return true;
-          }
-          break;
-        case 'CREATE':
-          query.equalTo('position', options.position);
-          query1.equalTo('name', options.name);
+        result = await compoundQuery.first();
+        if (result){
+          return false;
+        }else {
+          return true;
+        }
+      case 'CREATE':
+        query.equalTo('position', options.position);
+        query1.equalTo('name', options.name);
       
-          query.equalTo('menu', pointerToMenu);
-          query1.equalTo('menu', pointerToMenu);
+        query.equalTo('menu', pointerToMenu);
+        query1.equalTo('menu', pointerToMenu);
           
-          query.equalTo('parent', pointerToParent);
-          query1.equalTo('parent', pointerToParent);
+        query.equalTo('parent', pointerToParent);
+        query1.equalTo('parent', pointerToParent);
           
-          const compoundQueryCreate = Parse.Query.or(query, query1);
+        compoundQueryCreate = Parse.Query.or(query, query1);
       
-          const resultCreate = await compoundQueryCreate.first();
-          if (resultCreate){
-            return false;
-          }else {
-            return true;
-          }
-          break;
+        resultCreate = await compoundQueryCreate.first();
+        if (resultCreate){
+          return false;
+        }else {
+          return true;
+        }
       }
     } catch (err) {
-      throw err
+      throwError(err);
     }
   },
   
@@ -180,7 +177,7 @@ module.exports = {
         return false;
       }
     } catch (err) {
-      throw err
+      throwError(err);
     }
   },
   

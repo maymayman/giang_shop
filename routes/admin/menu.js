@@ -54,7 +54,7 @@ router.post('/', helper.uploadFile, async function (req, res, next) {
     if(user && user.role == 'administrator'){
       const isValidate = await validate.validationMenu(options, 'EDIT');
       if(isValidate){
-        const menus = await MenuModel.findByIdToUpdate(options, sessionToken);
+        await MenuModel.findByIdToUpdate(options, sessionToken);
       }else {
         const errorMessage = 'name or position is exist already';
         return res.redirect(`/admin/menus?errorMessage=${errorMessage}`);
@@ -85,7 +85,7 @@ router.post('/create', helper.uploadFile, async function (req, res, next) {
     if(user && user.role == 'administrator'){
       const isValidate = await validate.validationMenu(options, 'CREATE');
       if(isValidate){
-        const menus = await MenuModel.create(options, sessionToken);
+        await MenuModel.create(options, sessionToken);
       }else {
         const errorMessage = 'name or position is exist already';
         return res.redirect(`/admin/menus?errorMessage=${errorMessage}`);

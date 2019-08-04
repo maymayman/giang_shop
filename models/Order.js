@@ -15,7 +15,7 @@ module.exports = {
 
       return helper.toJSON(newOrder);
     } catch (err) {
-      throw err;
+      throwError(err);
     }
   },
 
@@ -37,7 +37,7 @@ module.exports = {
 
       return helper.toJSON(orders);
     } catch (err) {
-      throw err;
+      throwError(err);
     }
   },
   countMyOrder: async function(options) {
@@ -54,7 +54,7 @@ module.exports = {
 
       return count;
     } catch (err) {
-      throw err;
+      throwError(err);
     }
   },
   getOrderByAdminOrShop: async function(options) {
@@ -74,7 +74,7 @@ module.exports = {
 
       return helper.toJSON(orders);
     } catch (err) {
-      throw err;
+      throwError(err);
     }
   },
   
@@ -92,7 +92,7 @@ module.exports = {
 
       return count;
     } catch (err) {
-      throw err;
+      throwError(err);
     }
   },
 
@@ -110,7 +110,7 @@ module.exports = {
 
       return helper.toJSON(order);
     } catch (err) {
-      throw err;
+      throwError(err);
     }
   },
 
@@ -126,7 +126,7 @@ module.exports = {
       const result = await order.save(null, {sessionToken: user.sessionToken});
       return result;
     } catch (err) {
-      throw err;
+      throwError(err);
     }
   }
 };

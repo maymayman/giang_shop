@@ -1,20 +1,16 @@
 const helper = require('./helper');
 
-
 module.exports = {
-  
-  count: async function(options) {
+  count: async function() {
     try {
       const Contact = Parse.Object.extend('Contact');
       const query = new Parse.Query(Contact);
-  
-      // query.equalTo('status', options.status);
       
       const count = await query.count();
       
       return count;
     } catch (err) {
-      throw err;
+      throwError(err);
     }
   },
   
@@ -23,8 +19,6 @@ module.exports = {
       const { skip, limit } = helper.pagination(options);
       const Contact = Parse.Object.extend('Contact');
       const query = new Parse.Query(Contact);
-      
-      // query.equalTo('status', options.status);
   
       query.skip(skip);
       query.limit(limit);
@@ -34,7 +28,7 @@ module.exports = {
   
       return helper.toJSON(results);
     }catch (err) {
-      throw err;
+      throwError(err);
     }
     
   },
@@ -53,7 +47,7 @@ module.exports = {
       
       return helper.toJSON(newContact);
     }catch (err) {
-      throw err;
+      throwError(err);
     }
   },
   
@@ -70,7 +64,7 @@ module.exports = {
     
       return helper.toJSON(contact);
     } catch (err) {
-      throw err;
+      throwError(err);
     }
   }
   
