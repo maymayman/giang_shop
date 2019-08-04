@@ -16,7 +16,7 @@ const common = {
         service: 'gmail',
         host: 'smtp.gmail.com',
         port: 587,
-        secure: false, 
+        secure: false,
         auth: {
           user: process.env.MAIL_USER,
           pass: process.env.MAIL_PASS,
@@ -37,7 +37,7 @@ const common = {
       console.log('Preview URL: %s', nodemailer.getTestMessageUrl(info));
     } catch (error) {
       console.error(error, '++++++++++++++++++');
-    }    
+    }
   }
 };
 
@@ -78,9 +78,9 @@ router.post('/register', async function(req, res, next) {
     }
 
     const data = {
-      username, 
-      password, 
-      email, 
+      username,
+      password,
+      email,
       address,
       phone
     };
@@ -146,7 +146,7 @@ router.get('/account', async function(req, res, next) {
     const user = req.user;
     const menus = await MenuModel.find(true);
     const active = req.query.active;
-    
+
     res.render('account', { menus, user, active });
   } catch (error) {
     next(error);
@@ -168,11 +168,11 @@ router.get('/verify', async function(req, res, next) {
 
     const pointerToUser = new Parse.User();
     pointerToUser.id = userId;
-  
+
     const user = await pointerToUser.fetch();
 
     const activeUser = await user.save({status: 'ACTIVE'}, { sessionToken: token });
-    
+
     return res.send(`
       <a href=${domain}>
         Success Verify, Welcome ${activeUser.get('username')}, Please Login to Shopping
@@ -191,13 +191,13 @@ router.get('/order/history', async function(req, res, next) {
     const limit = parseInt(req.query.limit) || 20;
     const status = req.query.status || 'NEW';
     const keyword = req.query.keyword || '';
-    
+
     const menus = await MenuModel.find(true);
-  
+
     const orders = await OrderModel.getOrderByAdminOrShop({
       user, page, limit, status
     });
-    
+
     const count = await OrderModel.count({user, status});
     res.render('./history_order', {
       menus,
@@ -220,24 +220,24 @@ router.get('/order/:id', async function(req, res, next) {
   try {
     const user = req.user;
     const objectId = req.params.id;
-  
+
     const menus = await MenuModel.find(true);
-  
+
     const order = await OrderModel.findById(objectId, user);
-    
+
     if (!order) {
       return next('Order Not Found');
     }
-    
+
     const productIds = Object.keys(order.items);
     const products = await ProductModel.findByIds(productIds, user);
-    
+
     if (products.length) {
       products.forEach(product => {
         product.count = order.items[product.objectId].count;
       });
     }
-    
+
     // res.render('../admin/order/detail', {order, user, products});
     res.render('./history_order_detail', {
       menus,
@@ -249,6 +249,5 @@ router.get('/order/:id', async function(req, res, next) {
     next(error);
   }
 });
-
 
 module.exports = router;

@@ -24,7 +24,7 @@ module.exports = {
       const { skip, limit } = helper.pagination(options);
       const pointerToUser = new Parse.User();
       pointerToUser.id = options.user.objectId;
-      
+
       const Order = Parse.Object.extend('Order');
       const query = new Parse.Query(Order);
       query.equalTo('user', pointerToUser);
@@ -44,11 +44,14 @@ module.exports = {
     try {
       const pointerToUser = new Parse.User();
       pointerToUser.id = options.user.objectId;
-      
+
       const Order = Parse.Object.extend('Order');
       const query = new Parse.Query(Order);
       query.equalTo('user', pointerToUser);
-      query.equalTo('status', options.status);
+
+      if (options.status) {
+        query.equalTo('status', options.status);
+      }
 
       const count = await query.count();
 
@@ -65,7 +68,7 @@ module.exports = {
       query.limit(limit);
       query.skip(skip);
       query.equalTo('status', options.status);
-      
+
       if (options.user && options.user.role == 'store'){
         query.equalTo('storeIds', options.user.objectId);
       }
@@ -77,13 +80,13 @@ module.exports = {
       throwError(err);
     }
   },
-  
+
   count: async function(options) {
     try {
       const Order = Parse.Object.extend('Order');
       const query = new Parse.Query(Order);
       query.equalTo('status', options.status);
-      
+
       if (options.user && options.user.role == 'store'){
         query.equalTo('storeIds', options.user.objectId);
       }
@@ -97,11 +100,11 @@ module.exports = {
   },
 
   findById: async function(objectId, user) {
-    try {      
+    try {
       const Order = Parse.Object.extend('Order');
       const query = new Parse.Query(Order);
       query.equalTo('objectId', objectId);
-  
+
       if (user.role === 'store') {
         query.equalTo('storeIds', user.objectId);
       }
@@ -115,7 +118,7 @@ module.exports = {
   },
 
   update: async function(objectId, data, user) {
-    try {      
+    try {
       const Order = Parse.Object.extend('Order');
       const query = new Parse.Query(Order);
 

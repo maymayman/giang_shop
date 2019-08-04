@@ -6,13 +6,13 @@
         e.preventDefault();
         $(this).parent().find('.account-dropdown , .search-content').slideToggle('medium');
     })
-    
+
     /* Cart dropdown */
     var iconCart = $('.icon-cart');
     iconCart.on('click', function() {
         $('.shopping-cart-content').toggleClass('cart-visible');
     })
-    
+
     /* Slider active */
     $('.slider-active').owlCarousel({
         loop: true,
@@ -35,8 +35,8 @@
             }
         }
     })
-    
-    
+
+
     /* Slider active 2 */
     $('.slider-active-2').owlCarousel({
         loop: true,
@@ -59,8 +59,8 @@
             }
         }
     })
-    
-    
+
+
     /* Slider active */
     $('.slider-active-3').owlCarousel({
         loop: true,
@@ -82,8 +82,8 @@
             }
         }
     })
-    
-    
+
+
     /* Instagram active */
     $('.instagram-active').owlCarousel({
         loop: true,
@@ -105,8 +105,8 @@
             }
         }
     })
-    
-    
+
+
     /* Collection slider active */
     $('.collection-active').owlCarousel({
         loop: true,
@@ -130,8 +130,8 @@
             }
         }
     })
-    
-    
+
+
     /* Collection slider active 2 */
     $('.collection-active-2').owlCarousel({
         loop: true,
@@ -155,8 +155,8 @@
             }
         }
     })
-    
-    
+
+
     /* Testimonial active */
     $('.testimonial-active').owlCarousel({
         loop: true,
@@ -182,8 +182,8 @@
             }
         }
     })
-    
-    
+
+
     /* Brand logo active */
     $('.brand-logo-active').owlCarousel({
         loop: true,
@@ -210,8 +210,8 @@
             }
         }
     })
-    
-    
+
+
     /* Related product active */
     $('.related-product-active').owlCarousel({
         loop: true,
@@ -238,8 +238,8 @@
             }
         }
     })
-    
-    
+
+
     /*--- Quickview-slide-active ---*/
     $('.quickview-slide-active').owlCarousel({
         loop: true,
@@ -265,13 +265,13 @@
             }
         }
     })
-    
-    
+
+
     $('.quickview-slide-active a').on('click', function() {
         $('.quickview-slide-active a').removeClass('active');
     })
-    
-    
+
+
     /*----------------------------
     	Cart Plus Minus Button
     ------------------------------ */
@@ -294,7 +294,7 @@
         }
         let cartProducts = Cookies.get('cartProducts');
         const productId = $input.data("product-id");
-        
+
         cartProducts = JSON.parse(cartProducts);
         cartProducts[productId].count = newVal;
 
@@ -310,8 +310,8 @@
         $(".total-amount").text(total_amount + amount);
         $input.val(newVal);
     });
-    
-    
+
+
     /*----------------------------
     	Cart Plus Minus Button
     ------------------------------ */
@@ -334,15 +334,15 @@
         }
         $input.val(newVal);
     });
-    
+
     /*----clear cart----- */
     $('.cart-clear').on('click', function () {
       Cookies.remove('cartProducts');
       Cookies.remove('countProducts');
     });
-    
-    
-    
+
+
+
     /*--
     Menu Stick
     -----------------------------------*/
@@ -356,15 +356,15 @@
             header.addClass('stick');
         }
     });
-    
-    
+
+
     /* jQuery MeanMenu */
     $('#mobile-menu-active').meanmenu({
         meanScreenWidth: "991",
         meanMenuContainer: ".mobile-menu-area .mobile-menu",
     });
-    
-    
+
+
     /*-----------------------------------
         Scroll zoom
     -------------------------------------- */
@@ -373,17 +373,17 @@
         reset: false
     });
     sr.reveal('.scroll-zoom');
-    
-    
+
+
     /*-----------------------
-        Shop filter active 
+        Shop filter active
     ------------------------- */
     $('.filter-active a').on('click', function(e) {
         e.preventDefault();
         $('.product-filter-wrapper').slideToggle();
     })
-    
-    
+
+
     /*---------------------
         Price slider
     --------------------- */
@@ -402,22 +402,22 @@
         amountprice.val("$" + sliderrange.slider("values", 0) +
             " - $" + sliderrange.slider("values", 1));
     });
-    
-    
+
+
     /* Language dropdown */
     $(".language-style a").on("click", function(e) {
         e.preventDefault();
         $(this).parent().find('.lang-car-dropdown').slideToggle('medium');
     })
-    
-    
+
+
     /* use style dropdown */
     $(".use-style a").on("click", function(e) {
         e.preventDefault();
         $(this).parent().find('.lang-car-dropdown').slideToggle('medium');
     })
-    
-    
+
+
     /*=========================
 		Toggle Ativation
 	===========================*/
@@ -432,8 +432,8 @@
         });
     }
     itemToggler();
-    
-    
+
+
     function itemToggler2() {
         $(".toggle-item-active2").slice(0, 8).show();
         $(".item-wrapper2").find(".loadMore2").on('click', function(e) {
@@ -445,7 +445,7 @@
         });
     }
     itemToggler2();
-    
+
     function itemToggler3() {
         $(".toggle-item-active3").slice(0, 8).show();
         $(".item-wrapper3").find(".loadMore3").on('click', function(e) {
@@ -457,8 +457,8 @@
         });
     }
     itemToggler3();
-    
-    
+
+
     /*--------------------------
         ScrollUp
     ---------------------------- */
@@ -468,12 +468,12 @@
         scrollSpeed: 900,
         animation: 'fade'
     });
-    
-    
+
+
     /*--------------------------
         Isotope
     ---------------------------- */
-    
+
     $('.grid').imagesLoaded(function() {
         // init Isotope
         $('.grid').isotope({
@@ -486,11 +486,11 @@
             }
         });
     });
-    
-    
+
+
     /*--- Clickable menu active ----*/
     const slinky = $('#menu').slinky()
-    
+
     /*====== sidebarCart ======*/
     function sidebarMainmenu() {
         var menuTrigger = $('.clickable-mainmenu-active'),
@@ -505,8 +505,8 @@
         });
     };
     sidebarMainmenu();
-    
-    
+
+
     /*=========================
 		Toggle Ativation
 	===========================*/
@@ -545,8 +545,8 @@
         });
     }
     itemToggler6();
-    
-    
+
+
     /*---------------------
         Countdown
       --------------------- */
@@ -557,8 +557,8 @@
             $this.html(event.strftime('<span class="cdown day">%-D <p>Days</p></span> <span class="cdown hour">%-H <p>Hours</p></span> <span class="cdown minutes">%M <p>Minutes</p></span class="cdown second"> <span>%S <p>Second</p></span>'));
         });
     });
-    
-    
+
+
     /*--------------------------
         Product Zoom
 	---------------------------- */
@@ -571,8 +571,8 @@
         zoomType: "inner",
         cursor: "crosshair"
     });
-    
-    
+
+
     /*---------------------
         Product dec slider
     --------------------- */
@@ -607,8 +607,8 @@
             }
         ]
     });
-    
-    
+
+
     /*---------------------
         Video popup
     --------------------- */
@@ -621,8 +621,8 @@
             enabled: true,
         }
     });
-    
-    
+
+
     /*---------------------
         Sidebar active
     --------------------- */
@@ -631,8 +631,8 @@
         bottomSpacing: 30,
         minWidth: 767,
     });
-    
-    
+
+
     /* Product details slider */
     $('.product-details-slider-active').owlCarousel({
         loop: true,
@@ -658,8 +658,8 @@
             }
         }
     })
-    
-    
+
+
     /*--
     Magnific Popup
     ------------------------*/
@@ -669,27 +669,27 @@
             enabled: true
         }
     });
-    
-    
+
+
     /*-------------------------
     Create an account toggle
     --------------------------*/
     $('.checkout-toggle2').on('click', function() {
         $('.open-toggle2').slideToggle(1000);
     });
-    
+
     $('.checkout-toggle').on('click', function() {
         $('.open-toggle').slideToggle(1000);
     });
-    
-    
+
+
     /*---- CounterUp ----*/
     $('.count').counterUp({
         delay: 10,
         time: 1000
     });
-    
-    
+
+
     /* Blog img slide active */
     $('.blog-img-slide').owlCarousel({
         loop: true,
@@ -713,7 +713,7 @@
             }
         }
     });
-    
+
     $('.shopping-cart').on('click', function() {
         const productId = $(this).data('product_id');
         const price = $(this).data('price');
@@ -728,7 +728,7 @@
             cartProducts[productId] = product;
         } else {
             cartProducts = JSON.parse(cartProducts);
-            
+
             if (cartProducts[productId]) {
                 cartProducts[productId]['count'] += 1;
             } else {
@@ -759,7 +759,7 @@
             cartProducts[productId] =product;
         } else {
             cartProducts = JSON.parse(cartProducts);
-            
+
             if (cartProducts[productId]) {
                 cartProducts[productId]['count'] += count;
                 cartProducts[productId]['size'] = size;
@@ -773,7 +773,7 @@
         Cookies.set('countProducts', Object.keys(cartProducts).length);
 
         $('.count-style').text(Object.keys(cartProducts).length);
-    });    
+    });
 
     $('.cart-order').on('click', function() {
         let cartProducts = Cookies.get('cartProducts');
@@ -817,7 +817,7 @@
         $('body').loadingModal({
             text: 'Loading...'
         });
-            
+
         return fetch(url, {
             method: "POST", // *GET, POST, PUT, DELETE, etc.
             mode: "cors", // no-cors, cors, *same-origin
@@ -833,12 +833,12 @@
             if (!response.success || response.error) {
                 throw response.error;
             }
-            
+
             Cookies.remove('cartProducts');
             Cookies.remove('countProducts');
-            
+
             window.location.replace('/order/history');
-            
+
         }).catch(err => {
             console.error(err);
             $('body').loadingModal('destroy');
@@ -846,4 +846,24 @@
         });
     });
 
+    async function checkNewDiscount() {
+        var callUrl = '/check/first-discount';
+        let data = await fetch(callUrl, {
+            method: "GET", // *GET, POST, PUT, DELETE, etc.
+            mode: "cors", // no-cors, cors, *same-origin
+            cache: "no-cache", // *default, no-cache, reload, force-cache, only-if-cached
+            credentials: "same-origin", // include, *same-origin, omit
+            headers: {
+                // 'Accept': 'application/json',
+                "Content-Type": "application/json",
+                // "Content-Type": "application/x-www-form-urlencoded",
+            }});
+        data = await data.json();
+        if (data && data === 0) {
+            $('#discountNewUser').modal('show');
+        } else {
+            $('#discountNewUser').modal('hide');
+        }
+    };
+    checkNewDiscount();
 })(jQuery);

@@ -6,6 +6,7 @@ const MenuModel = require('../models/Menu');
 const ProductModel = require('../models/Product');
 const ContactModel = require('../models/Contact');
 const BannerModel = require('../models/Banner');
+const OrderModel = require('../models/Order');
 
 /* GET home page. */
 router.get('/', async function (req, res, next) {
@@ -30,7 +31,7 @@ router.get('/contact', async function (req, res, next) {
     const user = req.user;
     const menus = await MenuModel.find(true);
     const messageToUser = req.query.messageToUser || '';
-    
+
     res.render('contact', {menus, user, messageToUser});
   } catch (error) {
     next(error);
@@ -44,7 +45,7 @@ router.post('/contact', async function (req, res, next) {
     const subject = req.body.subject ? req.body.subject : null;
     const message = req.body.message ? req.body.message : null;
     let messageToUser = null;
-    
+
     if (email && name && message && subject) {
       let dataContact = {
         email: email,
@@ -61,7 +62,7 @@ router.post('/contact', async function (req, res, next) {
     } else {
       messageToUser = 'Please add full contact';
     }
-    
+
     res.redirect(`/contact?messageToUser=${messageToUser}`);
   } catch (error) {
     next(error);
@@ -74,6 +75,20 @@ router.get('/designers', async function (req, res, next) {
     const menus = await MenuModel.find(true);
     res.render('designer', {menus, user});
   } catch (error) {
+    next(error);
+  }
+});
+
+router.get('/check/first-discount', async function (req, res, next) {
+  try {
+    const user  = req.user;
+
+    if (!user || user.role !== 'customer'){
+      return res.json();
+    }
+    const total = await OrderModel.countMyOrder({ user: user });
+    return res.json(total);
+  } catch (e) {
     next(error);
   }
 });
