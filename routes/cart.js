@@ -3,6 +3,28 @@ const router = express.Router();
 
 const MenuModel = require('../models/Menu');
 const OrderModel = require('../models/Order');
+const ProductModel = require('../models/Product');
+
+const checkProdAvailable = async (products) => {
+  try {
+    for (let i = 0; i < products.length; i++) {
+      const product = products[i];
+      const type = product.type;
+
+      if (type === 'available') {
+        const objectId = product.objectId;
+        const size = product.size;
+        const count = product.count;
+
+        const available = await ProductModel.available(objectId, size, count);
+
+        if (!available) throw new Error(`${product.name} : out of stock `);
+      }
+    }
+  } catch (err) {
+    throwError(err);
+  }
+};
 
 const caculateTotalAmount = function(order) {
   const products = Object.values(order);
@@ -20,7 +42,8 @@ const formatOrders = function(data, sessionToken, deliveryInfo) {
       amount: caculateTotalAmount(order),
       sessionToken, 
       deliveryInfo, 
-      storeIds: [Object.values(order)[0].storeId]
+      storeIds: [Object.values(order)[0].storeId],
+      type: Object.values(order)[0].type
     }];
 
     return [
@@ -65,6 +88,8 @@ router.post('/order', async function(req, res) {
       return res.json({success: false, error: 'Invalid data ', data: null});
     }
 
+    await checkProdAvailable(products);
+
     products.forEach(product => {
       const orderCode = product.storeId + '-' + product.type;
       if (!orders[orderCode]) {
@@ -89,7 +114,6 @@ router.post('/order', async function(req, res) {
 
     res.json({success: true, error: null, data: { orders: result } });
   } catch (error) {
-    console.log(error);
     res.json({success: false, error: error.message, data: null});
   }
 });
