@@ -259,8 +259,16 @@ csslinks: [
                       </div>
 
                       <div class="col-12 col-md-12 size-quantity form-group">
-                        <% const quantitySize = product.quantitySize || {} %>
-                        <% for (let size in quantitySize) { %>
+                        <% const quantitySize = product.quantitySize || {} ;
+                          const sizes = product.size === 'fontSize'
+                            ? ['S', 'M', 'L', 'XL', 'XXL', 'XXXL']
+                            : ['35', '35,5', '36', '36,5', '37', '37,5', '38', '38,5', '39', '39,5', 
+                              '40', '40,5', '41', '41,5', '42', '42,5', '43', '43,5', '44'
+                            ];
+                        %>
+                        <% for (let i = 0; i < sizes.length; i++) { 
+                          const size = sizes[i];
+                        %>
                           <label for="quantity-size-<%= size; %>" class=" form-control-label">Size - <%= size; %> - Quantity</label>
                           <input type="number" id="<%= size; %>" name="<%= size; %>" class="form-control" value=<%= quantitySize[size]; %>>
                         <% } %>
