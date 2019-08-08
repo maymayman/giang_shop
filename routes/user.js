@@ -9,6 +9,8 @@ const UserModel = require('../models/User');
 const OrderModel = require('../models/Order');
 const ProductModel = require('../models/Product');
 
+const { USER } = require('../const');
+
 const common = {
   sendMail: async function(options) {
     try {
@@ -18,8 +20,8 @@ const common = {
         port: 587,
         secure: false,
         auth: {
-          user: process.env.MAIL_USER,
-          pass: process.env.MAIL_PASS,
+          user: 'consignistasg@gmail.com' || process.env.MAIL_USER,
+          pass: 'Trangiaan@2015' || process.env.MAIL_PASS,
         }
       });
 
@@ -82,7 +84,8 @@ router.post('/register', async function(req, res, next) {
       password,
       email,
       address,
-      phone
+      phone,
+      role: parseInt(store) ? USER.ROLE.STORE : USER.ROLE.CUSTOMER,
     };
     const result = await UserModel.signUp(data);
     errorMessage = `Welcome ${result.username}, 

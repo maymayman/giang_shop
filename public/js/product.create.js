@@ -6,16 +6,16 @@ function b64toBlob(b64Data, contentType, sliceSize) {
   const byteArrays = [];
 
   for (let offset = 0; offset < byteCharacters.length; offset += sliceSize) {
-      const slice = byteCharacters.slice(offset, offset + sliceSize);
+    const slice = byteCharacters.slice(offset, offset + sliceSize);
 
-      const byteNumbers = new Array(slice.length);
-      for (let i = 0; i < slice.length; i++) {
-          byteNumbers[i] = slice.charCodeAt(i);
-      }
+    const byteNumbers = new Array(slice.length);
+    for (let i = 0; i < slice.length; i++) {
+      byteNumbers[i] = slice.charCodeAt(i);
+    }
 
-      const byteArray = new Uint8Array(byteNumbers);
+    const byteArray = new Uint8Array(byteNumbers);
 
-      byteArrays.push(byteArray);
+    byteArrays.push(byteArray);
   }
 
   const blob = new Blob(byteArrays, {type: contentType});
@@ -26,8 +26,8 @@ function getPathName(href) {
   const reg = /.+?\:\/\/.+?(\/.+?)(?:#|\?|$)/;
   const pathname = reg.exec(href)[1];
 
-  return pathname.replace("'", "");
-};
+  return pathname.replace("'", '');
+}
 
 function validBase64(s) {
   return !!s.match(validBase64.regex);
@@ -74,19 +74,19 @@ validBase64.regex = /^\s*data:([a-z]+\/[a-z]+(;[a-z\-]+\=[a-z\-]+)?)?(;base64)?,
 
     $('#send').on('click', function () {
       const $this = $(this);
-      $this.attr("disabled", "disabled");
-      $this.addClass( "bg-info progress-bar-striped progress-bar-animated");
+      $this.attr('disabled', 'disabled');
+      $this.addClass( 'bg-info progress-bar-striped progress-bar-animated');
       const images = $('.images .img');
-      const form = document.getElementById("myForm");
+      const form = document.getElementById('myForm');
       const formDataToUpload = new FormData(form);
 
       for(let i = 0; i < images.length; i++) {
         const ImageURL = $(images[i]).attr('rel');
-        const block = ImageURL.split(";");
+        const block = ImageURL.split(';');
         // Get the content type of the image
-        const contentType = block[0].split(":")[1];// In this case "image/gif"
+        const contentType = block[0].split(':')[1];// In this case 'image/gif'
         // get the real base64 content of the file
-        const realData = block[1].split(",")[1];// In this case "R0lGODlhPQBEAPeoAJosM...."
+        const realData = block[1].split(',')[1];// In this case "R0lGODlhPQBEAPeoAJosM...."
 
         // Convert it to a blob to upload
         const blob = b64toBlob(realData, contentType);
@@ -98,17 +98,17 @@ validBase64.regex = /^\s*data:([a-z]+\/[a-z]+(;[a-z\-]+\=[a-z\-]+)?)?(;base64)?,
       $.ajax({
         url: '/admin/product/create',
         data: formDataToUpload,// the formData function is available in almost all new browsers.
-        type:"POST",
+        type:'POST',
         contentType:false,
         processData:false,
         cache:false,
-        dataType:"json", // Change this according to your response from the server.
+        dataType:'json', // Change this according to your response from the server.
         beforeSend: function() {
           console.log('before');
         },
         error:function(err){
-          $this.removeAttr("disabled", "disabled");
-          $this.removeClass( "bg-info progress-bar-striped progress-bar-animated");
+          $this.removeAttr('disabled', 'disabled');
+          $this.removeClass( 'bg-info progress-bar-striped progress-bar-animated');
           alert(err);
         },
         success:function(data){
@@ -116,21 +116,21 @@ validBase64.regex = /^\s*data:([a-z]+\/[a-z]+(;[a-z\-]+\=[a-z\-]+)?)?(;base64)?,
         },
         complete:function(response) {
           const { status, responseJSON } = response;
-          console.log(status, responseJSON)
-          $this.removeAttr("disabled", "disabled");
-          $this.removeClass( "bg-info progress-bar-striped progress-bar-animated");
+          console.log(status, responseJSON);
+          $this.removeAttr('disabled', 'disabled');
+          $this.removeClass( 'bg-info progress-bar-striped progress-bar-animated');
           if (status != 200 || !responseJSON || !responseJSON.success ) {
             alert(responseJSON.error);
           } else {
-            console.log("Request finished.", response);
-            window.location.replace('/admin/product?status=PENDING')
+            console.log('Request finished.', response);
+            window.location.replace('/admin/product?status=PENDING');
           }          
         }
       });
     });
     $('#crop').on('click', function () {
       $('#cropImage').modal('show');
-    })
+    });
 
     $('.image-editor').cropit({
       width: 300,
@@ -153,10 +153,10 @@ validBase64.regex = /^\s*data:([a-z]+\/[a-z]+(;[a-z\-]+\=[a-z\-]+)?)?(;base64)?,
       $(this).remove();
     });
 
-    $(".standardSelect").chosen({
+    $('.standardSelect').chosen({
       disable_search_threshold: 10,
-      no_results_text: "Oops, nothing found!",
-      width: "100%"
+      no_results_text: 'Oops, nothing found!',
+      width: '100%'
     });
 
     $('#summernote').summernote({
@@ -170,28 +170,26 @@ validBase64.regex = /^\s*data:([a-z]+\/[a-z]+(;[a-z\-]+\=[a-z\-]+)?)?(;base64)?,
     $('#sendUpdate').on('click', function () {
       const $this = $(this);
       const objectId = $('.object-id').data('object-id');
-      console.log(objectId)
-      $this.attr("disabled", "disabled");
-      $this.addClass( "bg-info progress-bar-striped progress-bar-animated");
+      $this.attr('disabled', 'disabled');
+      $this.addClass( 'bg-info progress-bar-striped progress-bar-animated');
       const images = $('.images .img');
-      const form = document.getElementById("updateFrom");
+      const form = document.getElementById('updateFrom');
       const formDataToUpload = new FormData(form);
-      const oldImages = [];
 
       for(let i = 0; i < images.length; i++) {
         const ImageURL = $(images[i]).attr('rel');
 
         if (validBase64(ImageURL)) {
-          const block = ImageURL.split(";");
+          const block = ImageURL.split(';');
           // Get the content type of the image
-          const contentType = block[0].split(":")[1];// In this case "image/gif"
+          const contentType = block[0].split(':')[1];// In this case 'image/gif'
           // get the real base64 content of the file
-          const realData = block[1].split(",")[1];// In this case "R0lGODlhPQBEAPeoAJosM...."
+          const realData = block[1].split(',')[1];// In this case 'R0lGODlhPQBEAPeoAJosM....'
 
           // Convert it to a blob to upload
           const blob = b64toBlob(realData, contentType);
 
-          // Create a FormData and append the file with "image" as parameter name
+          // Create a FormData and append the file with 'image' as parameter name
           formDataToUpload.append(`image${i}`, blob);
         } else {
           const oldPath = getPathName(ImageURL);
@@ -202,17 +200,17 @@ validBase64.regex = /^\s*data:([a-z]+\/[a-z]+(;[a-z\-]+\=[a-z\-]+)?)?(;base64)?,
       $.ajax({
         url: '/admin/product/update/' + objectId,
         data: formDataToUpload,// the formData function is available in almost all new browsers.
-        type:"POST",
+        type:'POST',
         contentType:false,
         processData:false,
         cache:false,
-        dataType:"json", // Change this according to your response from the server.
+        dataType:'json', // Change this according to your response from the server.
         beforeSend: function() {
           console.log('before');
         },
         error:function(err){
-          $this.removeAttr("disabled", "disabled");
-          $this.removeClass( "bg-info progress-bar-striped progress-bar-animated");
+          $this.removeAttr('disabled', 'disabled');
+          $this.removeClass( 'bg-info progress-bar-striped progress-bar-animated');
           alert(err);
         },
         success:function(data){
@@ -220,14 +218,13 @@ validBase64.regex = /^\s*data:([a-z]+\/[a-z]+(;[a-z\-]+\=[a-z\-]+)?)?(;base64)?,
         },
         complete:function(response) {
           const { status, responseJSON } = response;
-          console.log(status, responseJSON)
-          $this.removeAttr("disabled", "disabled");
-          $this.removeClass( "bg-info progress-bar-striped progress-bar-animated");
+          $this.removeAttr('disabled', 'disabled');
+          $this.removeClass( 'bg-info progress-bar-striped progress-bar-animated');
           if (status != 200 || !responseJSON || !responseJSON.success ) {
             alert(responseJSON.error);
           } else {
-            console.log("Request finished.", response);
-            window.location.replace('/admin/product?status=PENDING')
+            console.log('Request finished.', response);
+            window.location.replace('/admin/product?status=PENDING');
           }          
         }
       });
@@ -235,26 +232,26 @@ validBase64.regex = /^\s*data:([a-z]+\/[a-z]+(;[a-z\-]+\=[a-z\-]+)?)?(;base64)?,
 
     $('#size').change(function(){
       const value = this.value;
-      let sizes = []
-      let html = ''
+      let sizes = [];
+      let html = '';
       if (value === 'numberSize') {
         sizes = [
-          '35', '35.5', '36', '36.5', '37', '37.5', '38', '38.5', '39', '39.5', 
-          '40', '40.5', '41', '41.5', '42', '42.5', '43', '43.5', '44'
+          '35', '35,5', '36', '36,5', '37', '37,5', '38', '38,5', '39', '39,5', 
+          '40', '40,5', '41', '41,5', '42', '42,5', '43', '43,5', '44'
         ];
       } else if (value === 'fontSize') {
-        sizes = ['S', 'M', 'L', 'XL', 'XXL', 'XXXL']
+        sizes = ['S', 'M', 'L', 'XL', 'XXL', 'XXXL'];
       }
 
       sizes.forEach(function(size) {
         html = html + `
           <label for="quantity-size-${size}" class=" form-control-label">Size - ${size} - Quantity</label>
           <input type="number" id="${size}" name="${size}" class="form-control" value=0>
-        `
-      })
+        `;
+      });
 
-      $( ".size-quantity" ).empty();
-      $( ".size-quantity" ).append(html);
+      $('.size-quantity').empty();
+      $('.size-quantity').append(html);
     });
-  })
+  });
 })(jQuery);

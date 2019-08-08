@@ -12,6 +12,7 @@ module.exports = {
 		'Parse': true,
 		'domain': true,
 		'throwError': true,
+		'jQuery': true,
 	},
 	'parserOptions': {
 		'ecmaVersion': 2018
