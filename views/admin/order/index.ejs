@@ -8,7 +8,7 @@
 
 <body>
     <!-- Left Panel -->
-    
+
     <aside id="left-panel" class="left-panel">
         <%- include('../common/navbar', {}); %>
     </aside>
@@ -42,7 +42,7 @@
                             <tbody>
                                 <% orders.forEach(function(order){ %>
                                     <tr>
-                                        <th scope="serial"><%= order.objectId %></th>
+                                        <th scope="serial" ><%= order.objectId %></th>
                                         <td>
                                             <% const items = Object.values(order.items); %>
                                             <% if(user.role == 'administrator') { %>
@@ -69,11 +69,11 @@
                                                 ? 'complete'
                                                 : (order.status == 'NEW') ? 'pending' : 'delete'
                                             %>">
-                                                <%= order.status == 'COMPLETED' 
-                                                    ? 'Completed' 
+                                                <%= order.status == 'COMPLETED'
+                                                    ? 'Completed'
                                                     : (order.status == 'NEW')
                                                         ? 'Pending'
-                                                        : (order.status == 'OUT_OF_STOCK') 
+                                                        : (order.status == 'OUT_OF_STOCK')
                                                             ? 'Out Of Stock'
                                                             : 'Available';%>
                                             </span>
@@ -81,14 +81,18 @@
 
                                         <td>
                                             <% if (order.status == 'AVAILABLE' && user && user.role === 'administrator') { %>
-                                                <a href="<%= `${domain}admin/order/completed/${order.objectId}`; %>">
-                                                    <button type="button" class="btn btn-outline-success btn-sm">
+<!--                                                <a href="<%= `${domain}admin/order/completed/${order.objectId}`; %>">-->
+                                                    <button type="button" class="btn btn-outline-success btn-sm complete" data-order-id="<%= order.objectId %>">
                                                         <i class="fa fa-magic"></i>
                                                         &nbsp; Completed
                                                     </button>
-                                                </a>
+                                                <button type="button" class="btn btn-outline-success btn-sm failed" data-order-id="<%= order.objectId %>">
+                                                        <i class="fa fa-magic"></i>
+                                                        &nbsp; Failed
+                                                    </button>
+<!--                                                </a>-->
                                             <% } %>
-            
+
                                             <a>
                                                 <button type="button" class="btn btn-outline-success btn-sm"
                                                     onclick="location.href = './order/<%= order.objectId; %>'">
@@ -98,7 +102,7 @@
                                             </a>
                                         </td>
                                     </tr>
-                            
+
                                 <% }); %>
 
 
@@ -163,6 +167,8 @@
         <!-- /.content -->
         <div class="clearfix"></div>
         <!-- Footer -->
+        <%- include('./reasons', {}); %>
+
         <%- include('../common/footer', {}); %>
         <!-- /.site-footer -->
     </div>

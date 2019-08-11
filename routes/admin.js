@@ -49,11 +49,11 @@ router.get('/order', async function(req, res, next) {
     const limit = parseInt(req.query.limit) || 20;
     const status = req.query.status || 'NEW';
     const keyword = req.query.keyword || '';
-    
+
     const orders = await OrderModel.getOrderByAdminOrShop({
       user, page, limit, status
     });
-  
+
     const count = await OrderModel.count({user, status});
     res.render('../admin/order/index', {
       orders,
@@ -75,9 +75,9 @@ router.get('/order/:objectId', async function(req, res, next) {
   try {
     const user = req.user;
     const objectId = req.params.objectId;
-    
+
     const order = await OrderModel.findById(objectId, user);
-    
+
     if (!order) {
       return next('Order Not Found');
     }
@@ -97,25 +97,35 @@ router.get('/order/:objectId', async function(req, res, next) {
   }
 });
 
-router.get('/order/completed/:orderId', async function(req, res, next) {
+router.post('/order/update/:orderId', async function(req, res, next) {
   try {
-   
+
     const user = req.user;
     const orderId = req.params.orderId;
-
+    const status = req.body.status;
+    const reasons = req.body.reasons;
+    console.log('status------', status);
     if (user.role !== 'administrator') {
       throw 'Permission denied';
     }
-    
+
     const order = await OrderModel.findById(orderId, user);
-    
-    if (!order || order.status !== 'AVAILABLE') {
+
+    if (!order || order.status !== 'AVAILABLE' || !status) {
       throw 'Order Not Found';
     }
+    let dataUpdate = {
+      status: status
+    };
+    if (status === 'FAILED') {
+      if (!reasons) {
+        throw 'Pleases enter reason';
+      }
+      dataUpdate.reasons = reasons;
+    }
+    const orderSaved = await OrderModel.update(orderId, dataUpdate, user);
 
-    await OrderModel.update(orderId, {status: 'COMPLETED'}, user);
-    
-    res.redirect('/admin/order?status=COMPLETED');
+    res.json(orderSaved);
   } catch (error) {
     next(error);
   }
@@ -133,9 +143,9 @@ router.get('/order/:orderId/:productId', async function(req, res, next) {
     } else if (!status) {
       throw 'status Not Found';
     }
-    
+
     const order = await OrderModel.findById(orderId, user);
-    
+
     if (!order) {
       throw 'Order Not Found';
     }
@@ -154,7 +164,7 @@ router.get('/order/:orderId/:productId', async function(req, res, next) {
     }
 
     await OrderModel.update(orderId, data, user);
-    
+
     res.redirect(`/admin/order/${orderId}`);
   } catch (error) {
     next(error);
@@ -172,11 +182,11 @@ router.get('/contact', async function (req, res, next) {
       limit : limit,
       status: status
     };
-    
+
     const contacts = await ContactModel.findAllContact(options);
     const count = await ContactModel.count(options);
-  
-  
+
+
     res.render('../admin/contact', {contacts,
       user,
       status,
@@ -194,9 +204,9 @@ router.get('/contact/:id', async function (req, res, next) {
   try {
     const user = req.user;
     const objectId = req.params.id;
-    
+
     await ContactModel.findByIdAndUpdate(objectId, user.sessionToken);
-  
+
     res.redirect('/admin/contact');
   } catch (error) {
     next(error);
@@ -221,7 +231,7 @@ router.get('/banner/list', helper.uploadFile, async function (req, res, next) {
       return res.redirect(`/admin/banner/list?errorMessage=${errorMessage}`);
     }
     const listBanner = await BannerModel.findAllBanner(options);
-  
+
     res.render('../admin/banner/list-banner', {user, listBanner, errorMessage});
   } catch (error) {
     next(error);
@@ -242,9 +252,9 @@ router.get('/banner/list/:bannerId', helper.uploadFile, async function (req, res
       status: 'ACTIVE',
       objectId: bannerId
     };
-    
+
     await BannerModel.findByIdAndUpdate(options, sessionToken);
-    
+
     res.redirect('/');
   } catch (error) {
     next(error);
@@ -256,7 +266,7 @@ router.get('/banner/create', helper.uploadFile, async function (req, res, next) 
     const user = req.user;
     let errorMessage = req.query.errorMessage ? req.query.errorMessage : '';
     const userId = _.get(user, 'objectId', undefined);
-  
+
     if(!userId || user.role != 'administrator'){
       errorMessage = 'permission denied';
       return res.redirect(`/admin/banner/create?errorMessage=${errorMessage}`);
@@ -281,7 +291,7 @@ router.post('/banner/create', helper.uploadFile, async function (req, res, next)
       let errorMessage = 'Image is require';
       return res.redirect(`/admin/banner/list?errorMessage=${errorMessage}`);
     }
-    
+
     if(!userId || user.role != 'administrator'){
       let errorMessage = 'permission denied';
       return res.redirect(`/admin/banner/list?errorMessage=${errorMessage}`);
@@ -301,7 +311,7 @@ router.post('/banner/create', helper.uploadFile, async function (req, res, next)
         return res.redirect(`/admin/banner/list?errorMessage=${errorMessage}`);
       }
       await BannerModel.create(banner);
-      
+
       res.redirect('/admin/banner/list');
     }
   } catch (error) {
