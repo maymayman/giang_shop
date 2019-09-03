@@ -42,6 +42,7 @@
 
             <div class="col col-md-2">
               <select id="filterMenuId" name="filterMenuId" class="btn btn-outline-secondary ml-2" style="width: auto">
+                <option value="" <%= '' == menu ? 'selected' : ''%>>Tất cả</option>
                 <% menus.forEach(function (m) {%>
                 <option value="<%=m.objectId%>" <%= m.objectId == menu ? 'selected' : ''%> ><%=m.name%></option>
                 <%}) %>
@@ -50,6 +51,7 @@
 
             <div class="col col-md-2">
               <select id="filterParentId" name="filterParentId" class="btn btn-outline-secondary" style="width: auto">
+                <option value="" <%= '' == parent ? 'selected' : ''%>>Tất cả</option>
                 <% categories.forEach(function (category) {%>
                 <option value="<%=category.objectId%>" <%= category.objectId == parent ? 'selected' : ''%> ><%=category.name%></option>
                 <%}) %>

@@ -41,8 +41,9 @@
 
           <strong class="card-title">Categories</strong>
           <select id="filterMenuId" name="filterMenuId" class="btn btn-outline-secondary btn-sm ml-2" style="width: auto">
-            <% menus.forEach(function (menu) {%>
-            <option value="<%=menu.objectId%>" <%= menu.objectId == menu ? 'selected' : ''%> ><%=menu.name%></option>
+              <option value="" <%= '' == menu ? 'selected' : ''%>>Tất cả</option>
+            <% menus.forEach(function (m) {%>
+            <option value="<%=m.objectId%>" <%= m.objectId == menu ? 'selected' : ''%> ><%=m.name%></option>
             <%}) %>
           </select>
         </div>
