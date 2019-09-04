@@ -8,7 +8,7 @@ const helper = require('../../models/helper/index');
 router.get('/', async function (req, res, next) {
   try {
     const user = req.user;
-    const errorMessage = req.query.errorMessage ? req.query.errorMessage : '';
+    let errorMessage = req.query.errorMessage ? req.query.errorMessage : '';
     const status = req.query.status || 'ACTIVE';
     const page = parseInt(req.query.page) || 1;
     const limit = parseInt(req.query.limit) || 20;
@@ -17,17 +17,23 @@ router.get('/', async function (req, res, next) {
     let categories = [];
     let subCategories = [];
     let count = null;
+    let menuName;
 
     const options = {
       user: user,
       status: status
     };
-
+    if (parent && !menu) {
+      errorMessage = 'please choose menu first.';
+      return res.redirect(`/admin/categories-children?errorMessage=${errorMessage}`);
+    }
     const menus = await MenuModel.findByAdmin(options);
 
     if (menu) {
       options.menu = menu;
     }
+    // get menu name
+    menuName = await MenuModel.findByAdmin(options);
     categories = await MenuModel.findCategoriesByAdmin(options);
     if (parent) {
       options.parent = parent;
@@ -39,6 +45,7 @@ router.get('/', async function (req, res, next) {
 
     res.render('../admin/menus/list-categories-children', {
       menus,
+      menuName,
       parent,
       menu,
       categories,
