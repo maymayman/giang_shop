@@ -99,7 +99,8 @@
             <% if (prePage > 0) { %>
             <li class="btn btn-outline-primary"><a class="prev" href=
                       <%= domain + 'admin/'
-                      + 'categories-parent?page=' + prePage
+                      + 'categories-parent?menu=' + menu
+                      + '&page=' + prePage
                       + '&limit=' + limit
                       + '&status=' + status
                       %>>
@@ -109,7 +110,8 @@
             <li class="btn btn-outline-primary"><a class="" href="#">...</a></li>
             <% } %>
             <li class="btn btn-outline-primary"><a href= <%= domain + 'admin/'
-              + 'categories-parent?page=' + prePage
+              + 'categories-parent?menu=' + menu
+              + '&page=' + prePage
               + '&limit=' + limit
               + '&status=' + status
               %>><%= prePage; %></a>
@@ -121,18 +123,20 @@
               <a class="active" href="#" style="color: black"><%= page; %></a></li>
             <% } %>
 
-            <% if (nextPage <= totalPage) { %>
+            <% if (nextPage < totalPage) { %>
             <li class="btn btn-outline-primary"><a href=<%= domain + 'admin/'
-              + 'categories-parent?page=' + nextPage
+              + 'categories-parent?menu=' + menu
+              + '&page=' + nextPage
               + '&limit=' + limit
               + '&status=' + status
               %>><%= nextPage; %></a>
             </li>
-            <% if (nextPage <= (totalPage - 1)) { %>
+            <% if (nextPage < (totalPage - 1)) { %>
             <li class="btn btn-outline-primary"><a class="" href="#">...</a></li>
             <% } %>
             <li class="btn btn-outline-primary"><a class="next" href=<%= domain + 'admin/'
-              + 'categories-parent?page=' + nextPage
+              + 'categories-parent?menu=' + menu
+              + '&page=' + nextPage
               + '&limit=' + limit
               + '&status=' + status
               %>>

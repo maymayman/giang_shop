@@ -86,6 +86,7 @@
             <thead>
             <tr>
               <th scope="col" style="width: 10%">ID</th>
+              <th scope="col" style="width: 10%">Menu</th>
               <th scope="col" style="width: auto; text-align: center">Category Parent</th>
               <th scope="col" style="width: auto">Name</th>
               <th scope="col" style="width: 10%">Status</th>
@@ -97,6 +98,7 @@
             <% subCategories.forEach(function(subCategory){ %>
             <tr>
               <th scope="serial"><%= subCategory.objectId %></th>
+              <th scope="serial"><%= menu && menuName ? menuName[0].name : '' %></th>
               <td style="text-align: center">
                 <span ><%= subCategory.parent && subCategory.parent.name ? subCategory.parent.name : '' %></span>
               </td>
