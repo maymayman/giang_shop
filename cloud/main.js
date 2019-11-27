@@ -2,7 +2,7 @@ const menuModel = require('../models/Menu');
 
 Parse.Cloud.beforeSave('Order', async (request) => {
   if (!request.user) {
-      throw new Parse.Error(Parse.Error.LOGIN_REQUIRE, 'Login Require, Please login before complete');
+    throw new Parse.Error(Parse.Error.LOGIN_REQUIRE, 'Login Require, Please login before complete');
   }
 
   if (!request.object.get('items') || !request.object.get('amount')) {
@@ -61,10 +61,10 @@ Parse.Cloud.beforeSave('Product', async (request) => {
   }
 });
 
-Parse.Cloud.afterSave('Menu', async (request) => {
+Parse.Cloud.afterSave('Menu', async () => {
   menuModel.find(true, true);
 });
 
-Parse.Cloud.afterSave('Category', async (request) => {
+Parse.Cloud.afterSave('Category', async () => {
   menuModel.find(true, true);
 });
