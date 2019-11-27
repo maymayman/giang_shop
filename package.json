@@ -17,7 +17,8 @@
     "parse-server": "^3.7.2",
     "lodash": "4.17.13",
     "joi": "14.3.1",
-    "sharp": "0.23.3"
+    "sharp": "0.23.3",
+    "compression": "1.7.4"
   },
   "devDependencies": {
     "nodemon": "^1.18.10"
