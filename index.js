@@ -6,6 +6,7 @@ const path = require('path');
 const cookie = require('cookie');
 const fs = require('fs');
 const sharp = require('sharp');
+const compression = require('compression');
 
 const indexRouter = require('./routes/index');
 const productRouter = require('./routes/product');
@@ -75,6 +76,8 @@ const api = new ParseServer({
 // javascriptKey, restAPIKey, dotNetKey, clientKey
 
 const app = express();
+// compress responses
+app.use(compression());
 
 const resize = (path, format, width, height) => {
   const readStream = fs.createReadStream(path);
@@ -110,7 +113,7 @@ app.get('/media/:fileName', async (req, res, next) => {
     // Get the resized image
     resize(pathFile, format, width, height).pipe(res);
   } catch (error) {
-    next(error)
+    next(error);
   }
 });
 // Serve static assets from the /public folder
