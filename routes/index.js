@@ -88,7 +88,7 @@ router.get('/check/first-discount', async function (req, res, next) {
     }
     const total = await OrderModel.countMyOrder({ user: user });
     return res.json(total);
-  } catch (e) {
+  } catch (error) {
     next(error);
   }
 });

@@ -4,6 +4,8 @@ const ParseServer = require('parse-server').ParseServer;
 const ParseDashboard = require('parse-dashboard');
 const path = require('path');
 const cookie = require('cookie');
+const fs = require('fs');
+const sharp = require('sharp');
 
 const indexRouter = require('./routes/index');
 const productRouter = require('./routes/product');
@@ -19,7 +21,18 @@ global.throwError = (err) => {
   throw err;
 };
 
-const databaseUri = process.env.DATABASE_URI || process.env.MONGODB_URI;
+const files = {
+  isExisted: async (path) => {
+    return new Promise((resolve) => {
+      fs.access(path, fs.F_OK, (err) => {
+        if (err) resolve(false);
+        resolve(true);
+      });
+    });
+  }
+};
+
+const databaseUri = process.env.DATABASE_URI || '';
 
 if (!databaseUri) {
   console.log('DATABASE_URI not specified, falling back to localhost.');
@@ -56,12 +69,50 @@ const api = new ParseServer({
   },
   logLevel: 'info'
 });
+
 // Client-keys like the javascript key or the .NET key are not necessary with parse-server
 // If you wish you require them, you can set them as options in the initialization above:
 // javascriptKey, restAPIKey, dotNetKey, clientKey
 
 const app = express();
 
+const resize = (path, format, width, height) => {
+  const readStream = fs.createReadStream(path);
+  let transform = sharp();
+
+  if (format) transform = transform.toFormat(format);
+
+  if (width || height) transform = transform.resize(width, height);
+
+  return readStream.pipe(transform);
+};
+
+app.get('/media/:fileName', async (req, res, next) => {
+  try {
+    const widthString = req.query.width;
+    const heightString = req.query.height;
+    const format = req.query.format;
+    const fileName = req.params.fileName;
+    const pathFile = path.join(__dirname, `public/media/${fileName}`);
+
+    // check file existed
+    const isExisted = await files.isExisted(pathFile);
+
+    if (!isExisted) return next();
+    // Parse to integer if possible
+    let width, height;
+    if (widthString) width = parseInt(widthString);
+    if (heightString) height = parseInt(heightString);
+
+    // Set the content-type of the response
+    res.type(`image/${format || 'jpeg'}`);
+
+    // Get the resized image
+    resize(pathFile, format, width, height).pipe(res);
+  } catch (error) {
+    next(error)
+  }
+});
 // Serve static assets from the /public folder
 app.use(express.static(path.join(__dirname, 'public')));
 

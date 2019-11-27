@@ -16,7 +16,8 @@
     "parse-dashboard": "^1.2.0",
     "parse-server": "^3.7.2",
     "lodash": "4.17.13",
-    "joi": "14.3.1"
+    "joi": "14.3.1",
+    "sharp": "0.23.3"
   },
   "devDependencies": {
     "nodemon": "^1.18.10"
@@ -24,7 +25,8 @@
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
     "start": "node index.js",
-    "dev": "nodemon index.js"
+    "dev": "nodemon index.js",
+    "eslint": "eslint index.js routes/** models/** cloud/** const/**"
   },
   "author": "",
   "license": "ISC"
