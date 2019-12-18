@@ -167,6 +167,13 @@ validBase64.regex = /^\s*data:([a-z]+\/[a-z]+(;[a-z\-]+\=[a-z\-]+)?)?(;base64)?,
       height: 350,
     });
 
+    $('#Description').summernote({
+      height: 350,
+    });
+    $('#shortDescription').summernote({
+      height: 350,
+    });
+
     $('#sendUpdate').on('click', function () {
       const $this = $(this);
       const objectId = $('.object-id').data('object-id');

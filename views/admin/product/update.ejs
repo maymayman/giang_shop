@@ -192,7 +192,7 @@ csslinks: [
                         <label for="shortDescription" class=" form-control-label">Short Description</label>
                         <textarea type="text" id="shortDescription" name="shortDescription"
                           class="form-control"
-                          style="height: 150px;"><%= product.shortDescription ? product.shortDescription : '' %></textarea>
+                          style="height: 150px;"><%- product.shortDescription ? product.shortDescription : '' %></textarea>
                       </div>
                     </div>
 
@@ -202,7 +202,7 @@ csslinks: [
                         <textarea type="text" id="Description" name="description"
                           class="form-control"
                           style="height: 150px;"
-                        ><%= product.description ? product.description : '' %></textarea>
+                        ><%- product.description ? product.description : '' %></textarea>
                       </div>
                     </div>
 
