@@ -24,7 +24,7 @@ const resize = async (image) => {
     const [name, type] = image.split('.')
     const pathImage = `${__basedir}/${publicPath}/${image}`
     const pathThumb = `${__basedir}/${publicPath}/${name}_width_400.${type}`
-    await checkImageAndThumb(pathImage, pathThumb);
+    await validImageAndThumb(pathImage, pathThumb);
     
     const readStream = fs.createReadStream(pathImage);
     const writeStream = fs.createWriteStream(`${pathThumb}`)
