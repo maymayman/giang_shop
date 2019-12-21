@@ -22,7 +22,9 @@ Number.prototype.formatPrice = function(n, x, s, c) {
                 <img class="default-img" src=<%= product.thumbnails && product.thumbnails[0] ?  domain + product.thumbnails[0] : domain + product.images[0]; %> alt="">
                 <img class="hover-img" src=<%= product.thumbnails && product.thumbnails[1]
                     ? domain + product.thumbnails[1]
-                    : domain + product.thumbnails[0]; %> alt="">
+                    : product.thumbnails && product.thumbnails[0]
+                        ? domain + product.thumbnails[0]
+                        : domain + product.images[0]; %> alt="">
               </a>
 
               <span class="pink">NEW</span>

@@ -4,7 +4,7 @@ module.exports = {
   fileExisted: async (path) => {
     return new Promise((resolve) => {
       fs.access(path, fs.F_OK, (err) => {
-        console.error(err.stack);
+        console.error(err ? err.stack : '');
         const result = err ? false : true
         
         resolve(result);
