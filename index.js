@@ -98,6 +98,8 @@ app.get('/media/:fileName', async (req, res, next) => {
     if (widthString) width = parseInt(widthString);
     if (heightString) height = parseInt(heightString);
 
+    if (!width && !height) return next();
+
     // Set the content-type of the response
     res.type(`image/${format || 'jpeg'}`);
 

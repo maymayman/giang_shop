@@ -19,10 +19,10 @@ Number.prototype.formatPrice = function(n, x, s, c) {
           <div class="product-wrap-2 mb-25 scroll-zoom">
             <div class="product-img">
               <a href=<%= domain + 'product/' + product.objectId; %>>
-                <img class="default-img" src=<%= domain + product.images[0] + '?width=250'; %> alt="">
-                <img class="hover-img" src=<%= product.images[1] + '?width=250'
-                    ? domain + product.images[1] + '?width=250'
-                    : domain + product.images[0] + '?width=250'; %> alt="">
+                <img class="default-img" src=<%= product.thumbnails && product.thumbnails[0] ?  domain + product.thumbnails[0] : domain + product.images[0]; %> alt="">
+                <img class="hover-img" src=<%= product.thumbnails && product.thumbnails[1]
+                    ? domain + product.thumbnails[1]
+                    : domain + product.thumbnails[0]; %> alt="">
               </a>
 
               <span class="pink">NEW</span>
@@ -30,7 +30,7 @@ Number.prototype.formatPrice = function(n, x, s, c) {
                   <!--<a title="Add To Cart" -->
                   <!--data-product_id=<%= product.objectId; %>-->
                   <!--data-price=<%= product.price; %>-->
-                  <!--data-images=<%= product.images; %>-->
+                  <!--data-images=<%= product.thumbnails; %>-->
                   <!--data-name="<%= product.name; %>"-->
                   <!--data-store-id="<%= product.store.ObjectId; %>"-->
                   <!--class="shopping-cart"-->
