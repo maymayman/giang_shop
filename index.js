@@ -8,6 +8,7 @@ const fs = require('fs');
 const sharp = require('sharp');
 const compression = require('compression');
 
+const { UTILS } = require('./const');
 const indexRouter = require('./routes/index');
 const productRouter = require('./routes/product');
 const cartRouter = require('./routes/cart');
@@ -17,20 +18,10 @@ const orderRouter = require('./routes/order');
 const menuRouter = require('./routes/menu');
 
 global.domain = process.env.DOMAIN || 'http://localhost:1337/';
+global.__basedir = __dirname;
 global.throwError = (err) => {
   console.error(err.stack ? err.stack : err);
   throw err;
-};
-
-const files = {
-  isExisted: async (path) => {
-    return new Promise((resolve) => {
-      fs.access(path, fs.F_OK, (err) => {
-        if (err) resolve(false);
-        resolve(true);
-      });
-    });
-  }
 };
 
 const databaseUri = process.env.DATABASE_URI || '';
@@ -99,7 +90,7 @@ app.get('/media/:fileName', async (req, res, next) => {
     const pathFile = path.join(__dirname, `public/media/${fileName}`);
 
     // check file existed
-    const isExisted = await files.isExisted(pathFile);
+    const isExisted = await UTILS.fileExisted(pathFile);
 
     if (!isExisted) return next();
     // Parse to integer if possible
@@ -202,3 +193,9 @@ httpServer.listen(port, function() {
 
 // This will enable the Live Query real-time server
 // ParseServer.createLiveQueryServer(httpServer);
+
+/****************************************************************************
+*  RUN JOB                                                                  *
+****************************************************************************/
+
+require('./jobs');
