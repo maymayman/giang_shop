@@ -21,14 +21,15 @@ const validImageAndThumb = async (pathImage, pathThumb) => {
 
 const resize = async (image) => {
   try {
-    const [name, type] = image.split('.')
+    const [name] = image.split('.')
+    const type = 'jpeg'
     const pathImage = `${__basedir}/${publicPath}/${image}`
     const pathThumb = `${__basedir}/${publicPath}/${name}_width_400.${type}`
     await validImageAndThumb(pathImage, pathThumb);
     
     const readStream = fs.createReadStream(pathImage);
     const writeStream = fs.createWriteStream(`${pathThumb}`)
-    readStream.pipe(sharp().resize(400)).pipe(writeStream)
+    readStream.pipe(sharp().toFormat(type).resize(400)).pipe(writeStream)
               .on('finish', () => console.log('resize tream file done: ' + image));
 
     return `${name}_width_400.${type}`;
