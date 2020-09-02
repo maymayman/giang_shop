@@ -16,6 +16,8 @@ const userRouter = require('./routes/user');
 const adminRouter = require('./routes/admin');
 const orderRouter = require('./routes/order');
 const menuRouter = require('./routes/menu');
+const addressRouter = require('./routes/address');
+
 
 global.domain = process.env.DOMAIN || 'http://localhost:1337/';
 global.__basedir = __dirname;
@@ -163,6 +165,7 @@ app.use('/user', sessionMiddleware, userRouter);
 app.use('/admin', sessionMiddleware, adminRouter);
 app.use('/order', sessionMiddleware, orderRouter);
 app.use('/menu', sessionMiddleware, menuRouter);
+app.use('/location', addressRouter);
 
 // error handler
 // eslint-disable-next-line no-unused-vars

@@ -1,14 +1,15 @@
 const helper = require('./helper');
 
 module.exports = {
-  create: async function({items, amount, sessionToken, deliveryInfo, storeIds}) {
+  create: async function({items, amount, sessionToken, deliveryInfo, feeShip, storeIds}) {
     try {
       const Order = Parse.Object.extend('Order');
       const order = new Order();
 
       order.set('items', items);
-      order.set('amount', amount);
+      order.set('amount', amount + feeShip);
       order.set('deliveryInfo', deliveryInfo);
+      order.set('feeShip', feeShip);
       order.set('storeIds', storeIds);
 
       const newOrder = await order.save(null, { sessionToken });

@@ -30,6 +30,7 @@
                                 <tr>
                                     <th>Image</th>
                                     <th>Status</th>
+                                    <th>FeeShip</th>
                                     <th>Total Price</th>
                                     <th> Detail </th>
                                 </tr>
@@ -41,7 +42,9 @@
                                             <span><img style="width: 82px;" src=<%= domain + Object.values(order.items)[0].images; %> alt=""></span>
                                         </td>
                                         <td class="product-price-cart"><span class="amount"><%= order.status; %></span></td>
-                                        <td class="product-price-cart">
+                                        <td class="product-fee-ship-price-cart">
+                                            <span class="feeShip"><%= order.feeShip ? order.feeShip : 0; %></span>&nbsp; VND
+                                        </td><td class="product-price-cart">
                                             <span class="amount"><%= order.amount; %></span>&nbsp; VND
                                         </td>
                                         <td class="product-detail ">

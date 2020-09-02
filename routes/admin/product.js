@@ -19,6 +19,11 @@ const validateSaveProd = function(body) {
     sizes = ['S', 'M', 'L', 'XL', 'XXL', 'XXXL'];
   }
 
+  if (body.colors === 'none') {
+    body.colors = body.descriptionColor;
+    delete body.descriptionColor
+  }
+
   const sizeSchema = {};
   sizes.forEach(function(size) {
     sizeSchema[size] = Joi.number().min(0).required();
