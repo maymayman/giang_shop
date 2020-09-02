@@ -72,6 +72,14 @@ validBase64.regex = /^\s*data:([a-z]+\/[a-z]+(;[a-z\-]+\=[a-z\-]+)?)?(;base64)?,
       });
     });
 
+    $('#colors').on('change', function () {
+      if ($('#colors :selected').text() === 'NONE') {
+        $('.descriptionColorClass').show();
+      } else {
+        $('.descriptionColorClass').hide();
+      }
+    })
+
     $('#send').on('click', function () {
       const $this = $(this);
       $this.attr('disabled', 'disabled');

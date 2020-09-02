@@ -125,6 +125,40 @@
                                         </label>
                                         <input type="text" name="address">
                                     </div>
+                                    <div class="tax-select">
+                                        <label>
+                                            * Select Province
+                                        </label>
+                                        <select id="filterCityCode" name="filterCityCode" class="btn btn-outline-secondary">
+                                            <% cities.forEach(function (m) {%>
+                                            <option value="<%=m.code%>" <%= m.code == codeCity ? 'selected' : ''%> ><%=m.name%></option>
+                                            <%}) %>
+                                        </select>
+                                    </div>
+                                    <div class="tax-select">
+                                        <label>
+                                            * Select District&nbsp; &nbsp;
+                                        </label>
+                                        <select id="filterDistrictCode" name="filterDistrictCode" class="btn btn-outline-secondary">
+<!--                                            <% districts.forEach(function (m) {%>-->
+<!--                                            <option value="<%=m.code%>" <%= m.code == codeDistrict ? 'selected' : ''%> ><%=m.name%></option>-->
+<!--                                            <%}) %>-->
+<!--                                            <option value="" >Select Districts</option>-->
+
+                                        </select>
+                                    </div>
+                                    <div class="tax-select">
+                                        <label>
+                                            * Select Ward&nbsp; &nbsp; &nbsp;
+                                        </label>
+                                        <select id="filterWardCode" name="filterWardCode" class="btn btn-outline-secondary" >
+<!--                                            <% wards.forEach(function (m) {%>-->
+<!--                                            <option value="<%=m.code%>" <%= m.code == codeDistrict ? 'selected' : ''%> ><%=m.name%></option>-->
+<!--                                            <%}) %>-->
+<!--                                            <option value="" >Select Districts</option>-->
+
+                                        </select>
+                                    </div>
                                     <!-- <button class="cart-btn-2" type="submit">Get A Quote</button> -->
                                 </div>
                             </div>
@@ -134,7 +168,7 @@
                     <!-- <div class="col-lg-4 col-md-6">
                         <div class="discount-code-wrapper">
                             <div class="title-wrap">
-                               <h4 class="cart-bottom-title section-bg-gray">Use Coupon Code</h4> 
+                               <h4 class="cart-bottom-title section-bg-gray">Use Coupon Code</h4>
                             </div>
                             <div class="discount-code">
                                 <p>Enter your coupon code if you have one.</p>
@@ -154,12 +188,13 @@
                             <div class="total-shipping">
                                 <h5>Total shipping</h5>
                                 <ul>
-                                    <li> Standard <span>0</span>&nbsp; VND</li>
-                                    <!-- <li><input type="checkbox"> Express <span>$30.00</span></li> -->
+                                    <li > Standard <span id="feeShip" >0</span>&nbsp; VND</li>
+<!--                                     <li><input type="checkbox"> Express <span>$30.00</span></li>-->
+                                    <li style="text-align: center">Free shipping on orders from 750K </li>
                                 </ul>
                             </div>
                             <h4 class="grand-totall-title">Grand Total  (VND)<span>
-                                <span class="total-amount"><%= totalAmount; %></span>
+                                <span class="total-amount" data-total-amount="<%= totalAmount%>"><%= totalAmount; %></span>
                             </span></h4>
                             <a class="cart-order">Proceed to Checkout</a>
                         </div>
@@ -273,6 +308,8 @@
 <script src=<%= domain + "js/jquery.loadingModal.min.js"; %>></script>
 <!-- Main JS -->
 <script src=<%= domain + "js/main.js"; %>></script>
+
+<script src=<%= domain + 'js/cart.js'; %>></script>
 
 </body>
 

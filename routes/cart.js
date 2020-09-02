@@ -4,6 +4,8 @@ const router = express.Router();
 const MenuModel = require('../models/Menu');
 const OrderModel = require('../models/Order');
 const ProductModel = require('../models/Product');
+const CityModel = require('../models/city');
+const DistrictModel = require('../models/district');
 
 const checkProdAvailable = async (products) => {
   try {
@@ -33,7 +35,7 @@ const caculateTotalAmount = function(order) {
   }, 0);
 };
 
-const formatOrders = function(data, sessionToken, deliveryInfo) {
+const formatOrders = function(data, sessionToken, deliveryInfo, feeShip) {
   const orders = Object.values(data);
 
   return orders.reduce((results, order) => {
@@ -42,6 +44,7 @@ const formatOrders = function(data, sessionToken, deliveryInfo) {
       amount: caculateTotalAmount(order),
       sessionToken, 
       deliveryInfo, 
+      feeShip,
       storeIds: [Object.values(order)[0].storeId],
       type: Object.values(order)[0].type
     }];
@@ -55,20 +58,25 @@ const formatOrders = function(data, sessionToken, deliveryInfo) {
 
 router.get('/', async function(req, res, next) {
   try {
-    
+    const codeCity = '79'
+    const codeDistrict = '760'
     const user = req.user;
     const cookies = req.cookies;
     const cartProducts = cookies.cartProducts ? JSON.parse(cookies.cartProducts) : undefined;
     const products = cartProducts ? Object.values(cartProducts) : [];
-    const menus = await MenuModel.find(true);
-    
+    const [menus, cities, districts] = await Promise.all([
+      MenuModel.find(true),
+      CityModel.findAllCity(),
+      DistrictModel.findAllDistrictWithCityId(codeCity)
+    ]);
+    const wards = []
     let totalAmount = 0;
 
     products.forEach(product => {
       totalAmount = totalAmount + product.price * product.count;
     });
 
-    res.render('cart', { menus, products, totalAmount, user });
+    res.render('cart', { menus, products, totalAmount, user, cities, districts, wards, codeCity, codeDistrict });
   } catch (error) {
     next(error);
   }
@@ -81,6 +89,7 @@ router.post('/order', async function(req, res) {
     const products = cartProducts ? Object.values(cartProducts) : [];
     const sessionToken = cookies['X-Session-Token'] || '';
     const deliveryInfo = req.body.deliveryInfo;
+    const feeShip = req.body.feeShip || 25000;
     const storeIds = [];
     const orders = {};
 
@@ -104,7 +113,7 @@ router.post('/order', async function(req, res) {
 
     const promises = [];
 
-    const orderList = formatOrders(orders, sessionToken, deliveryInfo);
+    const orderList = formatOrders(orders, sessionToken, deliveryInfo, feeShip);
     
     orderList.forEach((data) => {
       promises.push(OrderModel.create(data));

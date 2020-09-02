@@ -812,6 +812,7 @@
         const name = $('input[name=Recipient_name]').val();
         const phone = $('input[name=Recipient_phone]').val();
         const address = $('input[name=address]').val();
+        const feeShip = Number($('#feeShip').text())
         const deliveryInfo = {
             name, phone, address
         };
@@ -830,7 +831,7 @@
                 "Content-Type": "application/json",
                 // "Content-Type": "application/x-www-form-urlencoded",
             },
-            body: JSON.stringify({deliveryInfo}), // body data type must match "Content-Type" header
+            body: JSON.stringify({deliveryInfo, feeShip }), // body data type must match "Content-Type" header
         }).then(res => res.json()).then(response => {
             if (!response.success || response.error) {
                 throw response.error;
