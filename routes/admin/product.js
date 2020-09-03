@@ -21,8 +21,9 @@ const validateSaveProd = function(body) {
 
   if (body.colors === 'none') {
     body.colors = body.descriptionColor;
-    delete body.descriptionColor
   }
+
+  delete body.descriptionColor;
 
   const sizeSchema = {};
   sizes.forEach(function(size) {
@@ -58,7 +59,7 @@ const validateSaveProd = function(body) {
   
   const { error } = schema.validate(body);
 
-  if (error) throw error.details[0].message;
+  if (error) throw new Error(error.details[0].message);
 
   if (!Array.isArray(body.category)) {
     body.category = [body.category];

@@ -25,10 +25,12 @@ module.exports = {
         }
       })
       .on('file', function (field, file) {
+        
         if (file && file.type == 'application/octet-stream') {
           removeFile.push(file.path);
-        }
-        if (file && file.type != 'application/octet-stream') {
+        } else if (field && !field.includes('image')) {
+          removeFile.push(file.path);
+        } else if (file && file.type != 'application/octet-stream') {
           const type = file.type.split('/')[1];
           const newPath = file.path + '.' + type;
           fs.renameSync(file.path, newPath);
@@ -39,7 +41,7 @@ module.exports = {
       .on('end', function () {
         if (removeFile && removeFile.length > 0){
           for (let i = 0; i < removeFile.length; i++){
-            fs.unlinkSync(removeFile[i]);
+            if (fs.existsSync(removeFile[i])) fs.unlinkSync(removeFile[i]);
           }
         }
         req.files = files;
