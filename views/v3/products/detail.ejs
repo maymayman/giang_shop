@@ -74,7 +74,7 @@ Number.prototype.formatPrice = function(n, x, s, c) {
               </div>
               <span><a href="#">3 Reviews</a></span>
           </div> -->
-          <p><%= product.shortDescription; %></p>
+          <p><%- product.shortDescription; %></p>
           <!-- <div class="pro-details-list">
               <ul>
                   <li>- 0.5 mm Dail</li>
@@ -192,7 +192,7 @@ Number.prototype.formatPrice = function(n, x, s, c) {
       <div class="tab-content description-review-bottom">
         <div id="des-details1" class="tab-pane active">
           <div class="product-description-wrapper">
-            <p style="width: 100%;"><%= product.description; %></p>
+            <p style="width: 100%;"><%- product.description; %></p>
           </div>
         </div>
         <div id="des-details2" class="tab-pane">
