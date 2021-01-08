@@ -44,8 +44,8 @@ const dashboard = new ParseDashboard({
   ],
   'users': [
     {
-      'user':'admin',
-      'pass':'root@admin'
+      'user': 'admin',
+      'pass': 'root@admin'
     }
   ],
   'useEncryptedPasswords': false,
@@ -53,7 +53,7 @@ const dashboard = new ParseDashboard({
 }, options);
 
 const api = new ParseServer({
-  databaseURI: databaseUri || 'mongodb://vietduc:giangshop2019@ds229186.mlab.com:29186/giangshop',
+  databaseURI: databaseUri || 'mongodb://root:secret_mongodb_password@localhost:27017/admin',
   cloud: process.env.CLOUD_CODE_MAIN || __dirname + '/cloud/main.js',
   appId: process.env.APP_ID || 'myAppId',
   masterKey: process.env.MASTER_KEY || 'myMasterKey', //Add your master key here. Keep it secret!
@@ -131,14 +131,14 @@ app.use('/dashboard', dashboard);
 app.set('views', path.join(__dirname, 'views/v3'));
 app.set('view engine', 'ejs');
 
-const sessionMiddleware = async function(req, res, next) {
+const sessionMiddleware = async function (req, res, next) {
   const cookies = cookie.parse(req.headers.cookie || '');
   req.cookies = cookies;
   const token = cookies['X-Session-Token'] || '';
 
   if (token) {
     if (!Parse.Cache.Session[token]) {
-      const responseUser =  await Parse.Cloud.httpRequest({
+      const responseUser = await Parse.Cloud.httpRequest({
         url: Parse.serverURL + '/users/me',
         headers: {
           'X-Parse-Application-Id': process.env.APP_ID || 'myAppId',
@@ -149,7 +149,7 @@ const sessionMiddleware = async function(req, res, next) {
       Parse.Cache.Session[token] = responseUser.data;
     }
   }
-  
+
   req.user = Parse.Cache.Session[token];
   next();
 };
@@ -158,7 +158,7 @@ app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
 
 app.use('/', sessionMiddleware, indexRouter);
-app.use('/product',sessionMiddleware, productRouter);
+app.use('/product', sessionMiddleware, productRouter);
 app.use('/cart', sessionMiddleware, cartRouter);
 app.use('/cart', sessionMiddleware, cartRouter);
 app.use('/user', sessionMiddleware, userRouter);
@@ -169,7 +169,7 @@ app.use('/location', addressRouter);
 
 // error handler
 // eslint-disable-next-line no-unused-vars
-app.use(function(err, req, res, next) {
+app.use(function (err, req, res, next) {
   // set locals, only providing error in development
   res.locals.message = err.message;
   res.locals.error = req.app.get('env') === 'development' ? err : {};
@@ -180,7 +180,7 @@ app.use(function(err, req, res, next) {
 });
 
 // Parse Server plays nicely with the rest of your web routes
-app.use('/', function(req, res) {
+app.use('/', function (req, res) {
   res.status(404).send('I dream of being a website. But not found');
 });
 
@@ -192,7 +192,7 @@ app.use('/', function(req, res) {
 
 const port = process.env.PORT || 1337;
 const httpServer = require('http').createServer(app);
-httpServer.listen(port, function() {
+httpServer.listen(port, function () {
   console.log('parse-server-example running on port ' + port + '.');
 });
 
@@ -203,4 +203,4 @@ httpServer.listen(port, function() {
 *  RUN JOB                                                                  *
 ****************************************************************************/
 
-require('./jobs');
+// require('./jobs');
