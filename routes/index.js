@@ -13,14 +13,9 @@ router.get('/', async function (req, res, next) {
   try {
     const user = req.user;
     const menus = await MenuModel.find(true);
-    const products = await ProductModel.find({skip: 0, limit: 10});
-    let banners = await BannerModel.findBannerIndex();
-    if (banners && banners.length){
-      banners.forEach(banner => {
-        banner.image = url.parse(banner.image).href;
-      });
-    }
-    res.render('index', {menus, products, user, banners});
+    const products = await ProductModel.find({ skip: 0, limit: 10 });
+
+    res.render('index', { menus, products, user, banners });
   } catch (error) {
     next(error);
   }
@@ -32,7 +27,7 @@ router.get('/contact', async function (req, res, next) {
     const menus = await MenuModel.find(true);
     const messageToUser = req.query.messageToUser || '';
 
-    res.render('contact', {menus, user, messageToUser});
+    res.render('contact', { menus, user, messageToUser });
   } catch (error) {
     next(error);
   }
@@ -73,7 +68,7 @@ router.get('/designers', async function (req, res, next) {
   try {
     const user = req.user;
     const menus = await MenuModel.find(true);
-    res.render('designer', {menus, user});
+    res.render('designer', { menus, user });
   } catch (error) {
     next(error);
   }
@@ -81,9 +76,9 @@ router.get('/designers', async function (req, res, next) {
 
 router.get('/check/first-discount', async function (req, res, next) {
   try {
-    const user  = req.user;
+    const user = req.user;
 
-    if (!user || user.role !== 'customer'){
+    if (!user || user.role !== 'customer') {
       return res.json();
     }
     const total = await OrderModel.countMyOrder({ user: user });
