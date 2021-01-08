@@ -5,7 +5,6 @@ const url = require('url');
 const MenuModel = require('../models/Menu');
 const ProductModel = require('../models/Product');
 const ContactModel = require('../models/Contact');
-const BannerModel = require('../models/Banner');
 const OrderModel = require('../models/Order');
 
 /* GET home page. */
@@ -15,7 +14,7 @@ router.get('/', async function (req, res, next) {
     const menus = await MenuModel.find(true);
     const products = await ProductModel.find({ skip: 0, limit: 10 });
 
-    res.render('index', { menus, products, user, banners });
+    res.render('index', { menus, products, user });
   } catch (error) {
     next(error);
   }
