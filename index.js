@@ -203,4 +203,4 @@ httpServer.listen(port, function () {
 *  RUN JOB                                                                  *
 ****************************************************************************/
 
-// require('./jobs');
+require('./jobs');
