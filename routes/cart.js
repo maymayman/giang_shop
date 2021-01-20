@@ -28,22 +28,22 @@ const checkProdAvailable = async (products) => {
   }
 };
 
-const caculateTotalAmount = function(order) {
+const caculateTotalAmount = function (order) {
   const products = Object.values(order);
-  return products.reduce(( accumulator, product ) => {
+  return products.reduce((accumulator, product) => {
     return accumulator + product.price * product.count;
   }, 0);
 };
 
-const formatOrders = function(data, sessionToken, deliveryInfo, feeShip) {
+const formatOrders = function (data, sessionToken, deliveryInfo, feeShip) {
   const orders = Object.values(data);
 
   return orders.reduce((results, order) => {
-    const data = [{ 
+    const data = [{
       items: order,
       amount: caculateTotalAmount(order),
-      sessionToken, 
-      deliveryInfo, 
+      sessionToken,
+      deliveryInfo,
       feeShip,
       storeIds: [Object.values(order)[0].storeId],
       type: Object.values(order)[0].type
@@ -56,7 +56,7 @@ const formatOrders = function(data, sessionToken, deliveryInfo, feeShip) {
   }, []);
 };
 
-router.get('/', async function(req, res, next) {
+router.get('/', async function (req, res, next) {
   try {
     const codeCity = '79'
     const codeDistrict = '760'
@@ -82,7 +82,7 @@ router.get('/', async function(req, res, next) {
   }
 });
 
-router.post('/order', async function(req, res) {
+router.post('/order', async function (req, res) {
   try {
     const cookies = req.cookies;
     const cartProducts = cookies.cartProducts ? JSON.parse(cookies.cartProducts) : undefined;
@@ -93,8 +93,8 @@ router.post('/order', async function(req, res) {
     const storeIds = [];
     const orders = {};
 
-    if (!storeIds || !deliveryInfo){
-      return res.json({success: false, error: 'Invalid data ', data: null});
+    if (!storeIds || !deliveryInfo) {
+      return res.json({ success: false, error: 'Invalid data ', data: null });
     }
 
     await checkProdAvailable(products);
@@ -114,16 +114,16 @@ router.post('/order', async function(req, res) {
     const promises = [];
 
     const orderList = formatOrders(orders, sessionToken, deliveryInfo, feeShip);
-    
+
     orderList.forEach((data) => {
       promises.push(OrderModel.create(data));
     });
-    
+
     const result = await Promise.all(promises);
 
-    res.json({success: true, error: null, data: { orders: result } });
+    res.json({ success: true, error: null, data: { orders: result } });
   } catch (error) {
-    res.json({success: false, error: error.message, data: null});
+    res.json({ success: false, error: error.message, data: null });
   }
 });
 

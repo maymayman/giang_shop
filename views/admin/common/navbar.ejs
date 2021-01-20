@@ -2,83 +2,90 @@
     <div id="main-menu" class="main-menu collapse navbar-collapse">
         <ul class="nav navbar-nav">
             <li class="active">
-                <a href=<%= domain + 'admin';%>><i class="menu-icon fa fa-laptop"></i>Dashboard </a>
+                <a href=<%=domain + 'admin' ;%>><i class="menu-icon fa fa-laptop"></i>Dashboard </a>
             </li>
+            <li class="menu-title">PRODUCT</li>
+            <li class="">
+                <a href=<%=domain + 'admin/product/create' ;%>> <i class="menu-icon ti-plus"></i>Create Product </a>
+            </li>
+
             <li class="menu-item-has-children dropdown">
-                <a href="#" class="dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"> 
+
+                <a href="#" class="dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                     <i class="menu-icon fa fa-cogs"></i>Products
                 </a>
                 <ul class="sub-menu children dropdown-menu">
                     <li>
                         <i class="fa fa-puzzle-piece"></i>
-                        <a href=<%= domain + 'admin/product?status=PENDING';%>>Pending</a>
+                        <a href=<%=domain + 'admin/product?status=PENDING' ;%>>Pending</a>
                     </li>
                     <li>
                         <i class="fa fa-puzzle-piece"></i>
-                        <a href=<%= domain + 'admin/product?status=ACTIVE';%>>Approved</a>
+                        <a href=<%=domain + 'admin/product?status=ACTIVE' ;%>>Approved</a>
                     </li>
                 </ul>
             </li>
             <li class="menu-item-has-children dropdown">
-                <a href="#" class="dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"> 
+                <a href="#" class="dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                     <i class="menu-icon fa fa-table"></i>Orders
                 </a>
                 <ul class="sub-menu children dropdown-menu">
                     <li>
                         <i class="fa fa-table"></i>
-                        <a href=<%= domain + 'admin/order?status=NEW';%>>Pending</a>
+                        <a href=<%=domain + 'admin/order?status=NEW' ;%>>Pending</a>
                     </li>
                     <li>
                         <i class="fa fa-table"></i>
-                        <a href=<%= domain + 'admin/order?status=OUT_OF_STOCK';%>>Out Of Stock</a>
+                        <a href=<%=domain + 'admin/order?status=OUT_OF_STOCK' ;%>>Out Of Stock</a>
                     </li>
                     <li>
                         <i class="fa fa-table"></i>
-                        <a href=<%= domain + 'admin/order?status=AVAILABLE';%>>Available</a>
+                        <a href=<%=domain + 'admin/order?status=AVAILABLE' ;%>>Available</a>
                     </li>
                     <li>
                         <i class="fa fa-table"></i>
-                        <a href=<%= domain + 'admin/order?status=COMPLETED';%>>Complete</a>
+                        <a href=<%=domain + 'admin/order?status=COMPLETED' ;%>>Complete</a>
                     </li>
                 </ul>
             </li>
 
             <li class=" dropdown">
-                <a href=<%= domain + 'admin/contact';%>  aria-expanded="false">
+                <a href=<%=domain + 'admin/contact' ;%> aria-expanded="false">
                     <i class="menu-icon fa fa-pencil-square-o"></i>Contact
                 </a>
             </li>
 
-            <% if(user && user.role == 'administrator'){%>
-            <li class="menu-item-has-children dropdown">
-                <a href="#" class="dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                    <i class="menu-icon fa fa-book"></i>Categories
-                </a>
-                <ul class="sub-menu children dropdown-menu">
-                    <li>
-                        <i class="fa fa-book"></i>
-                        <a href=<%= domain + 'admin/menus';%>>List Menu</a>
-                    </li>
-                    <li>
-                        <i class="fa fa-book"></i>
-                        <a href=<%= domain + 'admin/categories-parent';%>>Categories Parent</a>
-                    </li>
-                    <li>
-                        <i class="fa fa-book"></i>
-                        <a href=<%= domain + 'admin/categories-children';%>>Categories Children</a>
-                    </li>
-                </ul>
-            </li>
-            <%}%>
-
-            <% if(user && user.role == 'administrator'){%>
-                <li class=" dropdown">
-                    <a href=<%= domain + 'admin/banner/list';%>  aria-expanded="false">
-                        <i class="menu-icon fa fa-pencil-square-o"></i>Banners
+            <% if(user && user.role=='administrator' ){%>
+                <li class="menu-item-has-children dropdown">
+                    <a href="#" class="dropdown-toggle" data-toggle="dropdown" aria-haspopup="true"
+                        aria-expanded="false">
+                        <i class="menu-icon fa fa-book"></i>Categories
                     </a>
+                    <ul class="sub-menu children dropdown-menu">
+                        <li>
+                            <i class="fa fa-book"></i>
+                            <a href=<%=domain + 'admin/menus' ;%>>List Menu</a>
+                        </li>
+                        <li>
+                            <i class="fa fa-book"></i>
+                            <a href=<%=domain + 'admin/categories-parent' ;%>>Categories Parent</a>
+                        </li>
+                        <li>
+                            <i class="fa fa-book"></i>
+                            <a href=<%=domain + 'admin/categories-children' ;%>>Categories Children</a>
+                        </li>
+                    </ul>
                 </li>
+                <%}%>
 
-            <%}%>
+                    <% if(user && user.role=='administrator' ){%>
+                        <li class=" dropdown">
+                            <a href=<%=domain + 'admin/banner/list' ;%> aria-expanded="false">
+                                <i class="menu-icon fa fa-pencil-square-o"></i>Banners
+                            </a>
+                        </li>
+
+                        <%}%>
 
         </ul>
     </div><!-- /.navbar-collapse -->

@@ -6,427 +6,595 @@
 <!--[if IE 8]>
 <html class="no-js lt-ie9" lang=""> <![endif]-->
 <!--[if gt IE 8]><!-->
-<html class="no-js" lang=""> <!--<![endif]-->
+<html class="no-js" lang="">
+<!--<![endif]-->
 
-<%- include('../common/head', {
-csslinks: [
-`https://netdna.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap.css`,
-`https://cdnjs.cloudflare.com/ajax/libs/summernote/0.8.11/summernote.css`,
-`${domain}assets/css/lib/chosen/chosen.min.css`
-]
-}); %>
+<%- include('../common/head', { csslinks: [ `https://netdna.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap.css`,
+  `https://cdnjs.cloudflare.com/ajax/libs/summernote/0.8.11/summernote.css`,
+  `https://colorlib.com/etc/bwiz/colorlib-wizard-5/css/style.css`, `${domain}assets/css/lib/chosen/chosen.min.css` ] });
+  %>
 
 
-<style>
-  .btn-file {
-    position: relative;
-    overflow: hidden;
-  }
+  <style>
+    .btn-file {
+      position: relative;
+      overflow: hidden;
+    }
 
-  .btn-file input[type=file] {
-    position: absolute;
-    top: 0;
-    right: 0;
-    min-width: 100%;
-    min-height: 100%;
-    font-size: 100px;
-    text-align: right;
-    filter: alpha(opacity=0);
-    opacity: 0;
-    outline: none;
-    background: white;
-    cursor: inherit;
-    display: block;
-  }
+    .btn-file input[type=file] {
+      position: absolute;
+      top: 0;
+      right: 0;
+      min-width: 100%;
+      min-height: 100%;
+      font-size: 100px;
+      text-align: right;
+      filter: alpha(opacity=0);
+      opacity: 0;
+      outline: none;
+      background: white;
+      cursor: inherit;
+      display: block;
+    }
 
-  .content-submit {
-    padding: 10px 10px 10px 0;
-    border-top: 1px solid #e1e1e1;
-    text-align: right;
-    background-color: #f0f3f5;
-  }
+    .content-submit {
+      padding: 10px 10px 10px 0;
+      border-top: 1px solid #e1e1e1;
+      text-align: right;
+      background-color: #f0f3f5;
+    }
 
-  .multi-select {
-    border-radius: 1px;
-  }
+    .multi-select {
+      border-radius: 1px;
+    }
 
-  .yellow {
-    color: yellow;
-  }
+    .yellow {
+      color: yellow;
+    }
 
-  .gray {
-    color: gray;
-  }
+    .gray {
+      color: gray;
+    }
 
-  .green {
-    color: green;
-  }
+    .green {
+      color: green;
+    }
 
-  .blue {
-    color: blue;
-  }
+    .blue {
+      color: blue;
+    }
 
-  .maroon {
-    color: maroon;
-  }
+    .maroon {
+      color: maroon;
+    }
 
-  .black {
-    color: black;
-  }
-   .pink {
-    color: pink;
-  }
-   .white {
-    color: white;
-  }
-   .orange {
-    color: orange;
-  }
-   .red {
-    color: red;
-  }
+    .black {
+      color: black;
+    }
 
-  .columns .chosen-container, .column .chosen-container {
-    width: 100% !important;
-    margin-bottom: 1rem;
-  }
+    .pink {
+      color: pink;
+    }
 
-  .cropit-preview {
-        background-color: #f8f8f8;
-        background-size: cover;
-        border: 1px solid #ccc;
-        border-radius: 3px;
-        margin-top: 7px;
-        width: 300px;
-        height: 400px;
-      }
-      .cropit-preview-image-container {
-        cursor: move;
-      }
-      .cropit-preview-image-container img {
-        max-width: none;
-      }
-      .image-size-label {
-        margin-top: 10px;
-      }
-      input {
-        display: block;
-      }
-      input.cropit-image-input {
-  visibility: hidden;
-}
+    .white {
+      color: white;
+    }
 
-.select-image-btn {
-    background: #52a0c7;
-    color: #fff;
-    padding: 5px 10px;
-    text-align: center;
-    -webkit-user-select: none;
-    -moz-user-select: none;
-    -ms-user-select: none;
-    user-select: none;
-    cursor: pointer;
-    display: inline-block;
-    position: relative;
-    -webkit-box-shadow: 0 2px #3784aa;
-    box-shadow: 0 2px #3784aa;
-}
+    .orange {
+      color: orange;
+    }
 
-.image-editor {
-  text-align: center;
-}
-  
-</style>
+    .red {
+      color: red;
+    }
 
-<body class="">
-<!-- Left Panel -->
+    .columns .chosen-container,
+    .column .chosen-container {
+      width: 100% !important;
+      margin-bottom: 1rem;
+    }
 
-<aside id="left-panel" class="left-panel">
-  <%- include('../common/navbar', {}); %>
-</aside>
+    .cropit-preview {
+      background-color: #f8f8f8;
+      background-size: cover;
+      border: 1px solid #ccc;
+      border-radius: 3px;
+      margin-top: 7px;
+      width: 300px;
+      height: 400px;
+    }
 
-<!-- /#left-panel -->
-<!-- Right Panel -->
-<div id="right-panel" class="right-panel">
-  <!-- Header-->
-  <%- include('../common/header', {}); %>
-  <!-- /#header -->
-  <!-- Content -->
-  <div class="content">
-    <!-- Animated -->
-    <form id="myForm" action="" method="post" enctype="multipart/form-data">
-      <div class="row">
-        <div class="col-lg-12 col-md-12 col-sm-12">
-          <div class="animated fadeIn card card-body card-block" style="min-height: 300px">
-            <div class="col col-md-12">
-              <div class="col col-md-12">
-                <label for="image1">Image (require: 400 < width < 800 and scale 3/4 and not greater than 2MB)</label>
-              </div>
-              <div class="col col-md-12">
-              <a role="button" id="crop" data-target="#cropImage" class="btn btn-primary float-right demo-crop">Add new image</a>
-              </div>
-            </div>
+    .cropit-preview-image-container {
+      cursor: move;
+    }
 
-            <div class="col-12 col-md-12 images">
-              <!-- <div class="pic col-lg-3 col-md-3 col-sm-6">
-                <img class="default-image"
-                  src="data:image/png;base64,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" alt="Smiley face">
-              </div> -->
-            </div>
-          </div>
+    .cropit-preview-image-container img {
+      max-width: none;
+    }
 
-        </div>
-        <div class="col-lg-12 col-md-12 col-sm-12">
-          <div class="animated fadeIn">
+    .image-size-label {
+      margin-top: 10px;
+    }
+
+    input {
+      display: block;
+    }
+
+    input.cropit-image-input {
+      visibility: hidden;
+    }
+
+    .select-image-btn {
+      background: #52a0c7;
+      color: #fff;
+      padding: 5px 10px;
+      text-align: center;
+      -webkit-user-select: none;
+      -moz-user-select: none;
+      -ms-user-select: none;
+      user-select: none;
+      cursor: pointer;
+      display: inline-block;
+      position: relative;
+      -webkit-box-shadow: 0 2px #3784aa;
+      box-shadow: 0 2px #3784aa;
+    }
+
+    .image-editor {
+      text-align: center;
+    }
+
+    .steps ul:before {
+      content: none;
+    }
+
+    .actions li a:before {
+      content: none;
+    }
+
+    .actions li:first-child a:before {
+      content: none;
+    }
+  </style>
+
+  <body class="">
+    <!-- Left Panel -->
+
+    <aside id="left-panel" class="left-panel">
+      <%- include('../common/navbar', {}); %>
+    </aside>
+
+    <!-- /#left-panel -->
+    <!-- Right Panel -->
+    <div id="right-panel" class="right-panel">
+      <!-- Header-->
+      <%- include('../common/header', {}); %>
+        <!-- /#header -->
+        <!-- Content -->
+        <div class="content">
+          <!-- Animated -->
+          <form id="myForm" action="" method="post" enctype="multipart/form-data">
             <div class="row">
               <div class="col-lg-12">
                 <div class="card">
-                  <div class="card-body card-block">
-
-                    <div class="form-group col-lg-6 col-md-6 col-sm-12">
-                      <div class="col-lg-12">
-                        <label for="shortDescription" class=" form-control-label">Short Description</label>
-                        <textarea type="text" id="shortDescription" name="shortDescription"
-                          class="form-control"
-                          style="height: 150px;"></textarea>
-                      </div>
-                    </div>
-
-                    <div class="form-group col-lg-6 col-md-6 col-sm-12">
-                      <div class="col-md-12">
-                        <label for="Description" class=" form-control-label">Description</label>
-                        <textarea type="text" id="Description" name="description"
-                          class="form-control"
-                          style="height: 150px;"
-                        ></textarea>
-                      </div>
-                    </div>
-
-                    <div class="form-group col-lg-6 col-md-6 col-sm-12">
-                      <div class="col-md-12 col-sm-12">
-                        <label class=" form-control-label">Information</label></div>
-                      <div class="col-md-12 col-sm-12">
-                        <textarea id="summernote" name="information" width="100px"></textarea>
-                      </div>
-                    </div>
-
-
-                    <div class="form-group col-lg-6 col-md-6 col-sm-12">
-                      <div class="col-md-12 col-sm-12">
-                        <label class=" form-control-label">User manual</label></div>
-                      <div class="col-md-12 col-sm-12">
-                        <textarea id="summernote1" name="userManual" width="100px"></textarea>
-                      </div>
-                    </div>
-
+                  <div class="card-header">
+                    <strong>Labels</strong>
                   </div>
-                </div>
-              </div>
-            </div>
-          </div>
-        </div>
+                  <div class="card-body">
+                    <div class="steps clearfix col-lg-12">
+                      <ul role="tablist" class="">
+                        <li role="tab" aria-disabled="false" class="first checked current" aria-selected="true"><a
+                            id="wizard-t-0" href="#wizard-h-0" aria-controls="wizard-p-0"><span
+                              class="current-info audible"></span><span class="number"></span> </a></li>
+                        <li role="tab" aria-disabled="false" class="done" aria-selected="false"><a id="wizard-t-1"
+                            href="#wizard-h-1" aria-controls="wizard-p-1"><span class="number"></span> </a></li>
+                        <li role="tab" aria-disabled="false" class="done" aria-selected="false"><a id="wizard-t-2"
+                            href="#wizard-h-2" aria-controls="wizard-p-2"><span class="number"></span> </a></li>
+                        <li role="tab" aria-disabled="false" class="last done" aria-selected="false"><a id="wizard-t-3"
+                            href="#wizard-h-3" aria-controls="wizard-p-3"><span class="number"></span> </a></li>
+                      </ul>
+                    </div>
 
-        <div class="col-lg-4 col-md-4 col-sm-12">
-          <div class="animated fadeIn">
-            <div class="row">
-              <div class="col-lg-12">
-                <div class="card">
-                  <div class="card-body card-block">
-                    <div class="row form-group">
 
-                      <div class="col col-md-12 form-group">
+                    <div class="left-label col-lg-6">
+                      <div class="image-holder">
+                        <img src="https://colorlib.com/etc/bwiz/colorlib-wizard-1/images/form-wizard-2.jpg" alt=""
+                          style="width: 100%; height: auto;">
+                      </div>
+                    </div>
+
+                    <div class="right-label col-lg-6">
+                      <div class="col col-lg-6 form-group">
                         <label for="name" class=" form-control-label">Name</label>
                         <input type="text" id="name" name="name" class="form-control">
                       </div>
 
-                      <div class="col col-md-12 form-group">
+                      <div class="col col-lg-6 form-group">
                         <label for="code" class=" form-control-label">Code</label>
                         <input type="text" id="code" name="code" class="form-control">
                       </div>
 
-                      <div class="col-12 col-md-12 form-group">
-                        <label for="fontSize" class=" form-control-label">Size</label>
-
-                        <select id="size" name="size" class="standardSelect">
-                          <option value="" label="default"></option>
-                          <option value="fontSize" label="Font Size">Font Size</option>
-                          <option value="numberSize" label="Number Size">Number Size</option>
-                        </select>
-                      </div>
-
-                      <div class="col-12 col-md-12 size-quantity form-group">
-
-                      </div>
-
-                    </div>
-                  </div>
-                </div>
-              </div>
-            </div>
-          </div>
-        </div>
-
-        <div class="col-lg-4 col-md-4 col-sm-12">
-          <div class="animated fadeIn">
-            <div class="row">
-              <div class="col-lg-12">
-                <div class="card">
-                  <div class="card-body card-block">
-                    <div class="row form-group">
-                      <div class="col col-md-12 form-group">
+                      <div class="col col-md-6 form-group">
                         <label for="price" class=" form-control-label">Price</label>
                         <input type="number" id="price" name="price" class="form-control">
                       </div>
-                    
-                      <div class="col col-md-12 form-group">
+
+                      <div class="col col-md-6 form-group">
                         <label for="sale-price" class=" form-control-label">Old Price</label>
                         <input type="number" id="old-price" name="oldPrice" class="form-control">
                       </div>
 
-                      <div class="col-12 col-md-12 form-group">
-                        <label for="colors" class=" form-control-label">Type of Product</label>
-                        <select id="type" name="type" data-placeholder="Choose size..."
-                                class="standardSelect">
-                          <option value="available" label="default">available</option>
-                          <option value="unavailable" class="blue">unavailable</option>
-                        </select>
+                      <div class="col col-md-12 form-group">
+                        <label for="time-delivery" class=" form-control-label">Time Delivery From (day)</label>
+                        <input type="number" id="delivery-from" name="deliveryFrom" placeholder="" class="form-control">
                       </div>
-                    
-                      <div class="col-12 col-md-12 form-group">
-                        <label for="time-delivery" class=" form-control-label">Time Delivery From</label>
-                        <input type="number" id="delivery-from" name="deliveryFrom" placeholder="Delivery from" class="form-control">
+
+                      <div class="col col-md-12 form-group">
+                        <label for="time-delivery" class=" form-control-label">Time Delivery To (day)</label>
+                        <input type="number" id="delivery-to" name="deliveryTo" placeholder="" class="form-control">
                       </div>
-                    
-                      <div class="col-12 col-md-12 form-group">
-                        <label for="time-delivery" class=" form-control-label">Time Delivery To</label>
-                        <input type="number" id="delivery-to" name="deliveryTo" placeholder="Delivery to" class="form-control">
+
+                      <div class="col col-lg-12 form-group">
+                        <label for="short-description">Short Description:</label>
+                        <textarea class="form-control" rows="5" id="short-description"
+                          name="short-description"></textarea>
                       </div>
+
+                      <div class="actions clearfix col col-lg-12">
+                        <ul role="menu" aria-label="Pagination" class="">
+                          <li class="" aria-disabled="false"><a href="#previous" style="padding-left: 35px;"
+                              role="menuitem">Previous</a></li>
+                          <li aria-hidden="false" aria-disabled="false" class="" style=""><a href="#next"
+                              class="ti-arrow-right" role="menuitem" style="padding-left: 50px;">Next</a></li>
+                          <li aria-hidden="true" style="display: none;"><a href="#finish" role="menuitem">Place
+                              Holder</a></li>
+                        </ul>
+                      </div>
+
                     </div>
+
+
+
                   </div>
                 </div>
+
               </div>
-            </div>
-          </div>
-        </div>
 
-        <div class="col-lg-4 col-md-4 col-sm-12">
-            <div class="animated fadeIn">
-              <div class="row">
-                <div class="col-lg-12">
-                  <div class="card">
-                    <div class="card-body card-block">
-                      <div class="row form-group">
-                        
-                          <div class="col-12 col-md-12 form-group">
-                            <label for="category" class=" form-control-label">Categories</label>
-                            <select multiple id="category" name="category" class="standardSelect">
-                              <% if(listCategory && listCategory.length){ %>
-                              <% listCategory.forEach(function(categories){ %>
-                              <optgroup label="<%= categories.name %>">
-                                <option style="display: none">&nbsp;</option>
-                                <% categories.categories.forEach(function(category){ %>
-                                <optgroup label="&nbsp;&nbsp;&nbsp;&nbsp;<%= category.name %>">
-                                  <% category.items.forEach(function(item){ %>
-                                  <option value="<%= `${categories.objectId}:${category.objectId}:${item.objectId}` %>">&nbsp;&nbsp;&nbsp;&nbsp; <%= `${item.name} - ${category.name} - ${categories.name}` %></option>
-                                  <% }); %>
-                                </optgroup>
-                                <% }); %>
-                                <% }); %>
-                              </optgroup>
-                              <% } %>
-                            </select>
-                          </div>
 
-                          <div class="col-12 col-md-12 form-group">
-                            <label for="colors" class=" form-control-label">Colors</label>
-                            <select id="colors" name="colors" data-placeholder="Choose size..."
-                                    class="standardSelect">
-                              <option value="" label="default"></option>
-                              <option value="blue" class="blue">Blue</option>
-                              <option value="maroon" class="maroon">Maroon</option>
-                              <option value="gray" class="gray">Gray</option>
-                              <option value="green" class="green">Green</option>
-                              <option value="yellow" class="yellow">Yellow</option>
-                              <option value="black" class="black">Black</option>
-                              <option value="pink" class="pink">Pink</option>
-                              <option value="white" class="white">White</option>
-                              <option value="orange" class="orange">Orange</option>
-                              <option value="red" class="red">Red</option>
-                              <option value="none" class="NONE">NONE</option>
-                            </select>
-                          </div>
 
-                        <div class="col col-md-12 form-group descriptionColorClass" style="display:none">
-                          <label for="colorNone" class=" form-control-label">Description Color</label>
-                          <input type="text" id="descriptionColor" name="descriptionColor" class="form-control">
+
+              <div class="col-lg-12 col-md-12 col-sm-12">
+                <div class="animated fadeIn card card-body card-block" style="min-height: 300px">
+                  <div class="col col-md-12">
+                    <div class="col col-md-12">
+                      <label for="image1">Image (require: 400 < width < 800 and scale 3/4 and not greater than
+                          2MB)</label>
+                    </div>
+                    <div class="col col-md-12">
+                      <a role="button" id="crop" data-target="#cropImage"
+                        class="btn btn-primary float-right demo-crop">Add new image</a>
+                    </div>
+                  </div>
+
+                  <div class="col-12 col-md-12 images">
+                    <!-- <div class="pic col-lg-3 col-md-3 col-sm-6">
+                <img class="default-image"
+                  src="data:image/png;base64,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" alt="Smiley face">
+              </div> -->
+                  </div>
+                </div>
+
+              </div>
+
+              <div class="col-lg-12">
+                <div class="card">
+                  <div class="card-header">
+                    <h4>Default Tab</h4>
+                  </div>
+                  <div class="card-body">
+                    <div class="default-tab">
+                      <nav>
+                        <div class="nav nav-tabs" id="nav-tab" role="tablist">
+                          <a class="nav-item nav-link active show" id="nav-info-tab" data-toggle="tab" href="#nav-info"
+                            role="tab" aria-controls="nav-info" aria-selected="false">Info</a>
+                          <a class="nav-item nav-link" id="nav-profile-tab" data-toggle="tab" href="#nav-profile"
+                            role="tab" aria-controls="nav-profile" aria-selected="true">Profile</a>
+                          <a class="nav-item nav-link" id="nav-contact-tab" data-toggle="tab" href="#nav-contact"
+                            role="tab" aria-controls="nav-contact" aria-selected="false">Contact</a>
                         </div>
+                      </nav>
+                      <div class="tab-content pl-3 pt-2" id="nav-tabContent">
 
+                        <div class="tab-pane active show" id="nav-info" role="tabpanel" aria-labelledby="nav-info-tab">
                           <div class="col col-md-12 form-group">
-                            <label for="linkFacebook" class=" form-control-label">Link FaceBook</label>
-                            <input type="text" id="linkFacebook" name="linkFacebook" class="form-control">
+                            <label for="name" class=" form-control-label">Name</label>
+                            <input type="text" id="name" name="name" class="form-control">
                           </div>
-                        
-                          <div class="col col-md-12 form-group">
-                            <label for="linkInstagram" class=" form-control-label">Link Instagram</label>
-                            <input type="text" id="linkInstagram" name="linkInstagram" class="form-control">
+                          <p>Raw denim you probably haven't heard of them jean shorts Austin. Nesciunt tofu stumptown
+                            aliqua, retro synth master cleanse. Mustache cliche tempor, williamsburg carles vegan
+                            helvetica. Reprehenderit butcher retro keffiyeh dreamcatcher synth. Cosby sweater eu banh
+                            mi, irure terry richardson ex sd. Alip placeat salvia cillum iphone. Seitan alip s cardigan
+                            american apparel, butcher voluptate nisi .</p>
+                        </div>
+                        <div class="tab-pane" id="nav-profile" role="tabpanel" aria-labelledby="nav-profile-tab">
+                          <p>Raw denim you probably haven't heard of them jean shorts Austin. Nesciunt tofu stumptown
+                            aliqua, retro synth master cleanse. Mustache cliche tempor, williamsburg carles vegan
+                            helvetica. Reprehenderit butcher retro keffiyeh dreamcatcher synth. Cosby sweater eu banh
+                            mi, irure terry richardson ex sd. Alip placeat salvia cillum iphone. Seitan alip s cardigan
+                            american apparel, butcher voluptate nisi .</p>
+                        </div>
+                        <div class="tab-pane" id="nav-contact" role="tabpanel" aria-labelledby="nav-contact-tab">
+                          <p>Raw denim you probably haven't heard of them jean shorts Austin. Nesciunt tofu stumptown
+                            aliqua, retro synth master cleanse. Mustache cliche tempor, williamsburg carles vegan
+                            helvetica. Reprehenderit butcher retro keffiyeh dreamcatcher synth. Cosby sweater eu banh
+                            mi, irure terry richardson ex sd. Alip placeat salvia cillum iphone. Seitan alip s cardigan
+                            american apparel, butcher voluptate nisi .</p>
+                        </div>
+                      </div>
+
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+              <div class="col-lg-12 col-md-12 col-sm-12">
+                <div class="animated fadeIn">
+                  <div class="row">
+                    <div class="col-lg-12">
+                      <div class="card">
+                        <div class="card-body card-block">
+
+                          <!-- <div class="form-group col-lg-6 col-md-6 col-sm-12">
+                            <div class="col-lg-12">
+                              <label for="shortDescription" class=" form-control-label">Short Description</label>
+                              <textarea type="text" id="shortDescription" name="shortDescription" class="form-control"
+                                style="height: 150px;"></textarea>
+                            </div>
+                          </div> -->
+
+                          <div class="form-group col-lg-6 col-md-6 col-sm-12">
+                            <div class="col-md-12">
+                              <label for="Description" class=" form-control-label">Description</label>
+                              <textarea type="text" id="Description" name="description" class="form-control"
+                                style="height: 150px;"></textarea>
+                            </div>
                           </div>
-                          
-                          <div class="col-12 col-md-12" >
-                            <button type="button" id="send" class="col-12 col-md-12 mt-5 btn btn-outline-link">Create</button>
+
+                          <div class="form-group col-lg-6 col-md-6 col-sm-12">
+                            <div class="col-md-12 col-sm-12">
+                              <label class=" form-control-label">Information</label>
+                            </div>
+                            <div class="col-md-12 col-sm-12">
+                              <textarea id="summernote" name="information" width="100px"></textarea>
+                            </div>
                           </div>
+
+
+                          <div class="form-group col-lg-6 col-md-6 col-sm-12">
+                            <div class="col-md-12 col-sm-12">
+                              <label class=" form-control-label">User manual</label>
+                            </div>
+                            <div class="col-md-12 col-sm-12">
+                              <textarea id="summernote1" name="userManual" width="100px"></textarea>
+                            </div>
+                          </div>
+
+                        </div>
                       </div>
                     </div>
                   </div>
                 </div>
               </div>
+
+              <div class="col-lg-4 col-md-4 col-sm-12">
+                <div class="animated fadeIn">
+                  <div class="row">
+                    <div class="col-lg-12">
+                      <div class="card">
+                        <div class="card-body card-block">
+                          <div class="row form-group">
+
+                            <!-- <div class="col col-md-12 form-group">
+                              <label for="name" class=" form-control-label">Name</label>
+                              <input type="text" id="name" name="name" class="form-control">
+                            </div> -->
+
+                            <!-- <div class="col col-md-12 form-group">
+                              <label for="code" class=" form-control-label">Code</label>
+                              <input type="text" id="code" name="code" class="form-control">
+                            </div> -->
+
+                            <div class="col-12 col-md-12 form-group">
+                              <label for="fontSize" class=" form-control-label">Size</label>
+
+                              <select id="size" name="size" class="standardSelect">
+                                <option value="" label="default"></option>
+                                <option value="fontSize" label="Font Size">Font Size</option>
+                                <option value="numberSize" label="Number Size">Number Size</option>
+                              </select>
+                            </div>
+
+                            <div class="col-12 col-md-12 size-quantity form-group">
+
+                            </div>
+
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+              <div class="col-lg-4 col-md-4 col-sm-12">
+                <div class="animated fadeIn">
+                  <div class="row">
+                    <div class="col-lg-12">
+                      <div class="card">
+                        <div class="card-body card-block">
+                          <div class="row form-group">
+                            <!-- <div class="col col-md-12 form-group">
+                              <label for="price" class=" form-control-label">Price</label>
+                              <input type="number" id="price" name="price" class="form-control">
+                            </div>
+
+                            <div class="col col-md-12 form-group">
+                              <label for="sale-price" class=" form-control-label">Old Price</label>
+                              <input type="number" id="old-price" name="oldPrice" class="form-control">
+                            </div> -->
+
+                            <div class="col-12 col-md-12 form-group">
+                              <label for="colors" class=" form-control-label">Type of Product</label>
+                              <select id="type" name="type" data-placeholder="Choose size..." class="standardSelect">
+                                <option value="available" label="default">available</option>
+                                <option value="unavailable" class="blue">unavailable</option>
+                              </select>
+                            </div>
+
+                            <!-- <div class="col-12 col-md-12 form-group">
+                              <label for="time-delivery" class=" form-control-label">Time Delivery From</label>
+                              <input type="number" id="delivery-from" name="deliveryFrom" placeholder="Delivery from"
+                                class="form-control">
+                            </div>
+
+                            <div class="col-12 col-md-12 form-group">
+                              <label for="time-delivery" class=" form-control-label">Time Delivery To</label>
+                              <input type="number" id="delivery-to" name="deliveryTo" placeholder="Delivery to"
+                                class="form-control">
+                            </div> -->
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+              <div class="col-lg-4 col-md-4 col-sm-12">
+                <div class="animated fadeIn">
+                  <div class="row">
+                    <div class="col-lg-12">
+                      <div class="card">
+                        <div class="card-body card-block">
+                          <div class="row form-group">
+
+                            <div class="col-12 col-md-12 form-group">
+                              <label for="category" class=" form-control-label">Categories</label>
+                              <select multiple id="category" name="category" class="standardSelect">
+                                <% if(listCategory && listCategory.length){ %>
+                                  <% listCategory.forEach(function(categories){ %>
+                                    <optgroup label="<%= categories.name %>">
+                                      <option style="display: none">&nbsp;</option>
+                                      <% categories.categories.forEach(function(category){ %>
+                                    <optgroup label="&nbsp;&nbsp;&nbsp;&nbsp;<%= category.name %>">
+                                      <% category.items.forEach(function(item){ %>
+                                        <option
+                                          value="<%= `${categories.objectId}:${category.objectId}:${item.objectId}` %>">
+                                          &nbsp;&nbsp;&nbsp;&nbsp; <%= `${item.name} - ${category.name} -
+                                            ${categories.name}` %>
+                                        </option>
+                                        <% }); %>
+                                    </optgroup>
+                                    <% }); %>
+                                      <% }); %>
+                                        </optgroup>
+                                        <% } %>
+                              </select>
+                            </div>
+
+                            <div class="col-12 col-md-12 form-group">
+                              <label for="colors" class=" form-control-label">Colors</label>
+                              <select id="colors" name="colors" data-placeholder="Choose size..."
+                                class="standardSelect">
+                                <option value="" label="default"></option>
+                                <option value="blue" class="blue">Blue</option>
+                                <option value="maroon" class="maroon">Maroon</option>
+                                <option value="gray" class="gray">Gray</option>
+                                <option value="green" class="green">Green</option>
+                                <option value="yellow" class="yellow">Yellow</option>
+                                <option value="black" class="black">Black</option>
+                                <option value="pink" class="pink">Pink</option>
+                                <option value="white" class="white">White</option>
+                                <option value="orange" class="orange">Orange</option>
+                                <option value="red" class="red">Red</option>
+                                <option value="none" class="NONE">NONE</option>
+                              </select>
+                            </div>
+
+                            <div class="col col-md-12 form-group descriptionColorClass" style="display:none">
+                              <label for="colorNone" class=" form-control-label">Description Color</label>
+                              <input type="text" id="descriptionColor" name="descriptionColor" class="form-control">
+                            </div>
+
+                            <div class="col col-md-12 form-group">
+                              <label for="linkFacebook" class=" form-control-label">Link FaceBook</label>
+                              <input type="text" id="linkFacebook" name="linkFacebook" class="form-control">
+                            </div>
+
+                            <div class="col col-md-12 form-group">
+                              <label for="linkInstagram" class=" form-control-label">Link Instagram</label>
+                              <input type="text" id="linkInstagram" name="linkInstagram" class="form-control">
+                            </div>
+
+                            <div class="col-12 col-md-12">
+                              <button type="button" id="send"
+                                class="col-12 col-md-12 mt-5 btn btn-outline-link">Create</button>
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+
+            </div>
+          </form>
+          <!-- .animated -->
+        </div>
+
+
+        <div class="modal" id="cropImage" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
+          aria-hidden="true">
+          <div class="modal-dialog modal-md" role="document">
+            <div class="modal-content">
+              <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                  <span aria-hidden="true">&times;</span>
+                </button>
+                <h5 class="modal-title" id="exampleModalLabel">Edit Image </h5>
+              </div>
+              <div class="modal-body">
+                <div class="image-editor">
+                  <input type="file" class="cropit-image-input">
+                  <div class="cropit-preview" style="margin: auto;"></div>
+                  <div class="image-size-label">
+                    Resize image
+                  </div>
+                  <input type="range" class="cropit-image-zoom-input">
+                  <div class="btn select-image-btn">
+                    <span class="icon icon-image"></span>Select new image
+                  </div>
+                </div>
+
+
+              </div>
+              <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                <button type="submit" class="btn btn-primary btn-save-new-menu export">Crop</button>
+              </div>
             </div>
           </div>
-
-
         </div>
-    </form>
-    <!-- .animated -->
-  </div>
 
-
-  <div  class="modal" id="cropImage" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
-    <div class="modal-dialog modal-md" role="document">
-      <div class="modal-content">
-        <div class="modal-header">
-          <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-            <span aria-hidden="true">&times;</span>
-          </button>
-          <h5 class="modal-title" id="exampleModalLabel">Edit Image </h5>
-        </div>
-        <div class="modal-body">
-          <div class="image-editor">
-            <input type="file" class="cropit-image-input">
-            <div class="cropit-preview" style="margin: auto;"></div>
-            <div class="image-size-label">
-              Resize image
-            </div>
-            <input type="range" class="cropit-image-zoom-input">
-            <div class="btn select-image-btn">
-              <span class="icon icon-image"></span>Select new image
-            </div>
-          </div>
-      
-  
-        </div>
-        <div class="modal-footer">
-          <button type="button" class="btn btn-secondary"  data-dismiss="modal">Close</button>
-          <button type="submit" class="btn btn-primary btn-save-new-menu export">Crop</button>
-        </div>
-      </div>
+        <!-- /.content -->
+        <div class="clearfix"></div>
+        <!-- Footer -->
+        <%- include('../common/footer', {}); %>
+          <!-- /.site-footer -->
     </div>
-  </div>
 
-  <!-- /.content -->
-  <div class="clearfix"></div>
-  <!-- Footer -->
-  <%- include('../common/footer', {}); %>
-  <!-- /.site-footer -->
-</div>
+  </body>
 
-</body>
 </html>

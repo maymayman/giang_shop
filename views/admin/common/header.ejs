@@ -1,8 +1,8 @@
 <header id="header" class="header">
     <div class="top-left">
         <div class="navbar-header">
-            <a class="navbar-brand" href="./"><img src=<%= domain + 'img/logo.png'; %> alt="Logo"></a>
-            <a class="navbar-brand hidden" href="./"><img src=<%= domain + 'img/logo2.png'; %> alt="Logo"></a>
+            <a class="navbar-brand" href="./"><img src=<%=domain + 'img/logo.png' ; %> alt="Logo"></a>
+            <a class="navbar-brand hidden" href="./"><img src=<%=domain + 'img/logo2.png' ; %> alt="Logo"></a>
             <a id="menuToggle" class="menutoggle"><i class="fa fa-bars"></i></a>
         </div>
     </div>
@@ -17,8 +17,9 @@
                     </form>
                 </div>
 
-                <div class="dropdown for-notification">
-                    <button class="btn btn-secondary dropdown-toggle" type="button" id="notification" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                <!-- <div class="dropdown for-notification">
+                    <button class="btn btn-secondary dropdown-toggle" type="button" id="notification"
+                        data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                         <i class="fa fa-bell"></i>
                         <span class="count bg-danger">3</span>
                     </button>
@@ -37,10 +38,11 @@
                             <p>Server #3 overloaded.</p>
                         </a>
                     </div>
-                </div>
+                </div> -->
 
-                <div class="dropdown for-message">
-                    <button class="btn btn-secondary dropdown-toggle" type="button" id="message" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                <!-- <div class="dropdown for-message">
+                    <button class="btn btn-secondary dropdown-toggle" type="button" id="message" data-toggle="dropdown"
+                        aria-haspopup="true" aria-expanded="false">
                         <i class="fa fa-envelope"></i>
                         <span class="count bg-primary">4</span>
                     </button>
@@ -48,7 +50,7 @@
                         <p class="red">You have 4 Mails</p>
                         <a class="dropdown-item media" href="#">
                             <span class="photo media-left">
-                                <img alt="avatar" src=<%= domain + 'img/avatar/1.jpg'; %>>
+                                <img alt="avatar" src=<%=domain + 'img/avatar/1.jpg' ; %>>
                             </span>
                             <div class="message media-body">
                                 <span class="name float-left">Jonathan Smith</span>
@@ -58,7 +60,7 @@
                         </a>
                         <a class="dropdown-item media" href="#">
                             <span class="photo media-left">
-                                <img alt="avatar" src=<%= domain + 'img/avatar/2.jpg'; %>>
+                                <img alt="avatar" src=<%=domain + 'img/avatar/2.jpg' ; %>>
                             </span>
                             <div class="message media-body">
                                 <span class="name float-left">Jack Sanders</span>
@@ -68,7 +70,7 @@
                         </a>
                         <a class="dropdown-item media" href="#">
                             <span class="photo media-left">
-                                    <img alt="avatar" src=<%= domain + 'img/avatar/3.jpg'; %>>
+                                <img alt="avatar" src=<%=domain + 'img/avatar/3.jpg' ; %>>
                             </span>
                             <div class="message media-body">
                                 <span class="name float-left">Cheryl Wheeler</span>
@@ -78,7 +80,7 @@
                         </a>
                         <a class="dropdown-item media" href="#">
                             <span class="photo media-left">
-                                    <img alt="avatar" src=<%= domain + 'img/avatar/4.jpg'; %>>
+                                <img alt="avatar" src=<%=domain + 'img/avatar/4.jpg' ; %>>
                             </span>
                             <div class="message media-body">
                                 <span class="name float-left">Rachel Santos</span>
@@ -87,22 +89,24 @@
                             </div>
                         </a>
                     </div>
-                </div>
+                </div> -->
             </div>
 
             <div class="user-area dropdown float-right">
-                <a href="#" class="dropdown-toggle active" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                    <img class="user-avatar rounded-circle" src=<%= domain +  'img/admin.jpg'; %> alt="UserAvatar">
+                <a href="#" class="dropdown-toggle active" data-toggle="dropdown" aria-haspopup="true"
+                    aria-expanded="false">
+                    <img class="user-avatar rounded-circle" src=<%=domain + 'img/admin.jpg' ; %> alt="UserAvatar">
                 </a>
 
                 <div class="user-menu dropdown-menu">
                     <a class="nav-link" href="#"><i class="fa fa- user"></i>My Profile</a>
 
-                    <a class="nav-link" href="#"><i class="fa fa- user"></i>Notifications <span class="count">13</span></a>
+                    <a class="nav-link" href="#"><i class="fa fa- user"></i>Notifications <span
+                            class="count">0</span></a>
 
-                    <a class="nav-link" href="#"><i class="fa fa -cog"></i>Settings</a>
+                    <!-- <a class="nav-link" href="#"><i class="fa fa -cog"></i>Settings</a> -->
 
-                    <a class="nav-link" href="#"><i class="fa fa-power -off"></i>Logout</a>
+                    <a class="nav-link" href=<%=domain + "user/logout" ; %>><i class="fa fa-power -off"></i>Logout</a>
                 </div>
             </div>
 

@@ -1,7 +1,7 @@
 const helper = require('./helper');
 
 module.exports = {
-  count: async function() {
+  count: async function () {
     try {
       const Ward = Parse.Object.extend('Ward');
       const query = new Parse.Query(Ward);
@@ -19,6 +19,7 @@ module.exports = {
       const Ward = Parse.Object.extend('Ward');
       const query = new Parse.Query(Ward);
 
+      console.log("cityCode ", cityCode, "districtCode ", districtCode)
       query.equalTo('districtCode', districtCode)
       query.equalTo('cityCode', cityCode)
       query.descending('createdAt');
@@ -26,7 +27,7 @@ module.exports = {
       const results = await query.find();
 
       return helper.toJSON(results);
-    }catch (err) {
+    } catch (err) {
       throwError(err);
     }
 
@@ -52,7 +53,7 @@ module.exports = {
       const newWard = await ward.save();
 
       return helper.toJSON(newWard);
-    }catch (err) {
+    } catch (err) {
       throwError(err);
     }
   },

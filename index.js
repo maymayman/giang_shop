@@ -151,6 +151,7 @@ const sessionMiddleware = async function (req, res, next) {
   }
 
   req.user = Parse.Cache.Session[token];
+
   next();
 };
 
@@ -203,4 +204,4 @@ httpServer.listen(port, function () {
 *  RUN JOB                                                                  *
 ****************************************************************************/
 
-require('./jobs');
+// require('./jobs');

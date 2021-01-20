@@ -1,15 +1,15 @@
-(function($) {
+(function ($) {
     "use strict";
 
     /* Cart search */
-    $(".account-satting-active , .search-active").on("click", function(e) {
+    $(".account-satting-active , .search-active").on("click", function (e) {
         e.preventDefault();
         $(this).parent().find('.account-dropdown , .search-content').slideToggle('medium');
     })
 
     /* Cart dropdown */
     var iconCart = $('.icon-cart');
-    iconCart.on('click', function() {
+    iconCart.on('click', function () {
         $('.shopping-cart-content').toggleClass('cart-visible');
     })
 
@@ -267,21 +267,21 @@
     })
 
 
-    $('.quickview-slide-active a').on('click', function() {
+    $('.quickview-slide-active a').on('click', function () {
         $('.quickview-slide-active a').removeClass('active');
     })
 
 
     /*----------------------------
-    	Cart Plus Minus Button
+        Cart Plus Minus Button
     ------------------------------ */
     var CartPlusMinus = $('.cart-plus-minus');
     CartPlusMinus.prepend('<div class="dec qtybutton">-</div>');
     CartPlusMinus.append('<div class="inc qtybutton">+</div>');
-    $(".qtybutton").on("click", function() {
+    $(".qtybutton").on("click", function () {
         const $button = $(this);
         const $input = $button.parent().find("input");
-        const oldValue = $input .val();
+        const oldValue = $input.val();
         let plus = 1;
         if ($button.text() === "+") {
             var newVal = parseFloat(oldValue) + 1;
@@ -315,15 +315,15 @@
 
 
     /*----------------------------
-    	Cart Plus Minus Button
+        Cart Plus Minus Button
     ------------------------------ */
     var CartPlusMinus = $('.cart-plus-minus-detail');
     CartPlusMinus.prepend('<div class="dec qtybutton-detail">-</div>');
     CartPlusMinus.append('<div class="inc qtybutton-detail">+</div>');
-    $(".qtybutton-detail").on("click", function() {
+    $(".qtybutton-detail").on("click", function () {
         const $button = $(this);
         const $input = $button.parent().find("input");
-        const oldValue = $input .val();
+        const oldValue = $input.val();
         if ($button.text() === "+") {
             var newVal = parseFloat(oldValue) + 1;
         } else {
@@ -339,8 +339,8 @@
 
     /*----clear cart----- */
     $('.cart-clear').on('click', function () {
-      Cookies.remove('cartProducts');
-      Cookies.remove('countProducts');
+        Cookies.remove('cartProducts');
+        Cookies.remove('countProducts');
     });
 
 
@@ -350,7 +350,7 @@
     -----------------------------------*/
     var header = $('.sticky-bar');
     var win = $(window);
-    win.on('scroll', function() {
+    win.on('scroll', function () {
         var scroll = win.scrollTop();
         if (scroll < 200) {
             header.removeClass('stick');
@@ -380,7 +380,7 @@
     /*-----------------------
         Shop filter active
     ------------------------- */
-    $('.filter-active a').on('click', function(e) {
+    $('.filter-active a').on('click', function (e) {
         e.preventDefault();
         $('.product-filter-wrapper').slideToggle();
     })
@@ -391,13 +391,13 @@
     --------------------- */
     var sliderrange = $('#slider-range');
     var amountprice = $('#amount');
-    $(function() {
+    $(function () {
         sliderrange.slider({
             range: true,
             min: 16,
             max: 400,
             values: [0, 300],
-            slide: function(event, ui) {
+            slide: function (event, ui) {
                 amountprice.val("$" + ui.values[0] + " - $" + ui.values[1]);
             }
         });
@@ -407,25 +407,25 @@
 
 
     /* Language dropdown */
-    $(".language-style a").on("click", function(e) {
+    $(".language-style a").on("click", function (e) {
         e.preventDefault();
         $(this).parent().find('.lang-car-dropdown').slideToggle('medium');
     })
 
 
     /* use style dropdown */
-    $(".use-style a").on("click", function(e) {
+    $(".use-style a").on("click", function (e) {
         e.preventDefault();
         $(this).parent().find('.lang-car-dropdown').slideToggle('medium');
     })
 
 
     /*=========================
-		Toggle Ativation
-	===========================*/
+        Toggle Ativation
+    ===========================*/
     function itemToggler() {
         $(".toggle-item-active").slice(0, 8).show();
-        $(".item-wrapper").find(".loadMore").on('click', function(e) {
+        $(".item-wrapper").find(".loadMore").on('click', function (e) {
             e.preventDefault();
             $(this).parents(".item-wrapper").find(".toggle-item-active:hidden").slice(0, 4).slideDown();
             if ($(".toggle-item-active:hidden").length == 0) {
@@ -438,7 +438,7 @@
 
     function itemToggler2() {
         $(".toggle-item-active2").slice(0, 8).show();
-        $(".item-wrapper2").find(".loadMore2").on('click', function(e) {
+        $(".item-wrapper2").find(".loadMore2").on('click', function (e) {
             e.preventDefault();
             $(this).parents(".item-wrapper2").find(".toggle-item-active2:hidden").slice(0, 4).slideDown();
             if ($(".toggle-item-active2:hidden").length == 0) {
@@ -450,7 +450,7 @@
 
     function itemToggler3() {
         $(".toggle-item-active3").slice(0, 8).show();
-        $(".item-wrapper3").find(".loadMore3").on('click', function(e) {
+        $(".item-wrapper3").find(".loadMore3").on('click', function (e) {
             e.preventDefault();
             $(this).parents(".item-wrapper3").find(".toggle-item-active3:hidden").slice(0, 4).slideDown();
             if ($(".toggle-item-active3:hidden").length == 0) {
@@ -476,7 +476,7 @@
         Isotope
     ---------------------------- */
 
-    $('.grid').imagesLoaded(function() {
+    $('.grid').imagesLoaded(function () {
         // init Isotope
         $('.grid').isotope({
             itemSelector: '.grid-item',
@@ -498,11 +498,11 @@
         var menuTrigger = $('.clickable-mainmenu-active'),
             endTrigger = $('button.clickable-mainmenu-close'),
             container = $('.clickable-mainmenu');
-        menuTrigger.on('click', function(e) {
+        menuTrigger.on('click', function (e) {
             e.preventDefault();
             container.addClass('inside');
         });
-        endTrigger.on('click', function() {
+        endTrigger.on('click', function () {
             container.removeClass('inside');
         });
     };
@@ -510,11 +510,11 @@
 
 
     /*=========================
-		Toggle Ativation
-	===========================*/
+        Toggle Ativation
+    ===========================*/
     function itemToggler4() {
         $(".toggle-item-active4").slice(0, 6).show();
-        $(".item-wrapper4").find(".loadMore4").on('click', function(e) {
+        $(".item-wrapper4").find(".loadMore4").on('click', function (e) {
             e.preventDefault();
             $(this).parents(".item-wrapper4").find(".toggle-item-active4:hidden").slice(0, 3).slideDown();
             if ($(".toggle-item-active4:hidden").length == 0) {
@@ -526,7 +526,7 @@
 
     function itemToggler5() {
         $(".toggle-item-active5").slice(0, 6).show();
-        $(".item-wrapper5").find(".loadMore5").on('click', function(e) {
+        $(".item-wrapper5").find(".loadMore5").on('click', function (e) {
             e.preventDefault();
             $(this).parents(".item-wrapper5").find(".toggle-item-active5:hidden").slice(0, 3).slideDown();
             if ($(".toggle-item-active5:hidden").length == 0) {
@@ -538,7 +538,7 @@
 
     function itemToggler6() {
         $(".toggle-item-active6").slice(0, 6).show();
-        $(".item-wrapper6").find(".loadMore6").on('click', function(e) {
+        $(".item-wrapper6").find(".loadMore6").on('click', function (e) {
             e.preventDefault();
             $(this).parents(".item-wrapper6").find(".toggle-item-active6:hidden").slice(0, 3).slideDown();
             if ($(".toggle-item-active6:hidden").length == 0) {
@@ -552,10 +552,10 @@
     /*---------------------
         Countdown
       --------------------- */
-    $('[data-countdown]').each(function() {
+    $('[data-countdown]').each(function () {
         var $this = $(this),
             finalDate = $(this).data('countdown');
-        $this.countdown(finalDate, function(event) {
+        $this.countdown(finalDate, function (event) {
             $this.html(event.strftime('<span class="cdown day">%-D <p>Days</p></span> <span class="cdown hour">%-H <p>Hours</p></span> <span class="cdown minutes">%M <p>Minutes</p></span class="cdown second"> <span>%S <p>Second</p></span>'));
         });
     });
@@ -563,7 +563,7 @@
 
     /*--------------------------
         Product Zoom
-	---------------------------- */
+    ---------------------------- */
     $(".zoompro").elevateZoom({
         gallery: "gallery",
         galleryActiveClass: "active",
@@ -587,26 +587,26 @@
         prevArrow: '<span class="product-dec-icon product-dec-prev"><i class="fa fa-angle-up"></i></span>',
         nextArrow: '<span class="product-dec-icon product-dec-next"><i class="fa fa-angle-down"></i></span>',
         responsive: [{
-                breakpoint: 992,
-                settings: {
-                    slidesToShow: 4,
-                    slidesToScroll: 1
-                }
-            },
-            {
-                breakpoint: 767,
-                settings: {
-                    slidesToShow: 2,
-                    slidesToScroll: 1
-                }
-            },
-            {
-                breakpoint: 479,
-                settings: {
-                    slidesToShow: 2,
-                    slidesToScroll: 1
-                }
+            breakpoint: 992,
+            settings: {
+                slidesToShow: 4,
+                slidesToScroll: 1
             }
+        },
+        {
+            breakpoint: 767,
+            settings: {
+                slidesToShow: 2,
+                slidesToScroll: 1
+            }
+        },
+        {
+            breakpoint: 479,
+            settings: {
+                slidesToShow: 2,
+                slidesToScroll: 1
+            }
+        }
         ]
     });
 
@@ -676,11 +676,11 @@
     /*-------------------------
     Create an account toggle
     --------------------------*/
-    $('.checkout-toggle2').on('click', function() {
+    $('.checkout-toggle2').on('click', function () {
         $('.open-toggle2').slideToggle(1000);
     });
 
-    $('.checkout-toggle').on('click', function() {
+    $('.checkout-toggle').on('click', function () {
         $('.open-toggle').slideToggle(1000);
     });
 
@@ -716,7 +716,7 @@
         }
     });
 
-    $('.shopping-cart').on('click', function() {
+    $('.shopping-cart').on('click', function () {
         const productId = $(this).data('product_id');
         const price = $(this).data('price');
         const images = $(this).data('images');
@@ -743,7 +743,7 @@
         $('.count-style').text(Object.keys(cartProducts).length);
     });
 
-    $('.pro-add-cart').on('click', function() {
+    $('.pro-add-cart').on('click', function () {
         const productId = $(this).data('product_id');
         const price = $(this).data('price');
         const images = $(this).data('images');
@@ -758,7 +758,7 @@
 
         if (!cartProducts) {
             cartProducts = {};
-            cartProducts[productId] =product;
+            cartProducts[productId] = product;
         } else {
             cartProducts = JSON.parse(cartProducts);
 
@@ -777,7 +777,7 @@
         $('.count-style').text(Object.keys(cartProducts).length);
     });
 
-    $('.cart-order').on('click', function() {
+    $('.cart-order').on('click', function () {
         let cartProducts = Cookies.get('cartProducts');
         cartProducts = cartProducts ? JSON.parse(cartProducts) : null;
         let errMessage = ''
@@ -831,7 +831,7 @@
                 "Content-Type": "application/json",
                 // "Content-Type": "application/x-www-form-urlencoded",
             },
-            body: JSON.stringify({deliveryInfo, feeShip }), // body data type must match "Content-Type" header
+            body: JSON.stringify({ deliveryInfo, feeShip }), // body data type must match "Content-Type" header
         }).then(res => res.json()).then(response => {
             if (!response.success || response.error) {
                 throw response.error;
@@ -860,7 +860,8 @@
                 // 'Accept': 'application/json',
                 "Content-Type": "application/json",
                 // "Content-Type": "application/x-www-form-urlencoded",
-            }});
+            }
+        });
         data = await data.json();
         if (data && data === 0) {
             $('#discountNewUser').modal('show');
@@ -868,5 +869,5 @@
             $('#discountNewUser').modal('hide');
         }
     };
-    checkNewDiscount();
+    // checkNewDiscount();
 })(jQuery);
